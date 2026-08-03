@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#123f3a" />
+    <title>雀起 · 定风位</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Outfit:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">雀</span>
+          <span>雀起</span>
+        </div>
+        <button class="icon-button" type="button" aria-label="查看规则">
+          <span>?</span>
+        </button>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">MAHJONG · SEAT DRAW</p>
+        <h1 id="page-title">定风位</h1>
+        <p>一掷定乾坤，<br />谁来坐庄？</p>
+      </section>
+
+      <section class="wind-stage" aria-live="polite">
+        <div class="compass" id="compass">
+          <span class="card card-east">
+            <span class="card-inner">
+              <span class="tile-face tile-back" aria-hidden="true"></span>
+              <span class="tile-face tile-front"></span>
+            </span>
+          </span>
+          <span class="card card-south">
+            <span class="card-inner">
+              <span class="tile-face tile-back" aria-hidden="true"></span>
+              <span class="tile-face tile-front"></span>
+            </span>
+          </span>
+          <span class="card card-west">
+            <span class="card-inner">
+              <span class="tile-face tile-back" aria-hidden="true"></span>
+              <span class="tile-face tile-front"></span>
+            </span>
+          </span>
+          <span class="card card-north">
+            <span class="card-inner">
+              <span class="tile-face tile-back" aria-hidden="true"></span>
+              <span class="tile-face tile-front"></span>
+            </span>
+          </span>
+          <button class="center-tile" id="drawButton" type="button" aria-label="开始抽风">
+            <span class="tile-symbol">發</span>
+            <span class="tile-label" id="buttonLabel">开始</span>
+          </button>
+        </div>
+        <div class="result" id="result" aria-atomic="true">
+          <p>准备就绪</p>
+          <strong>点击下方开始抽风</strong>
+        </div>
+      </section>
+
+    </main>
+
+    <dialog class="rules-dialog" id="rulesDialog">
+      <div class="dialog-content">
+        <button class="close-button" id="closeRules" type="button" aria-label="关闭">×</button>
+        <p class="eyebrow">HOW TO PLAY</p>
+        <h2>定风位</h2>
+        <p>点击“开始抽风”，系统会随机抽取东、南、西、北四个风位。</p>
+        <p>抽到<strong>东风</strong>的玩家为本局庄家。</p>
+      </div>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
