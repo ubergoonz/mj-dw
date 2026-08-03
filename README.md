@@ -2,7 +2,9 @@
 
 > 雀起 - 定风位 - 一掷定乾坤，谁来坐庄？
 
-![screenshot](./mj-dw.png)
+<p align="center">
+	<img src="./mj-dw.png" alt="screenshot" width="420" />
+</p>
 
 ## Launch on GitHub Pages
 
