@@ -1,6 +1,6 @@
 # mj-dw
 
-雀起 - 定风位 - 一掷定乾坤，谁来坐庄？
+》 雀起 - 定风位 - 一掷定乾坤，谁来坐庄？
 
 ## Launch on GitHub Pages
 
@@ -15,13 +15,14 @@ After opening the page:
 3. Read the result below the compass.
 4. Tap or click 再抽一次 to draw again.
 
-## If the link does not load yet
+## Save the webpage as a shortcut on your mobile phone.
 
-GitHub Pages can take a few minutes after a push.
+Depending on your mobile phone, you can save the webpage as a shortcut on your mobile phone and accessit to 打位。
 
-Check deployment status in:
+## FAQs
 
-1. Repository Actions tab
-2. Latest workflow run: Deploy static site to GitHub Pages
+1. Why create this app?
+1A. When playing the 1st game using automatic table, have to spend some time to search for 東南西北。 This is wasting time. So I created this app, no need to destroy the 1st automatic arranged setup. Start faster and play more!
 
-When deployment is successful, refresh the live URL.
+2. How does it work?
+2A. The app uses a random number generator to generate a random direction and then use that as an input to the compass.
