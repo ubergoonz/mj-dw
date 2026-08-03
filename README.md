@@ -2,6 +2,8 @@
 
 > 雀起 - 定风位 - 一掷定乾坤，谁来坐庄？
 
+![screenshot](./mj-dw.png)
+
 ## Launch on GitHub Pages
 
 Open the live app here:
