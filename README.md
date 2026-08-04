@@ -29,7 +29,10 @@ Depending on your mobile phone, you can save the webpage as a shortcut on your m
 ## FAQs
 
 1. Why create this app?
+
 1A. When playing the 1st game using automatic table, have to spend some time to search for 東南西北。 This is wasting time. So I created this app, no need to destroy the 1st automatic arranged setup. Start faster and play more!
 
 2. How does it work?
+
 2A. The app uses a random number generator to generate a random direction and then use that as an input to the compass.
+
