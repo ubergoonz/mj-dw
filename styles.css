@@ -354,10 +354,12 @@ h1 {
 
 .app-footer {
   display: flex;
+  gap: 10px;
   width: 100%;
   margin-inline: auto;
   margin-top: auto;
   padding-top: 20px;
+  align-items: center;
   justify-content: center;
   color: rgba(12, 45, 41, 0.72);
   font-family: Outfit, sans-serif;
@@ -367,6 +369,35 @@ h1 {
   line-height: 1.5;
   max-width: 32ch;
   text-align: center;
+}
+
+.footer-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(12, 45, 41, 0.8);
+  text-decoration: none;
+  transition: transform 140ms ease, color 140ms ease;
+}
+
+.footer-github:hover,
+.footer-github:focus-visible {
+  color: var(--ink-deep);
+  transform: translateY(-1px);
+}
+
+.footer-github svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  fill: currentColor;
+}
+
+.footer-github span {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  line-height: 1.15;
+  text-align: left;
 }
 
 .is-drawing .card-inner {
