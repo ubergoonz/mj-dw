@@ -65,6 +65,12 @@ button {
   justify-content: space-between;
 }
 
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -93,6 +99,7 @@ button {
 }
 
 .icon-button,
+.icon-link,
 .close-button {
   display: grid;
   width: 34px;
@@ -106,6 +113,16 @@ button {
   cursor: pointer;
   font-family: Outfit, sans-serif;
   font-weight: 600;
+}
+
+.icon-link {
+  text-decoration: none;
+}
+
+.icon-link svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
 }
 
 .intro {
