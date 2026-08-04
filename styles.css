@@ -354,7 +354,8 @@ h1 {
 
 .app-footer {
   display: flex;
-  gap: 10px;
+  gap: 6px;
+  flex-direction: column;
   width: 100%;
   margin-inline: auto;
   margin-top: auto;
@@ -518,4 +519,13 @@ h1 {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+/* Ko-fi floating chat is injected after load; scale it down globally. */
+#kofi-widget-overlay,
+.kofi-widget-overlay,
+#kofi-widget-overlay iframe,
+.kofi-widget-overlay iframe {
+  transform: scale(0.82);
+  transform-origin: bottom right;
 }

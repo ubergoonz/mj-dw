@@ -1,5 +1,7 @@
 # mj-dw
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 > 雀起 - 定风位 - 一掷定乾坤，谁来坐庄？
 
 <p align="center">
@@ -15,10 +17,10 @@ https://ubergoonz.github.io/mj-dw/
 
 After opening the page:
 
-1. Tap or click 开始 in the center tile.
+1. Tap or click 發 in the center tile.
 2. Wait for the reveal animation.
 3. Read the result below the compass.
-4. Tap or click 再抽一次 to draw again.
+4. Tap or click 發 to draw again.
 
 ## Save the webpage as a shortcut on your mobile phone.
 
