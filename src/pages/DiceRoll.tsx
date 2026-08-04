@@ -25,9 +25,9 @@ export default function DiceRoll() {
   const [diceCount, setDiceCount] = useState<DiceCount>(2);
   const [dice, setDice] = useState<DieState[]>(initialDice);
   const [isRolling, setIsRolling] = useState(false);
-  const [rollLabel, setRollLabel] = useState("掷骰子");
+  const [rollLabel, setRollLabel] = useState("擲骰子");
   const [resultTitle, setResultTitle] = useState("Ready");
-  const [resultDetail, setResultDetail] = useState(`Total: ${2}`);
+  const [resultDetail, setResultDetail] = useState(`${2}`);
   const rollingIntervalId = useRef<number | null>(null);
   const rollingTimeoutId = useRef<number | null>(null);
 
@@ -36,14 +36,14 @@ export default function DiceRoll() {
 
     setDiceCount(nextCount);
     setResultTitle("Ready");
-    setResultDetail(`Total: ${nextCount}`);
+    setResultDetail(`${nextCount}`);
   }
 
   function throwDice() {
     if (isRolling) return;
 
     setIsRolling(true);
-    setRollLabel("ROLLING");
+    setRollLabel("擲骰中");
     setResultTitle("Rolling");
     setResultDetail("Good luck...");
 
@@ -61,11 +61,11 @@ export default function DiceRoll() {
         const next = prev.map((die, index) => (index < diceCount ? { ...die, face: randomDieValue() } : die));
         const total = next.slice(0, diceCount).reduce((sum, die) => sum + die.face, 0);
         setResultTitle("Result");
-        setResultDetail(`Total: ${total}`);
+        setResultDetail(`${total}`);
         return next;
       });
 
-      setRollLabel("ROLL AGAIN");
+      setRollLabel("再擲一次");
       setIsRolling(false);
     }, 900);
   }

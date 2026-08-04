@@ -231,7 +231,7 @@ body {
 }
 
 .result strong {
-  color: var(--ink);
+  color: var(--red);
   font-size: 24px;
   font-weight: 700;
 }
