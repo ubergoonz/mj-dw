@@ -49,7 +49,7 @@ body {
 }
 
 .eyebrow {
-  margin: 0;
+  margin: 0 0 9px;
   color: #a4702c;
   font-family: Outfit, sans-serif;
   font-size: 10px;
@@ -71,7 +71,7 @@ body {
   line-height: 1;
 }
 
-.hero p {
+.hero > p:not(.eyebrow) {
   margin: 14px auto 0;
   max-width: 34ch;
   color: #567069;

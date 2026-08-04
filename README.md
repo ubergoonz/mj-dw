@@ -7,6 +7,7 @@
 <p align="center">
 	<img src="./mj-dw-1.png" alt="screenshot" width="420" />
 	<img src="./mj-dw-2.png" alt="screenshot" width="420" />
+	<img src="./mj-dw-3.png" alt="screenshot" width="420" />
 </p>
 
 ## Launch on GitHub Pages

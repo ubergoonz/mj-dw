@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#123f3a" />
-    <title>雀起 · Dice Throw</title>
+    <title>雀起 · 掷骰子</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,18 +16,19 @@
   <body>
     <main class="dice-shell">
       <header class="topbar">
-        <a class="back-link" href="index.html" aria-label="Back to wind draw">← Back</a>
-        <p class="eyebrow">MAHJONG · DICE THROW</p>
+        <a class="back-link" href="index.html" aria-label="Back to wind draw">← 返回</a>
+        <p class="eyebrow">雀起 · 掷骰子</p>
       </header>
 
       <section class="hero" aria-labelledby="page-title">
+        <p class="eyebrow">MAHJONG · DICE ROLL</p>
         <h1 id="page-title">掷骰子</h1>
       </section>
 
       <section class="dice-stage" aria-live="polite">
         <div class="dice-options" role="group" aria-label="Select number of dice">
-          <button class="dice-option is-active" type="button" data-count="2" aria-pressed="true">2 Dice</button>
-          <button class="dice-option" type="button" data-count="3" aria-pressed="false">3 Dice</button>
+          <button class="dice-option is-active" type="button" data-count="2" aria-pressed="true">2 个骰子</button>
+          <button class="dice-option" type="button" data-count="3" aria-pressed="false">3 个骰子</button>
         </div>
 
         <div class="dice-row" id="diceRow">
@@ -68,7 +69,7 @@
 
         <button class="roll-button" id="rollButton" type="button">
           <span class="roll-symbol">⚄</span>
-          <span class="roll-label" id="rollLabel">ROLL</span>
+          <span class="roll-label" id="rollLabel">掷骰子</span>
         </button>
 
         <div class="result" id="result" aria-atomic="true">
