@@ -27,6 +27,14 @@ After opening the page:
 
 Depending on your mobile phone, you can save the webpage as a shortcut on your mobile phone and accessit to 打位。
 
+## Dice Roll
+
+Added new feature for dice roll. 
+
+Access it via: 
+
+https://ubergoonz.github.io/mj-dw/dice.html
+
 ## FAQs
 
 1. Why create this app?
