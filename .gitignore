@@ -1,3 +1,15 @@
 # macOS screenshot files
 Screen Shot*.png
 Screenshot*.png
+
+# Node / Vite
+node_modules
+dist
+dist-ssr
+*.local
+npm-debug.log*
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+*.tsbuildinfo

@@ -39,15 +39,6 @@ body {
   justify-content: space-between;
 }
 
-.back-link {
-  color: var(--ink-deep);
-  font-family: Outfit, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-decoration: none;
-}
-
 .eyebrow {
   margin: 0 0 9px;
   color: #a4702c;

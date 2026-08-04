@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> 雀起 - 定风位 - 一掷定乾坤，谁来坐庄？
+> 雀起 - 選風打位 - 一掷定乾坤，谁来坐庄？
 
 <p align="center">
 	<img src="./mj-dw-1.png" alt="screenshot" width="420" />
@@ -29,11 +29,37 @@ Depending on your mobile phone, you can save the webpage as a shortcut on your m
 
 ## Dice Roll
 
-Added new feature for dice roll. 
+Added new feature for dice roll.
 
-Access it via: 
+Access it via:
 
-https://ubergoonz.github.io/mj-dw/dice.html
+https://ubergoonz.github.io/mj-dw/#/dice
+
+## Development
+
+This app is built with [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), and [Vite](https://vite.dev/).
+
+```bash
+npm install       # install dependencies
+npm run dev       # start the local dev server
+npm run build     # type-check and build for production (outputs to dist/)
+npm run preview   # preview the production build locally
+npm run lint       # run eslint
+```
+
+Routing is handled with `react-router-dom` (`HashRouter`), so the wind-draw page lives at `/` and the dice-roll page at `/#/dice`. Pushing to `main` triggers the `deploy-pages.yml` workflow, which builds the app and deploys `dist/` to GitHub Pages.
+
+### Project structure
+
+```
+src/
+  components/   # shared UI (e.g. Footer)
+  lib/          # pure logic (e.g. wind shuffling)
+  pages/        # route-level pages (WindDraw, DiceRoll)
+  styles/       # ported CSS from the original static site
+  App.tsx       # route definitions
+  main.tsx      # app entry point
+```
 
 ## FAQs
 
@@ -44,4 +70,5 @@ https://ubergoonz.github.io/mj-dw/dice.html
 2. How does it work?
 
 2A. The app uses a random number generator to generate a random direction and then use that as an input to the compass.
+
 
