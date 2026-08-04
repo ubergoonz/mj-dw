@@ -8,6 +8,9 @@ export default function Brand() {
       <span className="brand-mark">雀</span>
       <a href={import.meta.env.BASE_URL} aria-label="重新加载页面">
         雀起
+        <span className="brand-flag" aria-hidden="true">
+          🇸🇬
+        </span>
       </a>
     </div>
   );

@@ -86,6 +86,10 @@ button {
   text-decoration: none;
 }
 
+.brand-flag {
+  margin-left: 4px;
+}
+
 .brand-mark {
   display: grid;
   width: 29px;

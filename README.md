@@ -1,6 +1,6 @@
 # mj-dw
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: Custom Permission Required](https://img.shields.io/badge/License-Custom%20Permission%20Required-red.svg)](LICENSE)
 
 > 雀起 - 選風打位 - 一掷定乾坤，谁来坐庄？
 
