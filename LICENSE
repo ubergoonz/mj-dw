@@ -1,12 +1,39 @@
-Copyright (c) 2026 Leslie Wang
+# PolyForm NonCommercial License 1.0.0
 
-All rights reserved.
+**Copyright (c) 2026 Leslie Wang**
 
-No part of this software, its source code, assets, documentation, or derived
-works may be copied, modified, merged, published, distributed, sublicensed,
-or otherwise used without prior written permission from the copyright holder.
+Source text: [https://polyformproject.org/licenses/noncommercial/1.0.0/](https://polyformproject.org/licenses/noncommercial/1.0.0/)
 
-For permission requests, contact the copyright holder directly.
+---
 
-This software is provided without any license grant except as explicitly
-authorized in writing by the copyright holder.
+### Acceptance
+In order to receive this license, you must agree to its terms. The terms of this license are conditions to the permissions granted to you. If you do not agree to such terms, you have no permission to exercise the rights granted below. If you violate this license, then the license will automatically terminate, and you must immediately cease all exercise of the rights granted below.
+
+### Copyright Grant
+Subject to the terms of this license, the licensor grants you a non-exclusive, worldwide, royalty-free, copyright license, to the extent of its copyrights in the software, to reproduce, adapt, translate, distribute, and share the software, in whole or in part, for Noncommercial uses only.
+
+### Patent Grant
+Subject to the terms of this license, the licensor grants you a non-exclusive, worldwide, royalty-free, patent license, to the extent of its patent claims, to make, have made, use, sell, offer for sale, import, and otherwise transfer the software, in whole or in part, for Noncommercial uses only.
+
+### Noncommercial
+"Noncommercial" means not primarily intended for or directed towards commercial advantage or monetary compensation.
+
+### Notices
+You must ensure that anyone who gets a copy of any part of this software from you also gets a copy of this license and the above copyright notice.
+
+### Nondiscrimination
+If you distribute or share the software, you may not restrict access to the software to any class of persons or entities, except to enforce compliance with this license.
+
+### No Other Rights
+These grants do not include any other licenses, such as trademarks or patents, except as expressly provided.
+
+### Disclaimer
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+---
+
+## Commercial Use & Licensing
+
+Commercial usage (including hosting as a paid service, white-labeling, or incorporating into commercial/revenue-generating enterprise software) is **strictly prohibited** under this license.
+
+If you wish to obtain a commercial license, please contact us.

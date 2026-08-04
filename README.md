@@ -1,14 +1,8 @@
 # mj-dw
 
-[![License: Custom Permission Required](https://img.shields.io/badge/License-Custom%20Permission%20Required-red.svg)](LICENSE)
+[![License: PolyForm NonCommercial 1.0.0](https://img.shields.io/badge/License-PolyForm%20NonCommercial%201.0.0-blue.svg)](LICENSE)
 
 > 雀起 - 選風打位 - 一掷定乾坤，谁来坐庄？
-
-<p align="center">
-	<img src="./mj-dw-1.png" alt="screenshot" width="420" />
-	<img src="./mj-dw-2.png" alt="screenshot" width="420" />
-	<img src="./mj-dw-3.png" alt="screenshot" width="420" />
-</p>
 
 ## Launch on GitHub Pages
 
