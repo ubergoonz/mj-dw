@@ -231,6 +231,7 @@ body {
 }
 
 .result strong {
+  font-family: Outfit, sans-serif;
   color: var(--red);
   font-size: 24px;
   font-weight: 700;

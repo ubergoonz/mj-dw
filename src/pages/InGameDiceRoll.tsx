@@ -83,6 +83,10 @@ export default function InGameDiceRoll() {
 
     if (!result) {
       setRevealedSeats([]);
+      const id = window.setTimeout(() => {
+        setRevealedSeats([...SEAT_ORDER]);
+      }, 1000);
+      revealTimeoutIds.current.push(id);
       return;
     }
 

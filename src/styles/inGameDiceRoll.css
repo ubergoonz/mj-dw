@@ -83,6 +83,7 @@
 .wall-result {
   max-width: 340px;
   margin-top: 40px;
+  font-family: Outfit, sans-serif;
   text-align: center;
 }
 
@@ -90,7 +91,8 @@
   margin: 0 0 6px;
   color: #8a7760;
   font-family: Outfit, sans-serif;
-  font-size: 11px;
+  font-size: 18px;
+  line-height: 1.5;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -98,6 +100,7 @@
 .wall-result strong {
   display: block;
   color: var(--ink);
+  font-family: inherit;
   font-size: 18px;
   font-weight: 700;
   line-height: 1.5;
@@ -107,7 +110,8 @@
   margin: 0 0 6px;
   color: var(--red);
   font-family: Outfit, sans-serif;
-  font-size: 13px;
+  font-size: 18px;
+  line-height: 1.5;
   font-weight: 600;
   text-transform: none;
   letter-spacing: normal;
