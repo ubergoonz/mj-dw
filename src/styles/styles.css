@@ -150,7 +150,7 @@ button {
   top: calc(100% + 10px);
   right: 0;
   z-index: 20;
-  min-width: 176px;
+  min-width: 280px;
   margin: 0;
   padding: 6px;
   list-style: none;
@@ -178,10 +178,19 @@ button {
   align-items: baseline;
   gap: 8px;
   padding: 9px 12px;
+  white-space: nowrap;
   color: var(--ink);
   text-decoration: none;
   border-radius: 9px;
   transition: background-color 0.15s ease;
+}
+
+.utility-menu-glyph {
+  min-width: 1.2em;
+  color: var(--red);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
 }
 
 .utility-menu-item:hover,
@@ -190,11 +199,13 @@ button {
 }
 
 .utility-menu-item strong {
+  white-space: nowrap;
   font-size: 15px;
   font-weight: 600;
 }
 
 .utility-menu-item small {
+  white-space: nowrap;
   color: #7a8f89;
   font-family: Outfit, sans-serif;
   font-size: 11px;
@@ -360,6 +371,26 @@ h1 {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75), 0 -1px 0 rgba(0, 0, 0, 0.18);
   opacity: 0;
   transform: rotateY(-90deg) scale(0.88);
+}
+
+.east-starter-marker {
+  position: absolute;
+  top: 50%;
+  right: -34px;
+  transform: translateY(-50%);
+  color: var(--red);
+  font-family: Outfit, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+
+.card.is-revealed .east-starter-marker {
+  opacity: 1;
 }
 
 .tile-front::before {

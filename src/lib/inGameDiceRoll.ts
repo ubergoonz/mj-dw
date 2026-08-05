@@ -54,27 +54,15 @@ export function stacksForSeat(seat: Seat): number {
 export function resolveWallBreak(seatRoll: number, breakRoll?: number): WallBreakResult {
   const chosenSeat = SEAT_ORDER[((seatRoll - 1) % SEAT_ORDER.length + SEAT_ORDER.length) % SEAT_ORDER.length];
 
-  // Three-dice mode uses a single roll and never needs rollover in practice
-  // (max 18), but keep this path direct and explicit.
-  if (breakRoll === undefined) {
-    return {
-      seatRoll,
-      breakRoll: seatRoll,
-      chosenSeat,
-      seat: chosenSeat,
-      totalStacks: stacksForSeat(chosenSeat),
-      breakStack: seatRoll,
-      remainingStacks: stacksForSeat(chosenSeat) - seatRoll,
-      rolledOver: false,
-    };
-  }
-
-  let breakCount = seatRoll + breakRoll;
+  const effectiveBreakRoll = breakRoll ?? seatRoll;
+  let breakCount = seatRoll + effectiveBreakRoll;
   let seatIndex = LEFTWARD_ROLLOVER_ORDER.indexOf(chosenSeat);
   let seat: Seat = chosenSeat;
   let totalStacks = stacksForSeat(seat);
 
-  while (breakCount > totalStacks) {
+  // Counting lands on a stack and the wall is opened after it. So when the
+  // count exactly reaches the wall end, opening continues at the next wall.
+  while (breakCount >= totalStacks) {
     breakCount -= totalStacks;
     seatIndex = (seatIndex + 1) % LEFTWARD_ROLLOVER_ORDER.length;
     seat = LEFTWARD_ROLLOVER_ORDER[seatIndex];
@@ -85,7 +73,7 @@ export function resolveWallBreak(seatRoll: number, breakRoll?: number): WallBrea
 
   return {
     seatRoll,
-    breakRoll,
+    breakRoll: effectiveBreakRoll,
     chosenSeat,
     seat,
     totalStacks,

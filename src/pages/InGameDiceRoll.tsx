@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Footer from "../components/Footer";
 import UtilityMenu from "../components/UtilityMenu";
 import HelpDialog from "../components/HelpDialog";
 import Brand from "../components/Brand";
-import { resolveWallBreak, SEAT_ORDER, type Seat, type WallBreakResult } from "../lib/inGameDiceRoll";
+import { resolveWallBreak, SEAT_ORDER, stacksForSeat, type Seat, type WallBreakResult } from "../lib/inGameDiceRoll";
 import "../styles/inGameDiceRoll.css";
 
 type DiceCount = 2 | 3;
@@ -25,6 +25,12 @@ const COMPASS_POSITIONS: Record<Seat, "east" | "south" | "west" | "north"> = {
 
 const DIE_LABELS = ["First die", "Second die", "Third die"];
 const ROLLOVER_TOTALS = Array.from({ length: 23 }, (_, index) => index + 2);
+const WALL_COLOR_THEMES = [
+  { top: "#f8efdc", bottom: "#e8dabb", border: "rgba(120, 100, 60, 0.24)" },
+  { top: "#e9f3e7", bottom: "#c8ddc4", border: "rgba(70, 103, 71, 0.3)" },
+  { top: "#f6e7ef", bottom: "#e3c6d5", border: "rgba(126, 74, 97, 0.3)" },
+  { top: "#e7eef7", bottom: "#c4d4e8", border: "rgba(74, 95, 130, 0.3)" },
+] as const;
 
 /** With 2 dice the dealer rolls twice — first roll picks the seat, second picks the break stack; with 3 dice, one roll does both. */
 function rollsRequired(diceCount: DiceCount): number {
@@ -64,6 +70,7 @@ export default function InGameDiceRoll() {
   const [result, setResult] = useState<WallBreakResult | null>(null);
   const [revealedSeats, setRevealedSeats] = useState<Seat[]>([]);
   const [isRolling, setIsRolling] = useState(false);
+  const [wallThemeIndex, setWallThemeIndex] = useState(0);
   const rollingIntervalId = useRef<number | null>(null);
   const rollingTimeoutId = useRef<number | null>(null);
   const revealTimeoutIds = useRef<number[]>([]);
@@ -110,6 +117,8 @@ export default function InGameDiceRoll() {
   function simulateRollover(total: number) {
     if (isRolling || diceCount !== 2) return;
 
+    setWallThemeIndex((current) => (current + 1) % WALL_COLOR_THEMES.length);
+
     const [firstRoll, secondRoll] = randomRollPairForTotal(total);
     const [firstFace, secondFace] = randomDiceForTotal(secondRoll);
     setDice([
@@ -132,6 +141,7 @@ export default function InGameDiceRoll() {
       setRollsSoFar([]);
     }
 
+    setWallThemeIndex((current) => (current + 1) % WALL_COLOR_THEMES.length);
     setIsRolling(true);
 
     rollingIntervalId.current = window.setInterval(() => {
@@ -180,6 +190,13 @@ export default function InGameDiceRoll() {
     return "点击掷骰";
   }
 
+  const wallTheme = WALL_COLOR_THEMES[wallThemeIndex];
+  const wallThemeVars = {
+    "--wall-stack-top": wallTheme.top,
+    "--wall-stack-bottom": wallTheme.bottom,
+    "--wall-stack-border": wallTheme.border,
+  } as CSSProperties;
+
   return (
     <main className="app-shell in-game-dice-roll">
       <header className="topbar">
@@ -197,7 +214,7 @@ export default function InGameDiceRoll() {
             </p>
             <p>
               2 颗骰子时，第一次由東掷骰，点数决定由哪一家掷第二次；两次点数相加后，从第二位掷骰者的墙开始数。
-              3 颗骰子时由東一次掷完并直接计数。从下一墩开始摸牌。
+              3 颗骰子时由東一次掷完并直接计数。墙墩计数一律从该墙的第 1 墩开始，开门后从下一墩开始摸牌。
             </p>
             <p>若两次点数超过当前墙的总墩数，则向左顺延：東→北→西→南→東。</p>
           </HelpDialog>
@@ -250,10 +267,65 @@ export default function InGameDiceRoll() {
                 <span className="card-inner">
                   <span className="tile-face tile-back" aria-hidden="true"></span>
                   <span className="tile-face tile-front">{seat}</span>
+                  {seat === "東" && (
+                    <span className="east-starter-marker" aria-label="起莊">
+                      ▲起莊
+                    </span>
+                  )}
                 </span>
               </span>
             );
           })}
+          <div className={`wall-ring${result ? " has-result" : ""}`} style={wallThemeVars} aria-hidden="true">
+            {SEAT_ORDER.map((seat) => {
+              const position = COMPASS_POSITIONS[seat];
+              const totalStacks = stacksForSeat(seat);
+              const isBreakSeat = result?.seat === seat;
+              // Visual stacks are laid out left-to-right, but wall counting is
+              // from the right end. `splitIndex` marks the break stack index
+              // in left-to-right coordinates; when breakStack is 0 it points
+              // past the right edge (boundary rollover to next wall).
+              const splitIndex = isBreakSeat ? totalStacks - result.breakStack : -1;
+
+              return (
+                <span
+                  className={[
+                    "seat-wall",
+                    `seat-wall-${position}`,
+                    isBreakSeat ? "is-break-seat" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  key={`wall-${seat}`}
+                >
+                  {Array.from({ length: totalStacks }).map((_, stackIndex) => {
+                    const isRightSegment = isBreakSeat && stackIndex >= splitIndex;
+                    const isBreakStack = isBreakSeat && result.breakStack > 0 && stackIndex === splitIndex;
+                    const isDrawStart = isBreakSeat && stackIndex === splitIndex - 1;
+
+                    return (
+                      <span
+                        className={[
+                          "seat-wall-stack",
+                          isRightSegment ? "is-right-segment" : "is-left-segment",
+                          isBreakStack ? "is-break-stack" : "",
+                          isDrawStart ? "is-draw-start" : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}
+                        style={
+                          isBreakSeat
+                            ? { transitionDelay: `${Math.abs(stackIndex - splitIndex) * 18}ms` }
+                            : undefined
+                        }
+                        key={`${seat}-${stackIndex}`}
+                      ></span>
+                    );
+                  })}
+                </span>
+              );
+            })}
+          </div>
           <button
             className="center-tile center-tile--dice"
             type="button"
@@ -289,8 +361,16 @@ export default function InGameDiceRoll() {
                 </p>
               )}
               <strong>
-                从右数第 <span className="wall-result-number">{result.breakStack}</span> 墩处开门，第{" "}
-                <span className="wall-result-number">{result.breakStack + 1}</span> 墩起摸牌
+                {result.breakStack === 0 ? (
+                  <>
+                    墙尾后开门，第 <span className="wall-result-number">1</span> 墩起摸牌
+                  </>
+                ) : (
+                  <>
+                    从第 <span className="wall-result-number">{result.breakStack}</span> 墩处开门，第{" "}
+                    <span className="wall-result-number">{result.breakStack + 1}</span> 墩起摸牌
+                  </>
+                )}
               </strong>
               <span className="wall-result-meta">
                 {result.seat}家墙共 {result.totalStacks} 墩，开门后剩{" "}

@@ -57,6 +57,7 @@ export default function UtilityMenu() {
                   to={utility.path}
                   onClick={() => setIsOpen(false)}
                 >
+                  <span className="utility-menu-glyph" aria-hidden="true">{utility.glyph}</span>
                   <strong>{utility.label}</strong>
                   <small>{utility.description}</small>
                 </Link>

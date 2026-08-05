@@ -126,6 +126,11 @@ export default function WindDraw() {
                 <span className="card-inner">
                   <span className="tile-face tile-back" aria-hidden="true"></span>
                   <span className="tile-face tile-front">{card.character}</span>
+                  {card.character === "東" && (
+                    <span className="east-starter-marker" aria-label="起莊">
+                      ▲起莊
+                    </span>
+                  )}
                 </span>
               </span>
             );
