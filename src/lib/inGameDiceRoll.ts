@@ -1,5 +1,7 @@
 export const SEAT_ORDER = ["東", "南", "西", "北"] as const;
 
+const LEFTWARD_ROLLOVER_ORDER = ["東", "北", "西", "南"] as const;
+
 export type Seat = (typeof SEAT_ORDER)[number];
 
 export interface WallBreakResult {
@@ -50,24 +52,40 @@ export function stacksForSeat(seat: Seat): number {
  * tile pick-up begins with the very next one.
  */
 export function resolveWallBreak(seatRoll: number, breakRoll?: number): WallBreakResult {
-  const chosenSeat = SEAT_ORDER[(seatRoll - 1) % SEAT_ORDER.length];
-  let breakCount = breakRoll === undefined ? seatRoll : seatRoll + breakRoll;
-  let seatIndex = SEAT_ORDER.indexOf(chosenSeat);
-  let totalStacks = stacksForSeat(SEAT_ORDER[seatIndex]);
-  const rolloverStep = breakRoll === undefined ? 1 : -1;
+  const chosenSeat = SEAT_ORDER[((seatRoll - 1) % SEAT_ORDER.length + SEAT_ORDER.length) % SEAT_ORDER.length];
+
+  // Three-dice mode uses a single roll and never needs rollover in practice
+  // (max 18), but keep this path direct and explicit.
+  if (breakRoll === undefined) {
+    return {
+      seatRoll,
+      breakRoll: seatRoll,
+      chosenSeat,
+      seat: chosenSeat,
+      totalStacks: stacksForSeat(chosenSeat),
+      breakStack: seatRoll,
+      remainingStacks: stacksForSeat(chosenSeat) - seatRoll,
+      rolledOver: false,
+    };
+  }
+
+  let breakCount = seatRoll + breakRoll;
+  let seatIndex = LEFTWARD_ROLLOVER_ORDER.indexOf(chosenSeat);
+  let seat: Seat = chosenSeat;
+  let totalStacks = stacksForSeat(seat);
 
   while (breakCount > totalStacks) {
     breakCount -= totalStacks;
-    seatIndex = (seatIndex + rolloverStep + SEAT_ORDER.length) % SEAT_ORDER.length;
-    totalStacks = stacksForSeat(SEAT_ORDER[seatIndex]);
+    seatIndex = (seatIndex + 1) % LEFTWARD_ROLLOVER_ORDER.length;
+    seat = LEFTWARD_ROLLOVER_ORDER[seatIndex];
+    totalStacks = stacksForSeat(seat);
   }
 
-  const seat = SEAT_ORDER[seatIndex];
   const breakStack = breakCount;
 
   return {
     seatRoll,
-    breakRoll: breakRoll ?? seatRoll,
+    breakRoll,
     chosenSeat,
     seat,
     totalStacks,
