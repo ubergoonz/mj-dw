@@ -626,6 +626,197 @@ h1 {
   line-height: 1.9;
 }
 
+.fan-payout-shell {
+  display: flex;
+  min-height: 100vh;
+  max-width: 520px;
+  margin: auto;
+  padding: 22px 25px 31px;
+  flex-direction: column;
+}
+
+.fan-payout-panel {
+  display: flex;
+  margin-top: 26px;
+  padding: 22px 18px 18px;
+  flex-direction: column;
+  gap: 18px;
+  background: rgba(252, 248, 241, 0.88);
+  border: 1px solid rgba(23, 61, 56, 0.12);
+  border-radius: 18px;
+  box-shadow: 0 16px 35px rgba(22, 53, 48, 0.08);
+}
+
+.fan-payout-form {
+  display: grid;
+  gap: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 12px 14px;
+  color: var(--ink-deep);
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(23, 61, 56, 0.2);
+  border-radius: 10px;
+  font: inherit;
+}
+
+.field select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+
+.range-field {
+  display: grid;
+  gap: 8px;
+}
+
+.range-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.range-header strong {
+  min-width: 28px;
+  text-align: right;
+}
+
+.range-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.compact-field {
+  margin: 0;
+}
+
+.toggle-field {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.toggle-field input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--red);
+}
+
+.fan-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.fan-summary > div {
+  padding: 10px 12px;
+  text-align: center;
+  background: rgba(23, 61, 56, 0.04);
+  border-radius: 10px;
+}
+
+.self-draw-mode-group {
+  display: grid;
+  gap: 10px;
+}
+
+.fan-summary small {
+  display: block;
+  color: #7d817a;
+  font-family: Outfit, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fan-summary strong {
+  display: block;
+  margin-top: 6px;
+  color: var(--ink-deep);
+  font-size: 16px;
+}
+
+.fan-table-wrap {
+  overflow-x: auto;
+}
+
+.fan-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.fan-table th,
+.fan-table td {
+  padding: 10px 8px;
+  text-align: center;
+  border-bottom: 1px solid rgba(23, 61, 56, 0.12);
+}
+
+.fan-table thead th {
+  color: #6d726f;
+  font-family: Outfit, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fan-table tbody tr:nth-child(odd) {
+  background: rgba(209, 154, 66, 0.04);
+}
+
+.fan-table tbody tr:nth-child(even) {
+  background: rgba(23, 61, 56, 0.02);
+}
+
+.fan-table tbody td {
+  color: var(--ink);
+}
+
+.fan-table tbody td:first-child {
+  font-weight: 700;
+  color: var(--ink-deep);
+  text-align: left;
+}
+
+.fan-table tbody tr:not(.fan-row-active) td,
+.fan-table tbody tr:not(.fan-row-active) td:first-child {
+  color: rgba(23, 61, 56, 0.42);
+  font-weight: 400;
+}
+
+.fan-table tbody tr.fan-row-active td,
+.fan-table tbody tr.fan-row-active td:first-child {
+  color: var(--ink-deep);
+  font-weight: 700;
+}
+
 .close-button {
   position: absolute;
   top: 16px;

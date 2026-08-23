@@ -15,6 +15,7 @@ Main routes:
 1. `/#/` - 選風打位
 2. `/#/dice` - 掷骰子
 3. `/#/in-game-dice` - 掷骰开墩
+4. `/#/fan-payout` - 番數計算
 
 ## Features
 
@@ -56,6 +57,28 @@ Extra behavior on this page:
 2. 東 and 西 use 19 stacks; 南 and 北 use 18 stacks.
 3. The opening wall animates when the break point is determined.
 4. The wall color theme rotates between rolls.
+
+### 4. 番數計算
+
+Use the fan payout calculator to estimate the table payout across fan counts.
+
+How it works:
+
+1. Set a base value and a max fan limit.
+2. Choose whether shooter pays on behalf of the other two players.
+3. Toggle 自摸 bonus on and set the bonus amount if needed.
+4. Pick the local self-draw rule: `all other players` or `one player only`.
+5. Review the table from 0 fan up to the limit.
+
+The calculator shows:
+
+- base payout by fan count
+- multiplier pattern such as `base × 2 × 2`
+- other players amount
+- shooter amount
+- total payout for the winning hand
+
+This is designed for quick Singapore mahjong table checks and local-rule comparisons.
 
 ## Wall-Break Rules
 
@@ -111,12 +134,14 @@ npm run lint       # run eslint
 1. `src/pages/WindDraw.tsx` - 選風打位
 2. `src/pages/DiceRoll.tsx` - 掷骰子
 3. `src/pages/InGameDiceRoll.tsx` - 掷骰开墩
+4. `src/pages/FanPayout.tsx` - 番數計算
 
 ### Core logic modules
 
 1. `src/lib/winds.ts` handles wind shuffling for seat draw.
 2. `src/lib/inGameDiceRoll.ts` contains wall-break resolution logic.
-3. `src/lib/utilities.ts` defines the utility menu registry.
+3. `src/lib/fanPayout.ts` handles fan payout calculation and self-draw/local-rule adjustments.
+4. `src/lib/utilities.ts` defines the utility menu registry.
 
 ### In-game dice technical behavior
 
