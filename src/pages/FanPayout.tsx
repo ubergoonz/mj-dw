@@ -159,8 +159,7 @@ export default function FanPayout() {
             <thead>
               <tr>
                 <th>台</th>
-                <th>Player A</th>
-                <th>Player B</th>
+                <th>Other Players</th>
                 <th>Shooter</th>
                 <th>Winner</th>
                 <th>自摸 each</th>
@@ -171,7 +170,6 @@ export default function FanPayout() {
               {rows.map((row) => (
                 <tr key={row.fan} className={row.inRange ? "fan-row-active" : undefined}>
                   <td>{row.label}</td>
-                  <td>{formatMoney(row.playerPays)}</td>
                   <td>{formatMoney(row.playerPays)}</td>
                   <td>{formatMoney(row.shooterPays)}</td>
                   <td>{formatMoney(row.winnerTakes)}</td>
