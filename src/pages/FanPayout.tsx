@@ -3,12 +3,15 @@ import Brand from "../components/Brand";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
-import { FAN_BASE_OPTIONS, FAN_TABLE_MAX, getFanPayoutRows } from "../lib/fanPayout";
+import { FAN_BASE_OPTIONS, FAN_INPUT_MAX, getFanPayoutRows } from "../lib/fanPayout";
 
 const formatMoney = (value: number): string => {
   const rounded = Number(value.toFixed(2));
   return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(2);
 };
+
+const clampFan = (value: string): number =>
+  Math.min(FAN_INPUT_MAX, Math.max(0, Math.floor(Number(value) || 0)));
 
 export default function FanPayout() {
   const [base, setBase] = useState(1);
@@ -18,6 +21,7 @@ export default function FanPayout() {
   const [selfDrawBonusInput, setSelfDrawBonusInput] = useState("1");
 
   const selfDrawBonusAmount = Math.max(0, Math.floor(Number(selfDrawBonusInput) || 0));
+  const isRangeInvalid = maxFan <= minFan;
 
   const rows = useMemo(
     () =>
@@ -64,7 +68,7 @@ export default function FanPayout() {
           </label>
 
           <div className="range-field">
-            <div className="range-header">
+            <div className={`range-header${isRangeInvalid ? " range-invalid" : ""}`}>
               <span>台 </span>
               <strong>
                 {minFan}–{maxFan}
@@ -72,39 +76,36 @@ export default function FanPayout() {
             </div>
 
             <div className="range-input-row" aria-label="台 range inputs">
-              <label className="field compact-field">
+              <label className={`field compact-field${isRangeInvalid ? " range-invalid" : ""}`}>
                 <span>Min 台</span>
                 <input
                   type="number"
                   min="0"
-                  max={FAN_TABLE_MAX}
+                  max={FAN_INPUT_MAX}
                   step="1"
                   value={minFan}
-                  onChange={(event) => {
-                    const nextMinFan = Math.max(0, Number(event.target.value) || 0);
-                    setMinFan(Math.min(nextMinFan, maxFan));
-                  }}
+                  onChange={(event) => setMinFan(clampFan(event.target.value))}
                 />
               </label>
 
-              <label className="field compact-field">
+              <label className={`field compact-field${isRangeInvalid ? " range-invalid" : ""}`}>
                 <span>Max 台</span>
                 <input
                   type="number"
                   min="0"
-                  max={FAN_TABLE_MAX}
+                  max={FAN_INPUT_MAX}
                   step="1"
                   value={maxFan}
-                  onChange={(event) => {
-                    const nextMaxFan = Math.min(
-                      FAN_TABLE_MAX,
-                      Math.max(0, Number(event.target.value) || 0),
-                    );
-                    setMaxFan(Math.max(nextMaxFan, minFan));
-                  }}
+                  onChange={(event) => setMaxFan(clampFan(event.target.value))}
                 />
               </label>
             </div>
+
+            {isRangeInvalid && (
+              <p className="range-invalid" role="alert">
+                Max 台 must be greater than Min 台.
+              </p>
+            )}
           </div>
 
           <label className="toggle-field" htmlFor="self-draw-bonus">

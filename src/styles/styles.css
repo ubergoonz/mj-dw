@@ -762,6 +762,13 @@ h1 {
   font-size: 16px;
 }
 
+.range-invalid,
+.range-invalid span,
+.range-invalid strong,
+.range-invalid input {
+  color: #b3261e;
+}
+
 .fan-table-wrap {
   overflow-x: auto;
 }

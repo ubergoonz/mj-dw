@@ -35,8 +35,11 @@ export interface FanPayoutRow {
   inRange: boolean;
 }
 
-/** The table always renders 0 fan through this limit; min/max only highlights rows. */
+/** The table always renders 0 台 through this limit; min/max only highlights rows. */
 export const FAN_TABLE_MAX = 15;
+
+/** Highest 台 a player can enter in the range inputs. */
+export const FAN_INPUT_MAX = 99;
 
 function safeNumber(value: number, fallback = 0): number {
   if (!Number.isFinite(value)) return fallback;
@@ -62,7 +65,7 @@ export function getFanPayoutRows({
   );
   const bonusAmount = selfDrawBonus ? Math.max(0, safeNumber(selfDrawBonusAmount, 0)) : 0;
 
-  return Array.from({ length: FAN_TABLE_MAX + 1 }, (_, fan) => {
+  return Array.from({ length: Math.max(FAN_TABLE_MAX, normalizedMaxFan) + 1 }, (_, fan) => {
     const multiplier = 2 ** fan;
     const playerPays = round2(normalizedBase * multiplier);
     const shooterPays = round2(playerPays * 2);
