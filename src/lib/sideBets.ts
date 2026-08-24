@@ -63,7 +63,8 @@ export function getSideBetRows({ baseMin, baseMax }: SideBetInput): SideBetRow[]
   return SIDE_BET_TYPES.flatMap((type) =>
     type.pairCounts.flatMap((pairs) =>
       SIDE_BET_STATES.map(({ id: state, label: stateLabel }) => {
-        const perPlayer = round2((state === "hidden" ? max : min) * pairs);
+        // Each pair beyond the first adds one more max on top of the scaled amount.
+        const perPlayer = round2((state === "hidden" ? max : min) * pairs + max * (pairs - 1));
         const winnerTakes = round2(perPlayer * 3);
         const hasShooter = type.id === "gang" && state === "open";
 

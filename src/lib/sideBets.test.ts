@@ -16,19 +16,19 @@ describe("getSideBetRows", () => {
     });
   });
 
-  it("doubles the payout for a two pair 正咬", () => {
+  it("adds one more max for a two pair 正咬", () => {
     const rows = getSideBetRows({ baseMin: 1, baseMax: 2 });
 
     expect(rows.find((row) => row.key === "animal-2-hidden")).toMatchObject({
       pairs: 2,
-      perPlayer: 4,
-      winnerTakes: 12,
+      perPlayer: 6,
+      winnerTakes: 18,
     });
 
     expect(rows.find((row) => row.key === "animal-2-open")).toMatchObject({
       pairs: 2,
-      perPlayer: 2,
-      winnerTakes: 6,
+      perPlayer: 4,
+      winnerTakes: 12,
     });
   });
 
