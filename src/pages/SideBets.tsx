@@ -27,7 +27,7 @@ export default function SideBets() {
         <Brand />
         <div className="topbar-actions">
           <UtilityMenu />
-          <HelpDialog eyebrow="HOW TO PLAY" title="花砲計算">
+          <HelpDialog eyebrow="HOW TO PLAY" title="花獸槓計算">
             <p>選擇底注最小值，最大值自動為最小值的兩倍。</p>
             <p>正咬（正動物 / 正花）與槓：正暗按最大值計，正明按最小值計。</p>
             <p>明槓另設出銃欄，顯示放槓者一人包付的金額，供對照參考。</p>
@@ -38,7 +38,7 @@ export default function SideBets() {
 
       <section className="hero" aria-labelledby="page-title">
         <p className="eyebrow">MAHJONG · SIDE BETS</p>
-        <h1 id="page-title">花砲計算</h1>
+        <h1 id="page-title">花獸槓計算</h1>
       </section>
 
       <section className="fan-payout-panel" aria-label="Side bet calculator">
@@ -106,7 +106,7 @@ export default function SideBets() {
               {rows.map((row) => (
                 <tr key={row.key} className="fan-row-active">
                   <td>
-                    {row.typeLabel} · {row.stateLabel}
+                    {row.typeLabel} · {row.stateLabel} · {row.pairLabel}
                   </td>
                   <td>{formatMoney(row.perPlayer)}</td>
                   <td>{row.hasShooter ? formatMoney(row.shooterPays) : "—"}</td>
