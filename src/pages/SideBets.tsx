@@ -97,9 +97,7 @@ export default function SideBets() {
             <thead>
               <tr>
                 <th>Side bet</th>
-                <th>Player A</th>
-                <th>Player B</th>
-                <th>Player C</th>
+                <th>Players (A/B/C)</th>
                 <th>Shooter (包)</th>
                 <th>Winner</th>
               </tr>
@@ -110,8 +108,6 @@ export default function SideBets() {
                   <td>
                     {row.typeLabel} · {row.stateLabel}
                   </td>
-                  <td>{formatMoney(row.perPlayer)}</td>
-                  <td>{formatMoney(row.perPlayer)}</td>
                   <td>{formatMoney(row.perPlayer)}</td>
                   <td>{row.hasShooter ? formatMoney(row.shooterPays) : "—"}</td>
                   <td>{formatMoney(row.winnerTakes)}</td>
