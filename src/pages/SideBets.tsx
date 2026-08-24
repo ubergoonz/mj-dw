@@ -13,7 +13,7 @@ const formatMoney = (value: number): string => {
   return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(2);
 };
 
-const baseOptions = [0.5, 1, 2, 3, 5, 10];
+const baseOptions = [0.5, 1, 2, 3, 4, 5, 10, 20, 30, 40, 50];
 
 export default function SideBets() {
   const [baseMin, setBaseMin] = useState(1);
@@ -29,7 +29,8 @@ export default function SideBets() {
           <UtilityMenu />
           <HelpDialog eyebrow="HOW TO PLAY" title="花砲計算">
             <p>選擇底注最小值，最大值自動為最小值的兩倍。</p>
-            <p>咬（動物 / 花）與同：暗（hidden）按最大值計，明（open）按最小值計。</p>
+            <p>正咬（正動物 / 正花）與槓：正暗按最大值計，正明按最小值計。</p>
+            <p>明槓另設出銃欄，顯示放槓者一人包付的金額，供對照參考。</p>
             <p>每一項由 Player A、Player B、Player C 各付相同金額給贏家。</p>
           </HelpDialog>
         </div>
@@ -82,11 +83,11 @@ export default function SideBets() {
             <strong>{formatMoney(baseMax)}</strong>
           </div>
           <div>
-            <small>Hidden</small>
+            <small>正暗</small>
             <strong>{formatMoney(baseMax)}</strong>
           </div>
           <div>
-            <small>Open</small>
+            <small>正明</small>
             <strong>{formatMoney(baseMin)}</strong>
           </div>
         </div>
@@ -99,6 +100,7 @@ export default function SideBets() {
                 <th>Player A</th>
                 <th>Player B</th>
                 <th>Player C</th>
+                <th>Shooter (包)</th>
                 <th>Winner</th>
               </tr>
             </thead>
@@ -111,6 +113,7 @@ export default function SideBets() {
                   <td>{formatMoney(row.perPlayer)}</td>
                   <td>{formatMoney(row.perPlayer)}</td>
                   <td>{formatMoney(row.perPlayer)}</td>
+                  <td>{row.hasShooter ? formatMoney(row.shooterPays) : "—"}</td>
                   <td>{formatMoney(row.winnerTakes)}</td>
                 </tr>
               ))}

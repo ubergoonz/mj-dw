@@ -43,4 +43,18 @@ describe("getSideBetRows", () => {
       expect(row.winnerTakes).toBe(row.perPlayer * 3);
     }
   });
+
+  it("lets the discarder cover the whole payout on open gang", () => {
+    const rows = getSideBetRows({ baseMin: 1, baseMax: 2 });
+
+    expect(rows.find((row) => row.key === "gang-open")).toMatchObject({
+      hasShooter: true,
+      shooterPays: 3,
+      winnerTakes: 3,
+    });
+
+    for (const row of rows.filter((candidate) => candidate.key !== "gang-open")) {
+      expect(row).toMatchObject({ hasShooter: false, shooterPays: 0 });
+    }
+  });
 });
