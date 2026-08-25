@@ -824,6 +824,150 @@ h1 {
   font-weight: 700;
 }
 
+.result-recorder-shell {
+  max-width: 980px;
+}
+
+.result-seat-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.result-seat {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(23, 61, 56, 0.13);
+  border-radius: 14px;
+}
+
+.result-seat-tally-invalid {
+  border-color: #b3261e;
+  box-shadow: 0 0 0 1px rgba(179, 38, 30, 0.18);
+}
+
+.field input.result-input-invalid {
+  border-color: #b3261e;
+  box-shadow: 0 0 0 1px rgba(179, 38, 30, 0.2);
+}
+
+.result-seat-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.result-seat-heading strong {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: #f5ead2;
+  background: var(--ink);
+  border-radius: 50%;
+}
+
+.result-seat-heading span {
+  font-weight: 700;
+}
+
+.result-session-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  align-self: end;
+}
+
+.utility-action-compact {
+  padding: 8px 10px;
+  font-size: 11px;
+}
+
+.result-win,
+.fan-table tbody td.result-win {
+  color: #16833f;
+}
+
+.result-loss,
+.fan-table tbody td.result-loss {
+  color: #b3261e;
+}
+
+.result-seat-net {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  text-align: center;
+  background: rgba(23, 61, 56, 0.05);
+  border-radius: 10px;
+}
+
+.result-seat-net small {
+  color: #7d817a;
+  font-family: Outfit, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.result-seat-net strong {
+  font-size: 18px;
+}
+
+.result-seat-net span {
+  color: #7d817a;
+  font-size: 11px;
+}
+
+.result-seat-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.result-seat-actions button,
+.utility-action {
+  padding: 11px 12px;
+  color: #f8ecd6;
+  font-family: Outfit, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--ink);
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.result-seat-actions button:last-child,
+.utility-action {
+  background: var(--red);
+}
+
+.copy-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.copy-panel textarea {
+  min-height: 150px;
+  padding: 12px 14px;
+  color: var(--ink-deep);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(23, 61, 56, 0.2);
+  border-radius: 12px;
+  font: 13px / 1.6 Outfit, sans-serif;
+  resize: vertical;
+}
+
+.copy-panel small {
+  color: var(--red);
+  font-family: Outfit, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .close-button {
   position: absolute;
   top: 16px;
