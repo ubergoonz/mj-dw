@@ -968,6 +968,57 @@ h1 {
   font-weight: 700;
 }
 
+@media (max-width: 820px) {
+  .result-recorder-shell {
+    max-width: 620px;
+  }
+
+  .result-seat-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .result-recorder-shell {
+    width: 100%;
+    padding-inline: 14px;
+  }
+
+  .result-recorder-shell .fan-payout-panel {
+    padding: 16px 12px 14px;
+    border-radius: 14px;
+  }
+
+  .result-recorder-shell .range-input-row,
+  .result-seat-row,
+  .result-session-actions,
+  .result-seat-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .result-seat {
+    padding: 12px;
+  }
+
+  .result-seat-heading strong {
+    width: 30px;
+    height: 30px;
+  }
+
+  .result-recorder-shell .fan-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .result-recorder-shell .fan-table {
+    min-width: 430px;
+    font-size: 11px;
+  }
+
+  .copy-panel textarea {
+    min-height: 120px;
+  }
+}
+
 .close-button {
   position: absolute;
   top: 16px;

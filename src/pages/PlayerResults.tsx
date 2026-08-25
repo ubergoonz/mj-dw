@@ -20,9 +20,9 @@ const parseChips = (value: string): number => Math.max(0, Number(value) || 0);
 const splitBaseChips = (value: string): number => parseChips(value) / SEAT_ORDER.length;
 
 export default function PlayerResults() {
-  const [defaultBaseInput, setDefaultBaseInput] = useState("100");
-  const [slots, setSlots] = useState<PlayerSessionSlot[]>(() => createInitialSlots(100));
-  const [leftInputs, setLeftInputs] = useState<Record<Seat, string>>(() => createSeatTextMap("25"));
+  const [defaultBaseInput, setDefaultBaseInput] = useState("2000");
+  const [slots, setSlots] = useState<PlayerSessionSlot[]>(() => createInitialSlots(2000));
+  const [leftInputs, setLeftInputs] = useState<Record<Seat, string>>(() => createSeatTextMap("500"));
   const [nextPlayerInputs, setNextPlayerInputs] = useState<Record<Seat, string>>(() => createSeatTextMap(""));
   const [entries, setEntries] = useState<PlayerResultEntry[]>([]);
   const [copyStatus, setCopyStatus] = useState("");
