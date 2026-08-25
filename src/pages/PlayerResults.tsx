@@ -28,13 +28,20 @@ export default function PlayerResults() {
   const [copyStatus, setCopyStatus] = useState("");
 
   const totalBaseChips = parseChips(defaultBaseInput);
+  const baseTally = useMemo(
+    () => slots.reduce((sum, slot) => sum + slot.baseChips, 0),
+    [slots],
+  );
   const leftChipsBySeat = useMemo(() => parseLeftInputs(leftInputs), [leftInputs]);
   const leftTally = useMemo(
     () => SEAT_ORDER.reduce((sum, seat) => sum + leftChipsBySeat[seat], 0),
     [leftChipsBySeat],
   );
-  const tallyDifference = leftTally - totalBaseChips;
-  const isTallyInvalid = Math.abs(tallyDifference) > 0.001;
+  const baseTallyDifference = baseTally - totalBaseChips;
+  const leftTallyDifference = leftTally - totalBaseChips;
+  const isBaseTallyInvalid = Math.abs(baseTallyDifference) > 0.001;
+  const isLeftTallyInvalid = Math.abs(leftTallyDifference) > 0.001;
+  const isTallyInvalid = isBaseTallyInvalid || isLeftTallyInvalid;
   const chatText = useMemo(() => formatPlayerResultsForChat(entries), [entries]);
 
   function updateSlot(seat: Seat, updates: Partial<PlayerSessionSlot>) {
@@ -115,7 +122,7 @@ export default function PlayerResults() {
           <UtilityMenu />
           <HelpDialog eyebrow="HOW TO PLAY" title="成績記錄">
             <p>開局先輸入總起始籌碼，系統會平均分給東、南、西、北四家作為 base。</p>
-            <p>四家的剩餘籌碼都可手動輸入；若總和不等於總起始籌碼，座位卡會以紅框提醒。</p>
+            <p>四家的 base 與剩餘籌碼都可手動輸入；若總和不等於總起始籌碼，座位卡會以紅框提醒。</p>
             <p>中途有人離場時，輸入剩餘籌碼並按「接手」，系統記錄離場者輸贏，接手者用該剩餘籌碼作為新 base。</p>
             <p>完場時輸入各家剩餘籌碼並按「完場」，下方文字可直接複製貼到聊天。</p>
           </HelpDialog>
@@ -161,7 +168,8 @@ export default function PlayerResults() {
               const slot = slots.find((candidate) => candidate.seat === seat)!;
               const leftChips = leftChipsBySeat[seat];
               const net = calculateNet(slot.baseChips, leftChips);
-              const isLeftChipMismatched = isTallyInvalid && leftChips !== slot.baseChips;
+              const isBaseChipMismatched = isBaseTallyInvalid && slot.baseChips !== splitBaseChips(defaultBaseInput);
+              const isLeftChipMismatched = isLeftTallyInvalid && leftChips !== slot.baseChips;
 
               return (
                 <section className={`result-seat${isTallyInvalid ? " result-seat-tally-invalid" : ""}`} key={seat}>
@@ -187,6 +195,7 @@ export default function PlayerResults() {
                       step="1"
                       value={slot.baseChips}
                       onChange={(event) => updateSlot(seat, { baseChips: parseChips(event.target.value) })}
+                      className={isBaseChipMismatched ? "result-input-invalid" : undefined}
                     />
                   </label>
 
@@ -239,16 +248,16 @@ export default function PlayerResults() {
             <strong>{entries.length}</strong>
           </div>
           <div>
-            <small>Tally</small>
-            <strong>{formatChips(leftTally)} / {formatChips(totalBaseChips)}</strong>
+            <small>Base tally</small>
+            <strong className={isBaseTallyInvalid ? "result-loss" : undefined}>{formatChips(baseTally)} / {formatChips(totalBaseChips)}</strong>
+          </div>
+          <div>
+            <small>Left tally</small>
+            <strong className={isLeftTallyInvalid ? "result-loss" : undefined}>{formatChips(leftTally)} / {formatChips(totalBaseChips)}</strong>
           </div>
           <div>
             <small>Difference</small>
-            <strong className={resultToneClass(tallyDifference)}>{formatSignedChips(tallyDifference)}</strong>
-          </div>
-          <div>
-            <small>Each base</small>
-            <strong>{formatChips(splitBaseChips(defaultBaseInput))}</strong>
+            <strong className={resultToneClass(leftTallyDifference)}>{formatSignedChips(leftTallyDifference)}</strong>
           </div>
         </div>
 
