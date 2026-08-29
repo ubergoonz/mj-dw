@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:docs": "npm run build --prefix docs-site",
+    "build:all": "npm run build && npm run build:docs && mkdir -p dist/docs && cp -r docs-site/build/. dist/docs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

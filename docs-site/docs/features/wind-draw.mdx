@@ -1,0 +1,24 @@
+---
+sidebar_position: 1
+title: 選風打位
+---
+
+# 選風打位 (Wind Draw)
+
+Use the compass view to determine seat positions before the game starts.
+
+Route: [`/#/wind-draw`](https://ubergoonz.github.io/mj-dw/#/wind-draw)
+
+![選風打位 screenshot](/img/features/wind-draw.png)
+
+## How it works
+
+1. Tap the center tile.
+2. The four winds reveal in sequence.
+3. 東 marks the dealer seat.
+4. The ▲起莊 marker appears beside 東.
+
+## Implementation
+
+- Page: `src/pages/WindDraw.tsx`
+- Logic: `src/lib/winds.ts` handles wind shuffling for seat draw.

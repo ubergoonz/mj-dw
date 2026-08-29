@@ -1,0 +1,52 @@
+---
+sidebar_position: 3
+title: 掷骰开墩
+---
+
+# 掷骰开墩 (In-Game Dice Roll)
+
+Use the in-game wall-break helper to determine where tile pick-up starts.
+
+Route: [`/#/in-game-dice`](https://ubergoonz.github.io/mj-dw/#/in-game-dice)
+
+![掷骰开墩 screenshot](/img/features/in-game-dice-roll.png)
+
+## How it works
+
+1. Choose `2 个骰子 · 掷两次` or `3 个骰子 · 掷一次`.
+2. Tap the center tile to roll.
+3. Watch the compass reveal the opening seat.
+4. Read the break position and the next stack for tile pick-up.
+
+## Extra behavior
+
+1. Each seat shows its own mini wall stack.
+2. 東 and 西 use 19 stacks; 南 and 北 use 18 stacks.
+3. The opening wall animates when the break point is determined.
+4. The wall color theme rotates between rolls.
+
+## Wall-break rules
+
+### Seat selection
+
+1. The first roll starts counting from 東.
+2. Counting order for seat selection is: 東 → 南 → 西 → 北.
+3. The seat landed on performs the second roll in 2-dice mode.
+
+### Stack counting
+
+1. In 3-dice mode, the single roll is used for both seat selection and stack counting.
+2. In 2-dice mode, the two roll totals are added together.
+3. Stack counting starts from the first stack of the selected wall.
+4. The wall opens after the counted stack, and tile pick-up begins from the next stack.
+
+### Rollover
+
+1. If the count passes the current wall, it rolls to the next wall on the left.
+2. Leftward rollover order is: 東 → 北 → 西 → 南 → 東.
+3. If the count lands exactly at the wall end, opening continues at the next wall.
+
+## Implementation
+
+- Page: `src/pages/InGameDiceRoll.tsx`
+- Logic: `src/lib/inGameDiceRoll.ts` contains wall-break resolution logic.

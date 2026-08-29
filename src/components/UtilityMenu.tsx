@@ -47,7 +47,26 @@ export default function UtilityMenu() {
       {isOpen && (
         <ul className="utility-menu-list" role="menu">
           {UTILITIES.map((utility) => {
-            const isActive = location.pathname === utility.path;
+            const isActive = !utility.external && location.pathname === utility.path;
+
+            if (utility.external) {
+              return (
+                <li key={utility.path} role="none">
+                  <a
+                    role="menuitem"
+                    className="utility-menu-item"
+                    href={utility.path}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <span className="utility-menu-glyph" aria-hidden="true">{utility.glyph}</span>
+                    <strong>{utility.label}</strong>
+                    <small>{utility.description}</small>
+                  </a>
+                </li>
+              );
+            }
 
             return (
               <li key={utility.path} role="none">

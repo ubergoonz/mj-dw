@@ -1,0 +1,25 @@
+---
+sidebar_position: 6
+title: 成績記錄
+---
+
+# 成績記錄 (Player Results)
+
+Track a play session's chip counts and settle net win/loss between players.
+
+Route: [`/#/player-results`](https://ubergoonz.github.io/mj-dw/#/player-results)
+
+![Player Results screenshot](/img/features/player-results.png)
+
+## How it works
+
+1. Set the total base chips for the table; it is split evenly across the four seats.
+2. Enter each seat's remaining chips at takeover or session end.
+3. The tool validates that base and remaining chip tallies match the table total.
+4. Record a result entry per seat with the net win/loss and optional replacement player name.
+5. Copy a formatted chat-ready summary of all recorded results.
+
+## Implementation
+
+- Page: `src/pages/PlayerResults.tsx`
+- Logic: `src/lib/playerResults.ts` handles chip tally validation, net calculation, and result entry formatting.

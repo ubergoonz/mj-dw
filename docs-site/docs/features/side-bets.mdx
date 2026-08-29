@@ -1,0 +1,25 @@
+---
+sidebar_position: 5
+title: 花獸槓計算
+---
+
+# 花獸槓計算 (Side Bets)
+
+Use the side-bet calculator to settle 花/獸 (flower/animal) and 槓 (kong) payouts outside the main hand.
+
+Route: [`/#/side-bets`](https://ubergoonz.github.io/mj-dw/#/side-bets)
+
+![花獸槓計算 screenshot](/img/features/side-bets.png)
+
+## How it works
+
+1. Pick a base min value; the max is automatically double the min.
+2. 正暗 (hidden) pairs are valued at the max; 正明 (open) pairs are valued at the min.
+3. Extra pairs of the same bet type multiply the payout.
+4. Open 槓 shows a separate 出銃 column for the amount a discarder pays alone.
+5. Each row is paid by all three other players to the winner at the shown per-player amount.
+
+## Implementation
+
+- Page: `src/pages/SideBets.tsx`
+- Logic: `src/lib/sideBets.ts` handles 花/獸/槓 side-bet row generation and payout amounts.

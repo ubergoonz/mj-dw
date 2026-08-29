@@ -1,0 +1,71 @@
+---
+sidebar_position: 7
+title: 招兵買馬
+---
+
+# 招兵買馬 (Beckon Invite)
+
+Organize and invite players to a session. The organizer fills in event info and game rules, and the page generates a copy-ready invite text for chat.
+
+Route: [`/#/beckon-invite`](https://ubergoonz.github.io/mj-dw/#/beckon-invite)
+
+![招兵買馬 screenshot](/img/features/beckon-invite.png)
+
+## Event info
+- Venue - enter a name or address; the page generates a clickable Google Maps search link
+- Expected start and end date + time
+- Total hours - automatically calculated from start and end
+- Expected number of rounds
+- Parking availability
+- Smoking availability
+   - Yes, at table
+   - Yes, outside
+   - No, smoker not welcome
+
+## Game rules
+
+- Stake size
+   - 0.10 / 0.20
+   - 0.20 / 0.40
+   - 0.30 / 0.60
+   - 0.30 / 0.60 (round off)
+   - 0.50 / 1.00
+   - 1.00 / 2.00
+   - 2.00 / 4.00
+   - 3.00 / 6.00 (round off)
+   - 5.00 / 10.00
+   - 10.00 / 20.00
+- Minimum fan: 0-10
+- Maximum fan: 1-10 (must be greater than minimum fan)
+- 鸡胡 (Ping Hu): 3.5 / 4
+- 花獸咬 (Animal/Flower Bite): Yes / No
+  - Open bite:
+      - 正：Yes / No
+      - 臭：Yes / No
+  - Close bite:
+      - 正：Yes / No
+      - 臭：Yes / No
+- 7 Pair: Yes / No
+- Shooter: Yes / No
+- End Wall: 7.5 / Play all
+- Dice Bonus: Yes / No
+   - Bonus type: free text, shown when Dice Bonus is enabled
+
+### Special hands
+
+- 大三元 : complete hand : Yes / No
+- 大四喜 ：complete hand : Yes / No
+- 七对子 ：complete hand : Yes / No
+- 花胡：
+   - 自摸第 7 張可搶第 8 張，抓第 8 張者付 1 台出銃 + 2 台閒家
+   - 自摸第 8 張，全體以出銃價支付
+- 天地胡
+   - 僅限首圈
+   - 天胡： 限庄家，全體以出銃價支付
+   - 地胡： 自摸第 7 張可搶第 8 張，抓第 8 張者付 1 台出銃 + 2 台閒家
+
+## Implementation
+
+- Page: `src/pages/BeckonInvite.tsx`
+- Logic: `src/lib/beckonInvite.ts` handles total-hours calculation, the Google Maps link, fan-range validation, and the copy-for-chat invite text generator.
+
