@@ -203,7 +203,7 @@ export default function BeckonInvite() {
           </div>
 
           <label className="field">
-            <span>鸡胡 (Ping Hu)</span>
+            <span>平胡 (Ping Hu)</span>
             <select
               value={form.pingHu}
               onChange={(event) => update("pingHu", Number(event.target.value) as 3.5 | 4)}
