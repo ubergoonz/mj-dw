@@ -1,58 +1,67 @@
 import type {ReactNode} from 'react';
-import clsx from 'clsx';
+import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
 
 type FeatureItem = {
+  glyph: string;
   title: string;
-  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
   description: ReactNode;
+  to: string;
 };
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
-      <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
-      </>
-    ),
+    glyph: '風',
+    title: '選風打位 Wind Draw',
+    description: <>Randomly assign seats and prevailing wind at the start of a session.</>,
+    to: '/docs/features/wind-draw',
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
-      </>
-    ),
+    glyph: '⚄',
+    title: '掷骰子 Dice Roll',
+    description: <>Roll dice to decide who breaks the wall and where play starts.</>,
+    to: '/docs/features/dice-roll',
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
-    description: (
-      <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
-      </>
-    ),
+    glyph: '⚅',
+    title: '掷骰开墩 In-Game Dice Roll',
+    description: <>Roll dice mid-game for draws, self-draw checks, and other in-game calls.</>,
+    to: '/docs/features/in-game-dice-roll',
+  },
+  {
+    glyph: '台',
+    title: '台數計算 Fan Payout',
+    description: <>Calculate payouts for a hand based on stake, fan count, and shooter rules.</>,
+    to: '/docs/features/fan-payout',
+  },
+  {
+    glyph: '花',
+    title: '花獸槓計算 Side Bets',
+    description: <>Work out flower, animal, and kong side-bet payouts at the table.</>,
+    to: '/docs/features/side-bets',
+  },
+  {
+    glyph: '績',
+    title: '秋後算績 Player Results',
+    description: <>Track scores across rounds and settle up at the end of the session.</>,
+    to: '/docs/features/player-results',
+  },
+  {
+    glyph: '招',
+    title: '招兵買馬 Beckon Invite',
+    description: <>Organize a session and generate a copy-ready invite for chat.</>,
+    to: '/docs/features/beckon-invite',
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({glyph, title, description, to}: FeatureItem) {
   return (
-    <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
-    </div>
+    <Link to={to} className={styles.featureCard}>
+      <span className={styles.featureGlyph} aria-hidden="true">{glyph}</span>
+      <Heading as="h4">{title}</Heading>
+      <p>{description}</p>
+    </Link>
   );
 }
 
@@ -60,9 +69,9 @@ export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
       <div className="container">
-        <div className="row">
-          {FeatureList.map((props, idx) => (
-            <Feature key={idx} {...props} />
+        <div className={styles.featureGrid}>
+          {FeatureList.map((props) => (
+            <Feature key={props.to} {...props} />
           ))}
         </div>
       </div>

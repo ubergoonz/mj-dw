@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently -n app,docs -c blue,magenta \"npm:dev:app\" \"npm:dev:docs\"",
+    "dev:app": "vite",
+    "dev:docs": "npm run start --prefix docs-site",
     "build": "tsc -b && vite build",
     "build:docs": "npm run build --prefix docs-site",
     "build:all": "npm run build && npm run build:docs && mkdir -p dist/docs && cp -r docs-site/build/. dist/docs",
@@ -21,6 +23,7 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.4",
+    "concurrently": "^10.0.5",
     "eslint": "^9.19.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.18",

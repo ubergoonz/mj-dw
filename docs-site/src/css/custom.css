@@ -2,29 +2,57 @@
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
+ *
+ * Colors and fonts here mirror the main app's theme (src/styles/styles.css)
+ * so the docs site feels like part of the same product.
  */
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --mj-ink: #173d38;
+  --mj-ink-deep: #0c2d29;
+  --mj-paper: #f7f0e2;
+  --mj-paper-dark: #eadbbd;
+  --mj-gold: #d19a42;
+  --mj-red: #c5503a;
+  --mj-jade: #4b8b7d;
+
+  --ifm-color-primary: var(--mj-jade);
+  --ifm-color-primary-dark: #417a6e;
+  --ifm-color-primary-darker: #3d7267;
+  --ifm-color-primary-darkest: #325e55;
+  --ifm-color-primary-light: #559c8c;
+  --ifm-color-primary-lighter: #5aa392;
+  --ifm-color-primary-lightest: #6cb2a2;
   --ifm-code-font-size: 95%;
+  --ifm-font-family-base: "Noto Serif SC", serif;
+  --ifm-heading-font-family: "Noto Serif SC", serif;
+  --ifm-background-color: var(--mj-paper);
+  --ifm-navbar-background-color: var(--mj-ink-deep);
+  --ifm-navbar-link-color: var(--mj-paper);
+  --ifm-navbar-link-hover-color: var(--mj-gold);
+  --ifm-footer-background-color: var(--mj-ink-deep);
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #6cb2a2;
+  --ifm-color-primary-dark: #4fa08d;
+  --ifm-color-primary-darker: #439385;
+  --ifm-color-primary-darkest: #37796f;
+  --ifm-color-primary-light: #86c1b4;
+  --ifm-color-primary-lighter: #93c8bd;
+  --ifm-color-primary-lightest: #b3dad2;
+  --ifm-background-color: #0c2d29;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+.navbar__title,
+.navbar__brand {
+  font-family: "Noto Serif SC", serif;
+}
+
+.navbar__link--active {
+  color: var(--mj-gold);
 }

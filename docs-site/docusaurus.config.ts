@@ -104,7 +104,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} mj-dw. Built with Docusaurus.`,
+      copyright: `Made with ❤️ by a MJ lover to MJ Community · © ${new Date().getFullYear()} mj-dw`,
     },
     prism: {
       theme: prismThemes.github,
