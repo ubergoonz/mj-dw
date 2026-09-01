@@ -53,6 +53,14 @@
   font-family: "Noto Serif SC", serif;
 }
 
+.navbar__link,
+.menu__link,
+.footer,
+.pagination-nav__label,
+.button {
+  font-family: Outfit, sans-serif;
+}
+
 .navbar__link--active {
   color: var(--mj-gold);
 }
