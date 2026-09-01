@@ -9,8 +9,31 @@
   margin-top: 0;
 }
 
+.copy-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.copy-tab {
+  padding: 6px 14px;
+  color: var(--ink-deep);
+  font-family: Outfit, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(23, 61, 56, 0.06);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.copy-tab-active {
+  color: #f8ecd6;
+  background: var(--ink);
+}
+
 .beckon-datetime-row {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 14px;
 }
 
@@ -26,6 +49,37 @@
 .beckon-maps-link:hover,
 .beckon-maps-link:focus-visible {
   text-decoration: underline;
+}
+
+.beckon-venue-status {
+  margin: -6px 0 0;
+  color: var(--ink);
+  opacity: 0.7;
+  font-size: 13px;
+}
+
+.beckon-venue-preview {
+  display: grid;
+  gap: 6px;
+  margin-top: -6px;
+}
+
+.beckon-venue-map {
+  width: 100%;
+  height: 160px;
+  border: 1px solid rgba(23, 61, 56, 0.15);
+  border-radius: 10px;
+}
+
+.beckon-venue-description {
+  margin: 0;
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.fan-summary.beckon-total-hours {
+  grid-template-columns: 1fr;
 }
 
 .beckon-subgroup {

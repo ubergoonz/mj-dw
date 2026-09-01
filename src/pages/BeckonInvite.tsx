@@ -1,24 +1,38 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Brand from "../components/Brand";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
 import {
+  DA_SAN_YUAN_OPTIONS,
+  DA_SI_XI_OPTIONS,
   END_WALL_OPTIONS,
   EXPECTED_ROUNDS_OPTIONS,
   FAN_MAX_BOUND,
   FAN_MIN_BOUND,
+  HOURS_PER_ROUND,
+  MEN_QING_OPTIONS,
   PING_HU_OPTIONS,
   SMOKING_OPTIONS,
   STAKE_OPTIONS,
+  TABLE_MODE_OPTIONS,
+  addHoursToDateTimeLocal,
   buildGoogleMapsUrl,
+  buildOsmEmbedUrl,
   calculateTotalHours,
   createInitialBeckonInviteForm,
+  estimateRoundsFromHours,
   formatBeckonInviteForChat,
+  formatBeckonInviteImagePrompt,
+  geocodeVenue,
   isFanRangeValid,
   type BeckonInviteForm,
+  type BigHandMode,
   type EndWallOption,
+  type MenQingMode,
   type SmokingOption,
+  type TableMode,
+  type VenueGeocodeResult,
 } from "../lib/beckonInvite";
 import "../styles/beckonInvite.css";
 
@@ -28,6 +42,9 @@ const clampFan = (value: string): number =>
 export default function BeckonInvite() {
   const [form, setForm] = useState<BeckonInviteForm>(createInitialBeckonInviteForm);
   const [copyStatus, setCopyStatus] = useState("");
+  const [copyTab, setCopyTab] = useState<"chat" | "ai">("chat");
+  const [venueResult, setVenueResult] = useState<VenueGeocodeResult | null>(null);
+  const [venueLookupStatus, setVenueLookupStatus] = useState<"idle" | "loading" | "not-found">("idle");
 
   function update<K extends keyof BeckonInviteForm>(key: K, value: BeckonInviteForm[K]) {
     setForm((current) => ({ ...current, [key]: value }));
@@ -40,10 +57,67 @@ export default function BeckonInvite() {
   const mapsUrl = useMemo(() => buildGoogleMapsUrl(form.venueQuery), [form.venueQuery]);
   const isFanRangeInvalid = !isFanRangeValid(form.minFan, form.maxFan);
   const chatText = useMemo(() => formatBeckonInviteForChat(form), [form]);
+  const imagePromptText = useMemo(() => formatBeckonInviteImagePrompt(form), [form]);
+
+  useEffect(() => {
+    const trimmed = form.venueQuery.trim();
+    if (!trimmed) {
+      setVenueResult(null);
+      setVenueLookupStatus("idle");
+      return;
+    }
+
+    const controller = new AbortController();
+    setVenueLookupStatus("loading");
+    const timer = setTimeout(() => {
+      geocodeVenue(trimmed, controller.signal)
+        .then((result) => {
+          setVenueResult(result);
+          setVenueLookupStatus(result ? "idle" : "not-found");
+        })
+        .catch(() => {
+          if (!controller.signal.aborted) setVenueLookupStatus("not-found");
+        });
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [form.venueQuery]);
 
   async function copyInvite() {
-    await navigator.clipboard.writeText(chatText);
+    await navigator.clipboard.writeText(copyTab === "chat" ? chatText : imagePromptText);
     setCopyStatus("Copied");
+  }
+
+  function handleStartChange(value: string) {
+    setForm((current) => ({
+      ...current,
+      startDateTime: value,
+      endDateTime: value ? addHoursToDateTimeLocal(value, current.expectedRounds * HOURS_PER_ROUND) : current.endDateTime,
+    }));
+  }
+
+  function handleEndChange(value: string) {
+    setForm((current) => {
+      const hours = calculateTotalHours(current.startDateTime, value);
+      return {
+        ...current,
+        endDateTime: value,
+        expectedRounds: hours !== null ? estimateRoundsFromHours(hours) : current.expectedRounds,
+      };
+    });
+  }
+
+  function handleExpectedRoundsChange(value: number) {
+    setForm((current) => ({
+      ...current,
+      expectedRounds: value,
+      endDateTime: current.startDateTime
+        ? addHoursToDateTimeLocal(current.startDateTime, value * HOURS_PER_ROUND)
+        : current.endDateTime,
+    }));
   }
 
   return (
@@ -72,11 +146,52 @@ export default function BeckonInvite() {
             <input
               value={form.venueQuery}
               onChange={(event) => update("venueQuery", event.target.value)}
-              placeholder="Search a venue name or address"
+              placeholder="Search a venue name, address, or postal code"
             />
           </label>
 
-          {mapsUrl && (
+          {venueLookupStatus === "loading" && <p className="beckon-venue-status">Searching venue…</p>}
+          {venueLookupStatus === "not-found" && (
+            <p className="beckon-venue-status">No matching location found.</p>
+          )}
+
+          {venueResult && (
+            <div className="beckon-venue-preview">
+              <iframe
+                className="beckon-venue-map"
+                title="Venue location preview"
+                src={buildOsmEmbedUrl(venueResult.lat, venueResult.lon)}
+                loading="lazy"
+              />
+              <p className="beckon-venue-description">{venueResult.displayName}</p>
+              {mapsUrl && (
+                <a className="beckon-maps-link" href={mapsUrl} target="_blank" rel="noreferrer">
+                  Open in Google Maps ↗
+                </a>
+              )}
+            </div>
+          )}
+
+          <label className="toggle-field" htmlFor="parking-available">
+            <input
+              id="parking-available"
+              type="checkbox"
+              checked={form.parkingAvailable}
+              onChange={(event) => update("parkingAvailable", event.target.checked)}
+            />
+            <span>Parking available</span>
+          </label>
+
+          <label className="field">
+            <span>Parking situation</span>
+            <input
+              value={form.parkingSituation}
+              onChange={(event) => update("parkingSituation", event.target.value)}
+              placeholder="e.g. free street parking after 6pm"
+            />
+          </label>
+
+          {!venueResult && mapsUrl && (
             <a className="beckon-maps-link" href={mapsUrl} target="_blank" rel="noreferrer">
               Open in Google Maps ↗
             </a>
@@ -88,7 +203,7 @@ export default function BeckonInvite() {
               <input
                 type="datetime-local"
                 value={form.startDateTime}
-                onChange={(event) => update("startDateTime", event.target.value)}
+                onChange={(event) => handleStartChange(event.target.value)}
               />
             </label>
 
@@ -97,40 +212,57 @@ export default function BeckonInvite() {
               <input
                 type="datetime-local"
                 value={form.endDateTime}
-                onChange={(event) => update("endDateTime", event.target.value)}
+                onChange={(event) => handleEndChange(event.target.value)}
               />
             </label>
           </div>
 
-          <div className="fan-summary">
-            <div>
-              <small>Total hours</small>
-              <strong>{totalHours !== null ? `${totalHours}h` : "—"}</strong>
+          <div className="beckon-datetime-row">
+            <label className="field compact-field">
+              <span>Expected number of rounds</span>
+              <select
+                value={form.expectedRounds}
+                onChange={(event) => handleExpectedRoundsChange(Number(event.target.value))}
+              >
+                {EXPECTED_ROUNDS_OPTIONS.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <div className="fan-summary beckon-total-hours">
+              <div>
+                <small>Total hours</small>
+                <strong>{totalHours !== null ? `${totalHours}h` : "—"}</strong>
+              </div>
             </div>
           </div>
 
           <label className="field">
-            <span>Expected number of rounds</span>
+            <span>Table mode</span>
             <select
-              value={form.expectedRounds}
-              onChange={(event) => update("expectedRounds", Number(event.target.value))}
+              value={form.tableMode}
+              onChange={(event) => update("tableMode", event.target.value as TableMode)}
             >
-              {EXPECTED_ROUNDS_OPTIONS.map((option) => (
-                <option key={option} value={option}>
-                  {option}
+              {TABLE_MODE_OPTIONS.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.label}
                 </option>
               ))}
             </select>
           </label>
 
-          <label className="toggle-field" htmlFor="parking-available">
-            <input
-              id="parking-available"
-              type="checkbox"
-              checked={form.parkingAvailable}
-              onChange={(event) => update("parkingAvailable", event.target.checked)}
-            />
-            <span>Parking available</span>
+          <label className="field">
+            <span>Stake size</span>
+            <select value={form.stakeId} onChange={(event) => update("stakeId", event.target.value)}>
+              {STAKE_OPTIONS.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </label>
 
           <label className="field">
@@ -150,17 +282,6 @@ export default function BeckonInvite() {
 
         <h2 className="form-section-title">Game rules</h2>
         <div className="fan-payout-form">
-          <label className="field">
-            <span>Stake size</span>
-            <select value={form.stakeId} onChange={(event) => update("stakeId", event.target.value)}>
-              {STAKE_OPTIONS.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </label>
-
           <div className="range-field">
             <div className={`range-header${isFanRangeInvalid ? " range-invalid" : ""}`}>
               <span>Fan range</span>
@@ -203,7 +324,21 @@ export default function BeckonInvite() {
           </div>
 
           <label className="field">
-            <span>平胡 (Ping Hu)</span>
+            <span>門清 (Men Qing) Concealed</span>
+            <select
+              value={form.menQing}
+              onChange={(event) => update("menQing", event.target.value as MenQingMode)}
+            >
+              {MEN_QING_OPTIONS.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="field">
+            <span>平胡幾台 (Ping Hu)</span>
             <select
               value={form.pingHu}
               onChange={(event) => update("pingHu", Number(event.target.value) as 3.5 | 4)}
@@ -236,7 +371,7 @@ export default function BeckonInvite() {
                   checked={form.openZheng}
                   onChange={(event) => update("openZheng", event.target.checked)}
                 />
-                <span>正</span>
+                <span>正 (加1台)</span>
               </label>
               <label className="toggle-field" htmlFor="open-chou">
                 <input
@@ -256,7 +391,7 @@ export default function BeckonInvite() {
                   checked={form.closeZheng}
                   onChange={(event) => update("closeZheng", event.target.checked)}
                 />
-                <span>正</span>
+                <span>正 (加1台)</span>
               </label>
               <label className="toggle-field" htmlFor="close-chou">
                 <input
@@ -266,6 +401,26 @@ export default function BeckonInvite() {
                   onChange={(event) => update("closeChou", event.target.checked)}
                 />
                 <span>臭</span>
+              </label>
+
+              <p className="beckon-subgroup-label">4隻</p>
+              <label className="toggle-field" htmlFor="four-tiles-add-fan">
+                <input
+                  id="four-tiles-add-fan"
+                  type="checkbox"
+                  checked={form.fourTilesAddFan}
+                  onChange={(event) => update("fourTilesAddFan", event.target.checked)}
+                />
+                <span>Add 1 fan</span>
+              </label>
+              <label className="toggle-field" htmlFor="four-tiles-pay-gang">
+                <input
+                  id="four-tiles-pay-gang"
+                  type="checkbox"
+                  checked={form.fourTilesPayGang}
+                  onChange={(event) => update("fourTilesPayGang", event.target.checked)}
+                />
+                <span>Pay 花獸槓</span>
               </label>
             </div>
           )}
@@ -280,15 +435,29 @@ export default function BeckonInvite() {
             <span>7 Pair</span>
           </label>
 
-          <label className="toggle-field" htmlFor="shooter">
-            <input
-              id="shooter"
-              type="checkbox"
-              checked={form.shooter}
-              onChange={(event) => update("shooter", event.target.checked)}
-            />
-            <span>Shooter</span>
-          </label>
+          <fieldset className="radio-field">
+            <legend>Shooter</legend>
+            <label htmlFor="shooter-yes">
+              <input
+                id="shooter-yes"
+                type="radio"
+                name="shooter"
+                checked={form.shooter}
+                onChange={() => update("shooter", true)}
+              />
+              <span>Yes</span>
+            </label>
+            <label htmlFor="shooter-no">
+              <input
+                id="shooter-no"
+                type="radio"
+                name="shooter"
+                checked={!form.shooter}
+                onChange={() => update("shooter", false)}
+              />
+              <span>No</span>
+            </label>
+          </fieldset>
 
           <label className="field">
             <span>End wall</span>
@@ -328,24 +497,32 @@ export default function BeckonInvite() {
 
         <h2 className="form-section-title">Special hands</h2>
         <div className="fan-payout-form">
-          <label className="toggle-field" htmlFor="da-san-yuan">
-            <input
-              id="da-san-yuan"
-              type="checkbox"
-              checked={form.daSanYuan}
-              onChange={(event) => update("daSanYuan", event.target.checked)}
-            />
-            <span>大三元 · complete hand</span>
+          <label className="field">
+            <span>大三元</span>
+            <select
+              value={form.daSanYuan}
+              onChange={(event) => update("daSanYuan", event.target.value as BigHandMode)}
+            >
+              {DA_SAN_YUAN_OPTIONS.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </label>
 
-          <label className="toggle-field" htmlFor="da-si-xi">
-            <input
-              id="da-si-xi"
-              type="checkbox"
-              checked={form.daSiXi}
-              onChange={(event) => update("daSiXi", event.target.checked)}
-            />
-            <span>大四喜 · complete hand</span>
+          <label className="field">
+            <span>大四喜</span>
+            <select
+              value={form.daSiXi}
+              onChange={(event) => update("daSiXi", event.target.value as BigHandMode)}
+            >
+              {DA_SI_XI_OPTIONS.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </label>
 
           <label className="toggle-field" htmlFor="qi-dui-zi-hand">
@@ -355,7 +532,7 @@ export default function BeckonInvite() {
               checked={form.qiDuiZiHand}
               onChange={(event) => update("qiDuiZiHand", event.target.checked)}
             />
-            <span>七对子 · complete hand</span>
+            <span>七对子 — 有玩 / 沒有玩</span>
           </label>
 
           <label className="toggle-field" htmlFor="hua-hu">
@@ -365,13 +542,17 @@ export default function BeckonInvite() {
               checked={form.huaHu}
               onChange={(event) => update("huaHu", event.target.checked)}
             />
-            <span>花胡</span>
+            <span>花胡 — 有玩 / 沒有玩</span>
           </label>
 
-          {form.huaHu && (
+          {form.huaHu ? (
             <ul className="beckon-rule-notes">
               <li>自摸第 7 張可搶第 8 張，抓第 8 張者付 1 台出銃 + 2 台閒家</li>
               <li>自摸第 8 張，全體以出銃價支付</li>
+            </ul>
+          ) : (
+            <ul className="beckon-rule-notes">
+              <li>不設花胡：自摸可打到第 7 張，第 8 張仍可搶（付 1 台）</li>
             </ul>
           )}
 
@@ -396,12 +577,48 @@ export default function BeckonInvite() {
 
         <div className="copy-panel">
           <div className="range-header">
-            <span>Copy invite for chat</span>
+            <div className="copy-tabs" role="tablist" aria-label="Copy invite format">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={copyTab === "chat"}
+                className={`copy-tab${copyTab === "chat" ? " copy-tab-active" : ""}`}
+                onClick={() => {
+                  setCopyTab("chat");
+                  setCopyStatus("");
+                }}
+              >
+                Chat
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={copyTab === "ai"}
+                className={`copy-tab${copyTab === "ai" ? " copy-tab-active" : ""}`}
+                onClick={() => {
+                  setCopyTab("ai");
+                  setCopyStatus("");
+                }}
+              >
+                AI
+              </button>
+            </div>
             <button className="utility-action" type="button" onClick={copyInvite}>
               Copy
             </button>
           </div>
-          <textarea readOnly value={chatText} aria-label="Copyable invite text" rows={16} />
+          {copyTab === "ai" && (
+            <p className="beckon-venue-status">
+              Paste this prompt into an AI image tool (ChatGPT, Gemini, Claude, DeepSeek, etc.) to generate a banner
+              image.
+            </p>
+          )}
+          <textarea
+            readOnly
+            value={copyTab === "chat" ? chatText : imagePromptText}
+            aria-label={copyTab === "chat" ? "Copyable invite text" : "Copyable AI image prompt"}
+            rows={16}
+          />
           {copyStatus && <small>{copyStatus}</small>}
         </div>
       </section>

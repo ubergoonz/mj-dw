@@ -51,12 +51,18 @@ describe("formatBeckonInviteForChat", () => {
     form.venueQuery = "Jurong Point";
     form.startDateTime = "2026-01-01T14:00";
     form.endDateTime = "2026-01-01T20:00";
+    form.daSanYuan = "pong";
+    form.daSiXi = "complete";
+    form.menQing = "fan";
 
     const text = formatBeckonInviteForChat(form);
 
     expect(text).toContain("Jurong Point");
     expect(text).toContain("Total hours: 6h");
-    expect(text).toContain("Stake: 0.10 / 0.20");
-    expect(text).toContain("Fan range: 1–8");
+    expect(text).toContain("Stake: 1.00 / 2.00");
+    expect(text).toContain("Fan range: 1–5");
+    expect(text).toContain("門清: Play + 加 1 台");
+    expect(text).toContain("大三元: Pong/Kong all 3 dragons (碰/槓三元即成)");
+    expect(text).toContain("大四喜: Winning hand only (和牌才算)");
   });
 });
