@@ -5,26 +5,27 @@ title: 招兵買馬
 
 # 招兵買馬 (Beckon Invite)
 
-Organize and invite players to a session. The organizer fills in event info and game rules, and the page generates a copy-ready invite text for chat.
+Organize and invite players to a session. The organizer fills in event info and game rules, and the page generates a copy-ready invite for chat, plus an AI image-prompt for a matching banner.
 
 Route: [`/#/beckon-invite`](https://ubergoonz.github.io/mj-dw/#/beckon-invite)
 
 ![招兵買馬 screenshot](/img/features/beckon-invite.png)
 
 ## Event info
-- Venue - enter a name or address; the page generates a clickable Google Maps search link
+- Venue - enter a name, address, or postal code
+   - Debounced lookup (500ms) against OpenStreetMap's Nominatim search, no API key required
+   - On a match: a small embedded map preview, the resolved location description, and an "Open in Google Maps ↗" link
+   - Shows "Searching venue…" while loading, or "No matching location found." if nothing matches
+   - Falls back to a plain Google Maps search link when no geocode result is available
+- Parking availability, plus a free-text "Parking situation" field (e.g. parking notes/instructions)
 - Expected start and end date + time
+   - Setting Start auto-sets End to `Start + expected rounds × 2 hours` (2 hours/round)
+   - Changing Expected number of rounds recalculates End the same way
+   - Manually editing End instead recalculates Expected number of rounds from the resulting total hours (clamped to 1-8)
+- Expected number of rounds: 1-8 (default 3), shown in the same row as Total hours
 - Total hours - automatically calculated from start and end
-- Expected number of rounds
-- Parking availability
-- Smoking availability
-   - Yes, at table
-   - Yes, outside
-   - No, smoker not welcome
-
-## Game rules
-
-- Stake size
+- Table mode: Auto (default) / Manual
+- Stake size (default 1.00 / 2.00)
    - 0.10 / 0.20
    - 0.20 / 0.40
    - 0.30 / 0.60
@@ -35,22 +36,33 @@ Route: [`/#/beckon-invite`](https://ubergoonz.github.io/mj-dw/#/beckon-invite)
    - 3.00 / 6.00 (round off)
    - 5.00 / 10.00
    - 10.00 / 20.00
+- Smoking availability
+   - Yes, at table
+   - Yes, outside
+   - No, smoker not welcome
+
+## Game rules
+
 - Minimum fan: 0-10
-- Maximum fan: 1-10 (must be greater than minimum fan)
-- Shooter: Yes / No
+- Maximum fan: 1-10, default 5 (must be greater than minimum fan)
+- 門清 (Men Qing) Concealed
+   - [ ] Not played (不設)
+   - [ ] Play
+   - [ ] Play + 加 1 台
 - 平胡 (Ping Hu): 3.5 / 4
 - 花獸咬 (Animal/Flower Bite): Yes / No
   - Open bite:
-      - 正：Yes / No
+      - 正 (加1台)：Yes / No
       - 臭：Yes / No
   - Close bite:
-      - 正：Yes / No
+      - 正 (加1台)：Yes / No
       - 臭：Yes / No
+  - 4隻:
+      - Add 1 fan：Yes / No (default Yes)
+      - Pay 花獸槓：Yes / No (default Yes)
+- 7 Pair: Yes / No
+- Shooter: Yes / No (radio buttons)
 - End Wall: 7.5 / Play all
-- 門清 Conseal
-   - [ ] Not played (不設)
-   - [ ] Play
-   - [ ] Play + 1 台
 - Dice Bonus: Yes / No
    - Bonus type: free text, shown when Dice Bonus is enabled
 
@@ -78,8 +90,17 @@ Route: [`/#/beckon-invite`](https://ubergoonz.github.io/mj-dw/#/beckon-invite)
    - 天胡： 限庄家，全體以出銃價支付
    - 地胡： 自摸第 7 張可搶第 8 張，抓第 8 張者付 1 台出銃 + 2 台閒家
 
+## Copy invite
+
+The bottom panel offers two tabs for generating shareable content from the form:
+
+- **Chat** - a formatted, copy-ready invite text summarizing venue, timing, and all game rules, for pasting into a chat app
+- **AI** - a text prompt describing a mahjong-themed banner image (venue, date/time, rounds, stake, and suggested visual style), for pasting into an AI image generator (ChatGPT, Gemini, Claude, DeepSeek, etc.)
+
+The Copy button copies whichever tab is currently active.
+
 ## Implementation
 
 - Page: `src/pages/BeckonInvite.tsx`
-- Logic: `src/lib/beckonInvite.ts` handles total-hours calculation, the Google Maps link, fan-range validation, and the copy-for-chat invite text generator.
+- Logic: `src/lib/beckonInvite.ts` handles total-hours calculation, venue geocoding (Nominatim) and OpenStreetMap embed URLs, start/end/rounds auto-sync, fan-range validation, and the chat/AI text generators.
 
