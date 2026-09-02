@@ -43,8 +43,8 @@ Route: [`/#/beckon-invite`](https://ubergoonz.github.io/mj-dw/#/beckon-invite)
 
 ## Game rules
 
-- Minimum fan: 0-10
-- Maximum fan: 1-10, default 5 (must be greater than minimum fan)
+- Minimum tai: 0-10
+- Maximum tai: 1-10, default 5 (must be greater than minimum tai)
 - 門清 (Men Qing) Concealed
    - [ ] Not played (不設)
    - [ ] Play
@@ -58,7 +58,7 @@ Route: [`/#/beckon-invite`](https://ubergoonz.github.io/mj-dw/#/beckon-invite)
       - 正 (加1台)：Yes / No
       - 臭：Yes / No
    - 4隻:
-      - Add 1 fan：Yes / No (default Yes)
+      - Add 1 台：Yes / No (default Yes)
       - Pay 花獸槓：Yes / No (default Yes)
 - Shooter: Yes / No (radio buttons)
 - End Wall: 7.5 / Play all
@@ -101,5 +101,5 @@ The Copy button copies whichever tab is currently active.
 ## Implementation
 
 - Page: `src/pages/BeckonInvite.tsx`
-- Logic: `src/lib/beckonInvite.ts` handles total-hours calculation, venue geocoding (Nominatim) and OpenStreetMap embed URLs, start/end/rounds auto-sync, fan-range validation, and the chat/AI text generators.
+- Logic: `src/lib/beckonInvite.ts` handles total-hours calculation, venue geocoding (Nominatim) and OpenStreetMap embed URLs, start/end/rounds auto-sync, tai-range validation, and the chat/AI text generators.
 

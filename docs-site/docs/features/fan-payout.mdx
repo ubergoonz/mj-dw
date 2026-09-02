@@ -3,18 +3,18 @@ sidebar_position: 4
 title: 番數計算
 ---
 
-# 番數計算 (Fan Payout)
+# 台數計算 (Tai Payout)
 
-Use the fan payout calculator to review the table payout for every fan value in a selected range.
+Use the tai payout calculator to review the table payout for every 台 value in a selected range.
 
 Route: [`/#/fan-payout`](https://ubergoonz.github.io/mj-dw/#/fan-payout)
 
-![番數計算 screenshot](/img/features/fan-payout.png)
+![台數計算 screenshot](/img/features/fan-payout.png)
 
 ## How it works
 
 1. Select the base pair: `player / shooter`. The default is `1 / 2`.
-2. Set the minimum and maximum 台 (fan); the default range is 1-5.
+2. Set the minimum and maximum 台; the default range is 1-5.
 3. The maximum must be greater than the minimum; invalid ranges are highlighted.
 4. Optionally enable `Include 自摸 bonus` and enter the bonus amount paid by each player.
 5. Review every row in the selected range, including normal-win and 自摸 amounts.
@@ -32,4 +32,4 @@ This is designed for quick Singapore mahjong table checks and local-rule compari
 ## Implementation
 
 - Page: `src/pages/FanPayout.tsx`
-- Logic: `src/lib/fanPayout.ts` handles fan payout calculation and self-draw/local-rule adjustments.
+- Logic: `src/lib/fanPayout.ts` handles tai payout calculation and self-draw/local-rule adjustments.

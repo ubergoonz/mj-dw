@@ -31,8 +31,8 @@ const FeatureList: FeatureItem[] = [
   },
   {
     glyph: '台',
-    title: '台數計算 Fan Payout',
-    description: <>Calculate payouts for a hand based on stake, fan count, and shooter rules.</>,
+    title: '台數計算 Tai Payout',
+    description: <>Calculate payouts for a hand based on stake, tai count, and shooter rules.</>,
     to: '/docs/features/fan-payout',
   },
   {

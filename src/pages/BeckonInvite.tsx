@@ -284,7 +284,7 @@ export default function BeckonInvite() {
         <div className="fan-payout-form">
           <div className="range-field">
             <div className={`range-header${isFanRangeInvalid ? " range-invalid" : ""}`}>
-              <span>Fan range</span>
+              <span>Tai range</span>
               <strong>
                 {form.minFan}–{form.maxFan}
               </strong>
@@ -292,7 +292,7 @@ export default function BeckonInvite() {
 
             <div className="range-input-row">
               <label className={`field compact-field${isFanRangeInvalid ? " range-invalid" : ""}`}>
-                <span>Minimum fan</span>
+                <span>Minimum tai</span>
                 <input
                   type="number"
                   min={FAN_MIN_BOUND}
@@ -304,7 +304,7 @@ export default function BeckonInvite() {
               </label>
 
               <label className={`field compact-field${isFanRangeInvalid ? " range-invalid" : ""}`}>
-                <span>Maximum fan</span>
+                <span>Maximum tai</span>
                 <input
                   type="number"
                   min={FAN_MIN_BOUND}
@@ -318,7 +318,7 @@ export default function BeckonInvite() {
 
             {isFanRangeInvalid && (
               <p className="range-invalid" role="alert">
-                Maximum fan must be greater than minimum fan.
+                Maximum tai must be greater than minimum tai.
               </p>
             )}
           </div>
@@ -411,7 +411,7 @@ export default function BeckonInvite() {
                   checked={form.fourTilesAddFan}
                   onChange={(event) => update("fourTilesAddFan", event.target.checked)}
                 />
-                <span>Add 1 fan</span>
+                <span>Add 1 台</span>
               </label>
               <label className="toggle-field" htmlFor="four-tiles-pay-gang">
                 <input

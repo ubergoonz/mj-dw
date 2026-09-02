@@ -270,7 +270,7 @@ export function formatBeckonInviteForChat(form: BeckonInviteForm): string {
     "💰 Game rules",
     `Table mode: ${tableModeLabel}`,
     `Stake: ${stake.label}`,
-    `Fan range: ${form.minFan}–${form.maxFan}`,
+    `Tai range: ${form.minFan}–${form.maxFan}`,
     `門清: ${menQingLabel}`,
     `平胡幾台(Ping Hu): ${form.pingHu}`,
     `花獸咬: ${form.animalBite ? "Yes" : "No"}`,
@@ -280,7 +280,7 @@ export function formatBeckonInviteForChat(form: BeckonInviteForm): string {
     lines.push(
       `  正明: ${form.openZheng ? "Yes" : "No"} · 臭明: ${form.openChou ? "Yes" : "No"}`,
       `  正暗: ${form.closeZheng ? "Yes" : "No"} · 臭暗: ${form.closeChou ? "Yes" : "No"}`,
-      `  4隻: Add 1 fan: ${form.fourTilesAddFan ? "Yes" : "No"} · Pay 花獸槓: ${form.fourTilesPayGang ? "Yes" : "No"}`,
+      `  4隻: Add 1 台: ${form.fourTilesAddFan ? "Yes" : "No"} · Pay 花獸槓: ${form.fourTilesPayGang ? "Yes" : "No"}`,
     );
   }
 

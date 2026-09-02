@@ -15,7 +15,7 @@ describe("FAN_BASE_OPTIONS", () => {
 });
 
 describe("getFanPayoutRows", () => {
-  it("uses the base pair as the 0 fan foundation", () => {
+  it("uses the base pair as the 0 台 foundation", () => {
     const rows = getFanPayoutRows({
       base: 1,
       minFan: 0,
@@ -118,7 +118,7 @@ describe("getFanPayoutRows", () => {
     ]);
   });
 
-  it("always renders 0 fan through the table limit and flags the selected range", () => {
+  it("always renders 0 台 through the table limit and flags the selected range", () => {
     const rows = getFanPayoutRows({
       base: 1,
       minFan: 2,

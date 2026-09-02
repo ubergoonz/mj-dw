@@ -17,7 +17,7 @@ Main routes:
 2. `/#/wind-draw` - 選風打位
 3. `/#/dice` - 掷骰子
 4. `/#/in-game-dice` - 掷骰开墩
-5. `/#/fan-payout` - 番數計算
+5. `/#/fan-payout` - 台數計算
 6. `/#/side-bets` - 花獸槓計算
 7. `/#/player-results` - Player Results
 8. `/#/beckon-invite` - 招兵買馬
@@ -69,19 +69,19 @@ Extra behavior on this page:
 
 ### 4. 番數計算
 
-Use the fan payout calculator to estimate the table payout across fan counts.
+Use the tai payout calculator to estimate the table payout across tai counts.
 
 How it works:
 
-1. Set a base value and a max fan limit.
+1. Set a base value and a maximum tai limit.
 2. Choose whether shooter pays on behalf of the other two players.
 3. Toggle 自摸 bonus on and set the bonus amount if needed.
 4. Pick the local self-draw rule: `all other players` or `one player only`.
-5. Review the table from 0 fan up to the limit.
+5. Review the table from 0 台 up to the limit.
 
 The calculator shows:
 
-- base payout by fan count
+- base payout by tai count
 - multiplier pattern such as `base × 2 × 2`
 - other players amount
 - shooter amount
@@ -122,7 +122,7 @@ How it works:
 1. Enter the venue, expected start/end date and time, expected number of rounds, parking, and smoking availability.
 2. Total hours is calculated automatically from start and end time.
 3. The venue text generates a clickable Google Maps search link.
-4. Set the table's game rules: stake size, fan range, 鴐胡 (Ping Hu), 花獸咬, 7 Pair, Shooter, End Wall, and Dice Bonus.
+4. Set the table's game rules: stake size, tai range, 鴐胡 (Ping Hu), 花獸咬, 7 Pair, Shooter, End Wall, and Dice Bonus.
 5. Toggle special hands: 大三元, 大四喜, 七對子, 花胡, and 天地胡, each with their payout notes.
 6. Copy the generated invite text to share in chat.
 
@@ -194,7 +194,7 @@ From the repo root, `npm run build:all` builds the app, builds the docs, and cop
 2. `src/pages/WindDraw.tsx` - 選風打位
 3. `src/pages/DiceRoll.tsx` - 掷骰子
 4. `src/pages/InGameDiceRoll.tsx` - 掷骰开墩
-5. `src/pages/FanPayout.tsx` - 番數計算
+5. `src/pages/FanPayout.tsx` - 台數計算
 6. `src/pages/SideBets.tsx` - 花獸槓計算
 7. `src/pages/PlayerResults.tsx` - Player Results
 8. `src/pages/BeckonInvite.tsx` - 招兵買馬
@@ -203,10 +203,10 @@ From the repo root, `npm run build:all` builds the app, builds the docs, and cop
 
 1. `src/lib/winds.ts` handles wind shuffling for seat draw.
 2. `src/lib/inGameDiceRoll.ts` contains wall-break resolution logic.
-3. `src/lib/fanPayout.ts` handles fan payout calculation and self-draw/local-rule adjustments.
+3. `src/lib/fanPayout.ts` handles tai payout calculation and self-draw/local-rule adjustments.
 4. `src/lib/sideBets.ts` handles 花/獸/槓 side-bet row generation and payout amounts.
 5. `src/lib/playerResults.ts` handles chip tally validation, net calculation, and result entry formatting.
-6. `src/lib/beckonInvite.ts` handles total-hours calculation, the Google Maps link, fan-range validation, and the copy-for-chat invite text generator.
+6. `src/lib/beckonInvite.ts` handles total-hours calculation, the Google Maps link, tai-range validation, and the copy-for-chat invite text generator.
 7. `src/lib/utilities.ts` defines the utility menu registry.
 
 ### In-game dice technical behavior
@@ -233,7 +233,7 @@ From the repo root, `npm run build:all` builds the app, builds the docs, and cop
 ```
 src/
   components/   # shared UI such as Brand, Footer, HelpDialog, UtilityMenu
-  lib/          # pure logic such as wind shuffle, wall-break, fan payout, side bets, player results
+  lib/          # pure logic such as wind shuffle, wall-break, tai payout, side bets, player results
   pages/        # route-level pages: WindDraw, DiceRoll, InGameDiceRoll, FanPayout, SideBets, PlayerResults
   styles/       # shared and page-specific CSS
   App.tsx       # route definitions

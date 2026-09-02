@@ -1,7 +1,7 @@
 export interface FanBaseOption {
-  /** Amount each of the two non-shooter players pays at 0 fan. */
+  /** Amount each of the two non-shooter players pays at 0 台. */
   player: number;
-  /** Amount the shooter pays at 0 fan. */
+  /** Amount the shooter pays at 0 台. */
   shooter: number;
 }
 
@@ -15,7 +15,7 @@ export const FAN_BASE_OPTIONS: FanBaseOption[] = [
 ];
 
 export interface FanPayoutInput {
-  /** The player side of the base pair, used as the 0 fan foundation. */
+  /** The player side of the base pair, used as the 0 台 foundation. */
   base: number;
   minFan?: number;
   maxFan: number;
