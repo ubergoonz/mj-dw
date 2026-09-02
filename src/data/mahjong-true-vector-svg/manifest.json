@@ -1,0 +1,436 @@
+[
+  {
+    "file": "row1_tile1.svg",
+    "row": 1,
+    "position": 1,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row1_tile2.svg",
+    "row": 1,
+    "position": 2,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row1_tile3.svg",
+    "row": 1,
+    "position": 3,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row1_tile4.svg",
+    "row": 1,
+    "position": 4,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row1_tile5.svg",
+    "row": 1,
+    "position": 5,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row1_tile6.svg",
+    "row": 1,
+    "position": 6,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row1_tile7.svg",
+    "row": 1,
+    "position": 7,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row1_tile8.svg",
+    "row": 1,
+    "position": 8,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row1_tile9.svg",
+    "row": 1,
+    "position": 9,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row2_tile1.svg",
+    "row": 2,
+    "position": 1,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row2_tile2.svg",
+    "row": 2,
+    "position": 2,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row2_tile3.svg",
+    "row": 2,
+    "position": 3,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row2_tile4.svg",
+    "row": 2,
+    "position": 4,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row2_tile5.svg",
+    "row": 2,
+    "position": 5,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row2_tile6.svg",
+    "row": 2,
+    "position": 6,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row2_tile7.svg",
+    "row": 2,
+    "position": 7,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row2_tile8.svg",
+    "row": 2,
+    "position": 8,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row2_tile9.svg",
+    "row": 2,
+    "position": 9,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row3_tile1.svg",
+    "row": 3,
+    "position": 1,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row3_tile2.svg",
+    "row": 3,
+    "position": 2,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row3_tile3.svg",
+    "row": 3,
+    "position": 3,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row3_tile4.svg",
+    "row": 3,
+    "position": 4,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row3_tile5.svg",
+    "row": 3,
+    "position": 5,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row3_tile6.svg",
+    "row": 3,
+    "position": 6,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row3_tile7.svg",
+    "row": 3,
+    "position": 7,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row3_tile8.svg",
+    "row": 3,
+    "position": 8,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row3_tile9.svg",
+    "row": 3,
+    "position": 9,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row4_tile1.svg",
+    "row": 4,
+    "position": 1,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row4_tile2.svg",
+    "row": 4,
+    "position": 2,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row4_tile3.svg",
+    "row": 4,
+    "position": 3,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row4_tile4.svg",
+    "row": 4,
+    "position": 4,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row4_tile5.svg",
+    "row": 4,
+    "position": 5,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row4_tile6.svg",
+    "row": 4,
+    "position": 6,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row4_tile7.svg",
+    "row": 4,
+    "position": 7,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row5_tile1.svg",
+    "row": 5,
+    "position": 1,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row5_tile2.svg",
+    "row": 5,
+    "position": 2,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row5_tile3.svg",
+    "row": 5,
+    "position": 3,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row5_tile4.svg",
+    "row": 5,
+    "position": 4,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row5_tile5.svg",
+    "row": 5,
+    "position": 5,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row5_tile6.svg",
+    "row": 5,
+    "position": 6,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row5_tile7.svg",
+    "row": 5,
+    "position": 7,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row5_tile8.svg",
+    "row": 5,
+    "position": 8,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row6_tile1.svg",
+    "row": 6,
+    "position": 1,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row6_tile2.svg",
+    "row": 6,
+    "position": 2,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row6_tile3.svg",
+    "row": 6,
+    "position": 3,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row6_tile4.svg",
+    "row": 6,
+    "position": 4,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row6_tile5.svg",
+    "row": 6,
+    "position": 5,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row6_tile6.svg",
+    "row": 6,
+    "position": 6,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row6_tile7.svg",
+    "row": 6,
+    "position": 7,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row6_tile8.svg",
+    "row": 6,
+    "position": 8,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row7_tile1.svg",
+    "row": 7,
+    "position": 1,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row7_tile2.svg",
+    "row": 7,
+    "position": 2,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row7_tile3.svg",
+    "row": 7,
+    "position": 3,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row7_tile4.svg",
+    "row": 7,
+    "position": 4,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row7_tile5.svg",
+    "row": 7,
+    "position": 5,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row7_tile6.svg",
+    "row": 7,
+    "position": 6,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row7_tile7.svg",
+    "row": 7,
+    "position": 7,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row7_tile8.svg",
+    "row": 7,
+    "position": 8,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row8_tile1.svg",
+    "row": 8,
+    "position": 1,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row8_tile2.svg",
+    "row": 8,
+    "position": 2,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row8_tile3.svg",
+    "row": 8,
+    "position": 3,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  },
+  {
+    "file": "row8_tile4.svg",
+    "row": 8,
+    "position": 4,
+    "type": "true vector SVG",
+    "viewBox": "0 0 96 112"
+  }
+]

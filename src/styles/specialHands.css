@@ -1,0 +1,180 @@
+.special-hands-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.special-hand-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+  gap: 14px;
+}
+
+.special-hand-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.special-hand-heading .eyebrow {
+  margin: 0 0 4px;
+}
+
+.special-hand-heading h2 {
+  margin: 0;
+  color: var(--ink-deep);
+  font-size: 28px;
+}
+
+.special-hand-heading p:not(.eyebrow) {
+  margin: 4px 0 0;
+  color: var(--jade);
+  font-family: Outfit, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.special-hand-tai {
+  display: grid;
+  width: 72px;
+  height: 72px;
+  place-content: center;
+  flex: 0 0 auto;
+  color: var(--paper);
+  background: var(--red);
+  border: 4px solid var(--paper-dark);
+  border-radius: 12px 5px 12px 5px;
+  box-shadow: 0 8px 18px rgba(197, 80, 58, 0.2);
+  font-family: Outfit, sans-serif;
+  font-size: 32px;
+  line-height: 1;
+  text-align: center;
+}
+
+.special-hand-tai small {
+  margin-top: 2px;
+  font-size: 13px;
+}
+
+.special-hand-example {
+  padding: 14px;
+  background: rgba(23, 61, 56, 0.05);
+  border: 1px solid rgba(23, 61, 56, 0.12);
+  border-radius: 10px;
+}
+
+.special-hand-example > p,
+.special-hand-details small {
+  margin: 0 0 10px;
+  color: var(--jade);
+  font-family: Outfit, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.special-hand-tiles {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.special-hand-tile {
+  display: block;
+  position: relative;
+  min-width: 0;
+  border-radius: 6px;
+  line-height: 0;
+}
+
+.special-hand-tile img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.special-hand-tile.is-winning-tile {
+  border: 3px solid var(--red);
+  box-shadow: 0 0 0 2px rgba(197, 80, 58, 0.18);
+}
+
+.special-hand-details {
+  display: grid;
+  gap: 12px;
+}
+
+.special-hand-winning-note {
+  margin: 12px 0 0;
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.special-hand-winning-note strong {
+  color: var(--red);
+}
+
+.special-hand-potentials {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(23, 61, 56, 0.14);
+}
+
+.special-hand-potentials small {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--jade);
+  font-family: Outfit, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.special-hand-potentials p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.special-hand-potential-tiles {
+  display: flex;
+  gap: 5px;
+  margin: 8px 0;
+}
+
+.special-hand-potential-tiles img {
+  width: 34px;
+  height: auto;
+}
+
+.special-hand-details > div {
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.52);
+  border-left: 3px solid var(--gold);
+}
+
+.special-hand-details small {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.special-hand-details p {
+  margin: 0;
+  line-height: 1.55;
+}
+
+@media (max-width: 420px) {
+  .special-hand-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .special-hand-tiles {
+    gap: 4px;
+  }
+
+  .special-hand-tile {
+    border-radius: 4px;
+  }
+}

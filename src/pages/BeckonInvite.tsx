@@ -425,16 +425,6 @@ export default function BeckonInvite() {
             </div>
           )}
 
-          <label className="toggle-field" htmlFor="seven-pair">
-            <input
-              id="seven-pair"
-              type="checkbox"
-              checked={form.sevenPair}
-              onChange={(event) => update("sevenPair", event.target.checked)}
-            />
-            <span>7 Pair</span>
-          </label>
-
           <fieldset className="radio-field">
             <legend>Shooter</legend>
             <label htmlFor="shooter-yes">

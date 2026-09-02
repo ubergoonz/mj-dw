@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: '麻将都Win Docs',
   tagline: '賭博練頭腦🧠',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/mj-dw-logo.svg',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {

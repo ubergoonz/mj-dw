@@ -98,7 +98,6 @@ export interface BeckonInviteForm {
   closeChou: boolean;
   fourTilesAddFan: boolean;
   fourTilesPayGang: boolean;
-  sevenPair: boolean;
   menQing: MenQingMode;
   shooter: boolean;
   endWall: EndWallOption;
@@ -135,7 +134,6 @@ export function createInitialBeckonInviteForm(): BeckonInviteForm {
     closeChou: false,
     fourTilesAddFan: true,
     fourTilesPayGang: true,
-    sevenPair: true,
     menQing: "play",
     shooter: true,
     endWall: "all",
@@ -287,8 +285,6 @@ export function formatBeckonInviteForChat(form: BeckonInviteForm): string {
   }
 
   lines.push(
-    `七對: ${form.sevenPair ? "Yes" : "No"}`,
-
     `出銃 (Shooter): ${form.shooter ? "Yes" : "No"}`,
     `尾墩: ${endWallLabel}`,
     `骰子花紅: ${form.diceBonus ? form.diceBonusType.trim() || "Yes" : "No"}`,

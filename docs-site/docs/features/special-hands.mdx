@@ -1,0 +1,46 @@
+---
+sidebar_position: 8
+title: 特別牌型
+---
+
+# 特別牌型 (Special Hands)
+
+Use this reference to look up common Singapore-style tai values for the special hands used by this toolkit.
+
+Route: [`/#/special-hands`](https://ubergoonz.github.io/mj-dw/#/special-hands)
+
+## How it works
+
+1. Choose a hand from the Special hand dropdown.
+2. Choose `Classic color` (default) or `Unicode` from Tile image set. Future image sets can be added to the shared renderer.
+3. Read the tai badge for the selected hand.
+4. Review the Mahjong tile-image layout, description, and table-rule note.
+5. The final tile has a red border: it is the winning tile that completes the illustrated hand. Check whether your table permits it as a self-draw, a discard claim, or both.
+6. Review Other winning potential. Short wait lists display tile images; broad waits, such as 13 Wonders and Nine Gates, are explained in text instead.
+7. Confirm the values with your group before play.
+
+## Included hands
+
+- 大三元 (Big Three Dragons)
+- 大四喜 (Big Four Winds)
+- 七对子 (Seven Pairs)
+- 花胡 (Flower Win)
+- 天胡 (Heavenly Hand)
+- 地胡 (Earthly Hand)
+- 十三幺 (13 Wonders)
+- 坎坎胡 (Kan Kan Hu)
+- 十八罗汉 (Shi Ba Luo Han)
+- 清老头 (All 1 & 9)
+- 九莲宝灯 (Nine Gates / Nine Heavenly Gates)
+
+## Rule catalogue
+
+The source of truth is [`src/data/specialHands.json`](https://github.com/ubergoonz/mj-dw/blob/main/src/data/specialHands.json). Each entry contains its name, tai value, description, rule note, and example tiles.
+
+Tai values are a convenient Singapore-style baseline rather than universal rules. Update the JSON file as your table agrees additions, removals, or different payouts.
+
+## Implementation
+
+- Page: `src/pages/SpecialHands.tsx`
+- Data: `src/data/specialHands.json`
+- Styles: `src/styles/specialHands.css`

@@ -53,6 +53,12 @@ const FeatureList: FeatureItem[] = [
     description: <>Organize a session and generate a copy-ready invite for chat.</>,
     to: '/docs/features/beckon-invite',
   },
+  {
+    glyph: '胡',
+    title: '特別牌型 Special Hands',
+    description: <>Look up common tai values and winning-layout examples for special hands.</>,
+    to: '/docs/features/special-hands',
+  },
 ];
 
 function Feature({glyph, title, description, to}: FeatureItem) {
