@@ -5,7 +5,7 @@ title: 掷骰子
 
 # 掷骰子 (Dice Roll)
 
-Use a simple 2-dice or 3-dice roller for general table setup.
+Use a simple animated 2-dice or 3-dice roller for general table setup and any table call that needs a total.
 
 Route: [`/#/dice`](https://ubergoonz.github.io/mj-dw/#/dice)
 
@@ -13,9 +13,15 @@ Route: [`/#/dice`](https://ubergoonz.github.io/mj-dw/#/dice)
 
 ## How it works
 
-1. Choose `2 个骰子` or `3 个骰子`.
-2. Tap the roll button.
-3. Read the final total shown below the dice.
+1. Choose `2 个骰子` or `3 个骰子`; two dice is selected by default.
+2. Tap `擲骰子` to begin the roll animation.
+3. The active dice update during the roll, then settle on their final faces.
+4. Read the final total in the Result panel.
+5. Tap `再擲一次` for another roll using the same dice count.
+
+## Result
+
+The tool displays the visible dice faces and their summed total. Changing the dice count resets the result so a fresh roll starts with the new mode.
 
 ## Implementation
 

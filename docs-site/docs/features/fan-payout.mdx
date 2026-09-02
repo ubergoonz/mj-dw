@@ -5,7 +5,7 @@ title: 番數計算
 
 # 番數計算 (Fan Payout)
 
-Use the fan payout calculator to estimate the table payout across fan counts.
+Use the fan payout calculator to review the table payout for every fan value in a selected range.
 
 Route: [`/#/fan-payout`](https://ubergoonz.github.io/mj-dw/#/fan-payout)
 
@@ -13,19 +13,19 @@ Route: [`/#/fan-payout`](https://ubergoonz.github.io/mj-dw/#/fan-payout)
 
 ## How it works
 
-1. Set a base value and a max fan limit.
-2. Choose whether shooter pays on behalf of the other two players.
-3. Toggle 自摸 bonus on and set the bonus amount if needed.
-4. Pick the local self-draw rule: `all other players` or `one player only`.
-5. Review the table from 0 fan up to the limit.
+1. Select the base pair: `player / shooter`. The default is `1 / 2`.
+2. Set the minimum and maximum 台 (fan); the default range is 1-5.
+3. The maximum must be greater than the minimum; invalid ranges are highlighted.
+4. Optionally enable `Include 自摸 bonus` and enter the bonus amount paid by each player.
+5. Review every row in the selected range, including normal-win and 自摸 amounts.
 
 ## The calculator shows
 
-- base payout by fan count
-- multiplier pattern such as `base × 2 × 2`
-- other players amount
-- shooter amount
-- total payout for the winning hand
+- the selected base pair and active 台 range
+- normal-win payments from each other player and the shooter
+- the winner's total for a normal win
+- 自摸 amount paid by each player and the winner's 自摸 total
+- optional 自摸 bonus included in each applicable payment
 
 This is designed for quick Singapore mahjong table checks and local-rule comparisons.
 

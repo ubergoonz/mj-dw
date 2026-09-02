@@ -1,9 +1,9 @@
 ---
 sidebar_position: 6
-title: 成績記錄
+title: 秋後算績
 ---
 
-# 成績記錄 (Player Results)
+# 秋後算績 (Player Results)
 
 Track a play session's chip counts and settle net win/loss between players.
 
@@ -13,11 +13,20 @@ Route: [`/#/player-results`](https://ubergoonz.github.io/mj-dw/#/player-results)
 
 ## How it works
 
-1. Set the total base chips for the table; it is split evenly across the four seats.
-2. Enter each seat's remaining chips at takeover or session end.
-3. The tool validates that base and remaining chip tallies match the table total.
-4. Record a result entry per seat with the net win/loss and optional replacement player name.
-5. Copy a formatted chat-ready summary of all recorded results.
+1. Set the total base chips for the table; Reset session splits this amount evenly across 東、南、西、北.
+2. Enter each player's name, base chips, and remaining chips in their seat card.
+3. The tool continuously validates base and remaining-chip tallies against the total; mismatches are marked in red.
+4. When a player leaves mid-session, enter the replacement name and choose `接手`. The outgoing result is recorded and the incoming player starts with the remaining chips as their new base.
+5. At the end of play, enter the remaining chips and use `完場` per seat or `全完場` for every seat.
+6. Review the recorded entries and copy the chat-ready summary.
+
+## The calculator shows
+
+- per-seat win/loss: remaining chips minus that player's base
+- running record count
+- base tally and remaining-chip tally compared with the table total
+- total difference, with gain/loss color treatment
+- a copyable chat summary of takeovers and final results
 
 ## Implementation
 

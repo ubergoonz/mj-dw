@@ -77,10 +77,10 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'mj-dw Docs',
+      title: '雀起🇸🇬',
       logo: {
-        alt: 'mj-dw Logo',
-        src: 'img/logo.svg',
+        alt: '雀',
+        src: 'img/mj-dw-logo.svg',
       },
       items: [
         {
