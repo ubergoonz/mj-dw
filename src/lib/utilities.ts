@@ -18,6 +18,7 @@ export const UTILITIES: Utility[] = [
   { path: "/player-results", glyph: "績", label: "秋後算績", description: "Player Results" },
   { path: "/beckon-invite", glyph: "招", label: "招兵買馬", description: "Beckon Invite" },
   { path: "/special-hands", glyph: "胡", label: "特別牌型", description: "Special Hands" },
+  { path: "/pure-suit", glyph: "清", label: "清一色听牌", description: "Pure Suit Waits" },
   { path: "/mj-dw/docs/", glyph: "書", label: "使用說明", description: "Docs", external: true },
 ];
 

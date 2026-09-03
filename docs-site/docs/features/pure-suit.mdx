@@ -1,0 +1,48 @@
+---
+sidebar_position: 9
+title: 清一色听牌
+---
+
+# 清一色听牌 (Pure Suit Waits)
+
+Use this hand assistant to analyze a one-suit hand (清一色), identify immediate winning tiles, compare discard choices, and account for the visible discard river.
+
+Route: [`/#/pure-suit`](https://ubergoonz.github.io/mj-dw/#/pure-suit)
+
+## How it works
+
+1. Choose the suit: 萬, 筒, or 索.
+2. Add open tiles into one of four groups. Each group has three main slots plus an optional fourth slot:
+	- Chi: three sequential tiles of the selected suit
+	- Pong: three matching tiles
+	- Gang: four matching tiles; adding a fourth matching tile upgrades a pong to a gang
+3. A hint below every group explains whether it is complete, incomplete, or invalid.
+4. Add any flower and animal tiles separately in the 12-slot garden (8 flowers and 4 animals). They are recorded visually but do not form normal hand sets.
+5. Add normal tiles to Hidden hand. It retains 14 visual slots; each completed open group locks three slots, and the final placed tile is marked with a red border as the latest draw.
+6. Use the Open group/Hidden hand destination control to choose where tapping suit tiles adds them, or drag tiles into the desired group or hand.
+7. At the listening hand size, the Winning tiles panel lists every tile that completes a standard one-suit hand.
+8. At the discard hand size, the Discard suggestions panel lists each discard that leaves one or more immediate waits, ordered by the number of resulting waits.
+9. Record known tiles in the Discard river. The tool shows copies still known to be available and the chance of drawing a winning tile among unknown tiles in the selected suit.
+
+## Hand sizes
+
+A standard winning hand has four sets and a pair. Completed exposed sets reduce the number of concealed tiles that need to be entered:
+
+| Completed exposed sets | Listening hand size | Before-discard hand size |
+| --- | --- | --- |
+| 0 | 13 | 14 |
+| 1 | 10 | 11 |
+| 2 | 7 | 8 |
+| 3 | 4 | 5 |
+| 4 | 1 | 2 |
+
+## Odds note
+
+The percentage is a **known-suit draw chance**, not a full wall probability. It subtracts only your entered hand and visible river tiles from the 36 tiles of the selected suit. Opponents' hidden hands, the wall, and the exact tiles in your exposed sets are not known to this calculator.
+
+## Implementation
+
+- Page: `src/pages/PureSuit.tsx`
+- Logic: `src/lib/pureSuit.ts`
+- Tests: `src/lib/pureSuit.test.ts`
+- Styles: `src/styles/pureSuit.css`

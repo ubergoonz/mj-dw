@@ -8,6 +8,7 @@ import SideBets from "./pages/SideBets.tsx";
 import PlayerResults from "./pages/PlayerResults.tsx";
 import BeckonInvite from "./pages/BeckonInvite.tsx";
 import SpecialHands from "./pages/SpecialHands.tsx";
+import PureSuit from "./pages/PureSuit.tsx";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
       <Route path="/player-results" element={<PlayerResults />} />
       <Route path="/beckon-invite" element={<BeckonInvite />} />
       <Route path="/special-hands" element={<SpecialHands />} />
+      <Route path="/pure-suit" element={<PureSuit />} />
     </Routes>
   );
 }

@@ -59,6 +59,12 @@ const FeatureList: FeatureItem[] = [
     description: <>Look up common tai values and winning-layout examples for special hands.</>,
     to: '/docs/features/special-hands',
   },
+  {
+    glyph: '清',
+    title: '清一色听牌 Pure Suit Waits',
+    description: <>Find one-suit waits, compare discard choices, and estimate known-tile odds.</>,
+    to: '/docs/features/pure-suit',
+  },
 ];
 
 function Feature({glyph, title, description, to}: FeatureItem) {

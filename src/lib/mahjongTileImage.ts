@@ -50,6 +50,30 @@ const unicodeTileGlyphs: Record<string, string> = {
   竹: "🀩",
 };
 
+const pipLayouts: Record<number, Array<[number, number]>> = {
+  1: [[27, 36]],
+  2: [[18, 24], [36, 48]],
+  3: [[18, 22], [27, 36], [36, 50]],
+  4: [[17, 23], [37, 23], [17, 49], [37, 49]],
+  5: [[17, 23], [37, 23], [27, 36], [17, 49], [37, 49]],
+  6: [[17, 21], [37, 21], [17, 36], [37, 36], [17, 51], [37, 51]],
+  7: [[17, 20], [37, 20], [27, 30], [17, 36], [37, 36], [17, 52], [37, 52]],
+  8: [[17, 19], [37, 19], [17, 30], [37, 30], [17, 42], [37, 42], [17, 53], [37, 53]],
+  9: [[17, 19], [27, 19], [37, 19], [17, 36], [27, 36], [37, 36], [17, 53], [27, 53], [37, 53]],
+};
+
+function circleFace(number: number): string {
+  return pipLayouts[number]
+    .map(([x, y], index) => `<circle cx="${x}" cy="${y}" r="6" fill="${index % 3 === 1 ? "#c5503a" : "#2c668e"}" stroke="#173d38" stroke-width="1"/>`)
+    .join("");
+}
+
+function bambooFace(number: number): string {
+  return pipLayouts[number]
+    .map(([x, y]) => `<rect x="${x - 3}" y="${y - 9}" width="6" height="18" rx="3" fill="#39836d"/><path d="M${x} ${y - 7}V${y + 7}" stroke="#d19a42" stroke-width="1"/>`)
+    .join("");
+}
+
 function classicTileSvg(tile: string): string {
   const numberedTile = tile.match(/^([一二三四五六七八九])([萬筒索])$/);
   const isRedDragon = tile === "中";
@@ -64,8 +88,13 @@ function classicTileSvg(tile: string): string {
         : isFlower
           ? "#b35a73"
           : "#173d38";
-  const face = numberedTile
-    ? `<text x="27" y="34" fill="${color}" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="27" font-weight="700">${numberedTile[1]}</text><text x="27" y="57" fill="${color}" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="15" font-weight="700">${numberedTile[2]}</text>`
+  const numberedValue = numberedTile ? "一二三四五六七八九".indexOf(numberedTile[1]) + 1 : 0;
+  const face = numberedTile?.[2] === "筒"
+    ? circleFace(numberedValue)
+    : numberedTile?.[2] === "索"
+      ? bambooFace(numberedValue)
+      : numberedTile
+        ? `<text x="27" y="34" fill="${color}" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="27" font-weight="700">${numberedTile[1]}</text><text x="27" y="57" fill="${color}" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="15" font-weight="700">${numberedTile[2]}</text>`
     : `<text x="27" y="46" fill="${color}" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="29" font-weight="700">${tile}</text>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 72"><rect x="1" y="1" width="52" height="70" rx="5" fill="#fffdf8" stroke="#cdb988" stroke-width="2"/>${face}</svg>`;
 }
