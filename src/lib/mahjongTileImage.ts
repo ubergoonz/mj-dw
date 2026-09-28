@@ -93,9 +93,11 @@ function classicTileSvg(tile: string): string {
     ? circleFace(numberedValue)
     : numberedTile?.[2] === "索"
       ? bambooFace(numberedValue)
-      : numberedTile
-        ? `<text x="27" y="34" fill="${color}" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="27" font-weight="700">${numberedTile[1]}</text><text x="27" y="57" fill="${color}" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="15" font-weight="700">${numberedTile[2]}</text>`
-    : `<text x="27" y="46" fill="${color}" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="29" font-weight="700">${tile}</text>`;
+      : numberedTile?.[2] === "萬"
+        ? `<text x="27" y="33" fill="#173d38" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="24" font-weight="700">${numberedTile[1]}</text><text x="27" y="58" fill="#c5503a" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="24" font-weight="700">萬</text>`
+        : numberedTile
+          ? `<text x="27" y="34" fill="${color}" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="27" font-weight="700">${numberedTile[1]}</text><text x="27" y="57" fill="${color}" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="15" font-weight="700">${numberedTile[2]}</text>`
+          : `<text x="27" y="46" fill="${color}" text-anchor="middle" font-family="Noto Serif SC, serif" font-size="29" font-weight="700">${tile}</text>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 72"><rect x="1" y="1" width="52" height="70" rx="5" fill="#fffdf8" stroke="#cdb988" stroke-width="2"/>${face}</svg>`;
 }
 

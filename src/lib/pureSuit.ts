@@ -5,6 +5,26 @@ export interface DiscardSuggestion {
   winningTiles: number[];
 }
 
+export interface TileUse {
+  tile: number;
+  pongs: number;
+  chis: number;
+}
+
+export type ClaimType = "pong" | "chi";
+
+export interface HandPlan {
+  /** Decomposed sets and pair, as groups of tile numbers. */
+  groups: number[][];
+  /** Tiles in hand not used by this decomposition. */
+  leftovers: number[];
+  /**
+   * Discarded tiles worth claiming. `tile` is the discard to call;
+   * `completes` lists the hand tiles it completes into a set.
+   */
+  claimHints: { tile: number; type: ClaimType; completes: number[] }[];
+}
+
 function totalTiles(counts: TileCounts): number {
   return counts.reduce((total, count) => total + count, 0);
 }
@@ -109,4 +129,104 @@ export function pureSuitDrawChance(
   );
   const unknownSuitTiles = 36 - totalTiles(handCounts) - totalTiles(riverCounts) - totalTiles(exposedCounts);
   return unknownSuitTiles > 0 ? available / unknownSuitTiles : 0;
+}
+
+/** Counts how many chi and pong sets each tile participates in within the current hand. */
+export function getPureSuitTileUsefulness(counts: TileCounts): TileUse[] {
+  return counts.map((count, index) => {
+    const tile = index + 1;
+    if (count === 0) return { tile, pongs: 0, chis: 0 };
+    const pongs = count >= 3 ? 1 : 0;
+    let chis = 0;
+    for (let start = tile - 2; start <= tile; start += 1) {
+      if (start < 1 || start > 7) continue;
+      if (counts[start - 1] > 0 && counts[start] > 0 && counts[start + 1] > 0) chis += 1;
+    }
+    return { tile, pongs, chis };
+  });
+}
+
+/** Finds the decomposition of the concealed tiles that leaves the fewest loose tiles. */
+export function getPureSuitBestDecomposition(counts: TileCounts): { groups: number[][]; leftovers: number[] } {
+  let best: { groups: number[][]; leftoverCount: number } = { groups: [], leftoverCount: totalTiles(counts) };
+
+  function search(remaining: TileCounts, groups: number[][]) {
+    const leftoverCount = totalTiles(remaining);
+    if (leftoverCount < best.leftoverCount) {
+      best = { groups, leftoverCount };
+    }
+    const firstTile = remaining.findIndex((count) => count > 0);
+    if (firstTile === -1) return;
+    const tile = firstTile + 1;
+
+    if (remaining[firstTile] >= 3) {
+      const next = [...remaining];
+      next[firstTile] -= 3;
+      search(next, [...groups, [tile, tile, tile]]);
+    }
+
+    if (tile <= 7 && remaining[firstTile + 1] > 0 && remaining[firstTile + 2] > 0) {
+      const next = [...remaining];
+      next[firstTile] -= 1;
+      next[firstTile + 1] -= 1;
+      next[firstTile + 2] -= 1;
+      search(next, [...groups, [tile, tile + 1, tile + 2]]);
+    }
+
+    if (remaining[firstTile] >= 2) {
+      const next = [...remaining];
+      next[firstTile] -= 2;
+      search(next, [...groups, [tile, tile]]);
+    }
+
+    const next = [...remaining];
+    next[firstTile] -= 1;
+    search(next, groups);
+  }
+
+  search([...counts], []);
+  const leftovers = [...counts];
+  for (const group of best.groups) {
+    for (const tile of group) leftovers[tile - 1] -= 1;
+  }
+  return {
+    groups: best.groups,
+    leftovers: leftovers.flatMap((count, index) => Array.from({ length: count }, () => index + 1)),
+  };
+}
+
+/**
+ * Plans how to complete the hand from the best decomposition: which discarded tiles
+ * are worth a pong or chi claim, and which loose tiles should be worked into sets.
+ */
+export function getPureSuitHandPlan(counts: TileCounts): HandPlan {
+  const { groups, leftovers } = getPureSuitBestDecomposition(counts);
+  const claimHints: HandPlan["claimHints"] = [];
+  const seen = new Set<string>();
+
+  // Any pair in hand can be completed by claiming a discarded third copy.
+  for (let tile = 1; tile <= 9; tile += 1) {
+    if (counts[tile - 1] === 2) claimHints.push({ tile, type: "pong", completes: [tile, tile] });
+  }
+
+  for (const tile of [...new Set(leftovers)]) {
+    if (counts[tile - 1] >= 2) continue; // already covered by the pong hint
+    // A discarded D completes a chi with this loose tile when the third tile is also in hand.
+    const discards: [number, number[]][] = [
+      [tile - 2, [tile - 1, tile]],
+      [tile - 1, [tile, tile + 1]],
+      [tile + 1, [tile, tile + 2]],
+      [tile + 2, [tile, tile + 1]],
+    ];
+    for (const [discard, needed] of discards) {
+      if (discard < 1 || discard > 9) continue;
+      if (!needed.every((partner) => partner === tile || counts[partner - 1] > 0)) continue;
+      const key = `${discard}:${[...needed].sort((a, b) => a - b).join(",")}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      claimHints.push({ tile: discard, type: "chi", completes: needed });
+    }
+  }
+
+  return { groups, leftovers, claimHints };
 }

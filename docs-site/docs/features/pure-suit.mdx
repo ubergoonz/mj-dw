@@ -11,18 +11,19 @@ Route: [`/#/pure-suit`](https://ubergoonz.github.io/mj-dw/#/pure-suit)
 
 ## How it works
 
-1. Choose the suit: 萬, 筒, or 索.
-2. Add open tiles into one of four groups. Each group has three main slots plus an optional fourth slot:
-	- Chi: three sequential tiles of the selected suit
-	- Pong: three matching tiles
-	- Gang: four matching tiles; adding a fourth matching tile upgrades a pong to a gang
-3. A hint below every group explains whether it is complete, incomplete, or invalid.
-4. Add any flower and animal tiles separately in the 12-slot garden (8 flowers and 4 animals). They are recorded visually but do not form normal hand sets.
-5. Add normal tiles to Hidden hand. It retains 14 visual slots; each completed open group locks three slots, and the final placed tile is marked with a red border as the latest draw.
-6. Use the Open group/Hidden hand destination control to choose where tapping suit tiles adds them, or drag tiles into the desired group or hand.
-7. At the listening hand size, the Winning tiles panel lists every tile that completes a standard one-suit hand.
-8. At the discard hand size, the Discard suggestions panel lists each discard that leaves one or more immediate waits, ordered by the number of resulting waits.
-9. Record known tiles in the Discard river. The tool shows copies still known to be available and the chance of drawing a winning tile among unknown tiles in the selected suit.
+1. Choose the suit: 萬, 筒, or 索. A status line under the summary always tells you what to do next.
+2. Step 1 · Hidden hand: add individual concealed tiles. The 14-slot rack keeps the latest added tile marked with a red border, and you can tap a rack tile to remove it.
+3. Step 2 · Suit tiles: use the `Tap → Hand` / `Tap → River` toggle to choose whether tapped tiles go to your hidden hand or the discard river. Drag-and-drop onto either rack works too, and each tile badge shows how many of its 4 copies are already accounted for. Tiles already in your hand also show a **use hint** in the lower-left corner: `P` when the tile forms a pong, `C×N` when it joins N possible chi sequences — the higher the count, the more valuable the tile.
+4. Step 3 · Claim / concealed set: record completed sets, grouped into Chi, Pong, and hidden Gang tabs:
+	- Chi from player: claim a three-tile sequence discarded by another player. Each sequence offers three buttons — one per permutation — so you can record exactly which tile you claimed (shown on the top row, with your two hand tiles below)
+	- Pong from player: claim the third matching tile discarded by another player (top row is the claimed tile, bottom row is your pair)
+	- Hidden Gang: all four matching tiles are self-drawn
+	Buttons that cannot be formed right now are greyed out with an explanatory tooltip. In the recorded set list, the claimed tile is tilted, matching how it is placed on a real table.
+5. A claimed Pong card shows a `Self-draw → Gang` action after you draw its fourth matching tile. This records a gang upgraded from the earlier claim.
+6. Step 4 · Discard river: record known discards so the tool can account for concealed tiles, claimed sets, and river tiles together.
+7. The **Ways to complete your hand** panel updates live at any hand size. It shows the best grouping of your concealed tiles (sets and the pair, with any loose tiles marked), then lists exactly which discards are worth calling: a `Pong` badge when a third copy of a pair in your hand is discarded, and a `Chi` badge with the specific hand tiles a discard would complete. The status line under the summary also names the top calls.
+8. At the listening hand size, the Winning tiles panel lists every tile that completes a standard one-suit hand.
+9. At the discard hand size, Best discards to listen ranks each viable discard by the chance of drawing one of its resulting waits from the known remaining tiles in the selected suit. The top option is highlighted, and each resulting wait is shown as a tile image.
 
 ## Hand sizes
 
