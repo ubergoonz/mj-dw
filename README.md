@@ -26,6 +26,16 @@ Documentation site:
 
 https://ubergoonz.github.io/mj-dw/docs/
 
+## Local development
+
+Run both the app and documentation development servers from the repository root:
+
+```sh
+./_local-dev/start-dev.sh
+```
+
+This requires Node.js, npm, and installed project dependencies. It opens the Mahjong app and documentation site in separate browser tabs, runs both servers together, and stops them with `Ctrl+C`.
+
 ## Features
 
 ### 1. 選風打位
@@ -67,25 +77,24 @@ Extra behavior on this page:
 3. The opening wall animates when the break point is determined.
 4. The wall color theme rotates between rolls.
 
-### 4. 番數計算
+### 4. 台數計算
 
-Use the tai payout calculator to estimate the table payout across tai counts.
+Use the tai payout calculator to review the table payout for every 台 value in a selected range.
 
 How it works:
 
-1. Set a base value and a maximum tai limit.
-2. Choose whether shooter pays on behalf of the other two players.
-3. Toggle 自摸 bonus on and set the bonus amount if needed.
-4. Pick the local self-draw rule: `all other players` or `one player only`.
-5. Review the table from 0 台 up to the limit.
+1. Select the base pair: `player / shooter`.
+2. Set the minimum and maximum 台; invalid ranges are highlighted.
+3. Optionally enable `Include 自摸 bonus` and enter the bonus amount paid by each player.
+4. Review every row in the selected range, including normal-win and 自摸 amounts.
 
 The calculator shows:
 
-- base payout by tai count
-- multiplier pattern such as `base × 2 × 2`
-- other players amount
-- shooter amount
-- total payout for the winning hand
+- the selected base pair and active 台 range
+- normal-win payments from each other player and the shooter
+- the winner's total for a normal win
+- 自摸 amount paid by each player and the winner's 自摸 total
+- optional 自摸 bonus included in each applicable payment
 
 This is designed for quick Singapore mahjong table checks and local-rule comparisons.
 
@@ -101,17 +110,18 @@ How it works:
 4. Open 槓 shows a separate 出銃 column for the amount a discarder pays alone.
 5. Each row is paid by all three other players to the winner at the shown per-player amount.
 
-### 6. Player Results
+### 6. 秋後算績 (Player Results)
 
 Track a play session's chip counts and settle net win/loss between players.
 
 How it works:
 
-1. Set the total base chips for the table; it is split evenly across the four seats.
-2. Enter each seat's remaining chips at takeover or session end.
+1. Set the total base chips for the table; `Reset session` splits it evenly across the four seats.
+2. Enter each player's name, base chips, and remaining chips in their seat card.
 3. The tool validates that base and remaining chip tallies match the table total.
-4. Record a result entry per seat with the net win/loss and optional replacement player name.
-5. Copy a formatted chat-ready summary of all recorded results.
+4. When a player leaves mid-session, use `接手` to record the outgoing result and seat a replacement.
+5. At the end of play, use `完場` per seat or `全完場` for every seat.
+6. Copy a formatted chat-ready summary of all recorded results.
 
 ### 7. 招兵買馬
 
@@ -119,12 +129,37 @@ Organize a mahjong session and generate a chat-ready invite for players.
 
 How it works:
 
-1. Enter the venue, expected start/end date and time, expected number of rounds, parking, and smoking availability.
-2. Total hours is calculated automatically from start and end time.
-3. The venue text generates a clickable Google Maps search link.
-4. Set the table's game rules: stake size, tai range, 鴐胡 (Ping Hu), 花獸咬, 7 Pair, Shooter, End Wall, and Dice Bonus.
-5. Toggle special hands: 大三元, 大四喜, 七對子, 花胡, and 天地胡, each with their payout notes.
-6. Copy the generated invite text to share in chat.
+1. Enter the venue; a debounced OpenStreetMap (Nominatim) lookup resolves it to an embedded map preview and an "Open in Google Maps" link, falling back to a plain Google Maps search link.
+2. Enter parking, smoking availability, expected start/end date and time, and expected rounds; start, end, rounds, and total hours stay in sync automatically.
+3. Set the table's game rules: stake size, tai range, 門清, 平胡 (Ping Hu), 花獸咬, Shooter, End Wall, and Dice Bonus.
+4. Toggle special hands: 大三元, 大四喜, 七對子, 花胡, and 天地胡, each with their payout notes.
+5. Copy the generated invite from the Chat tab, or switch to the AI tab for a banner image prompt.
+
+### 8. 特別牌型
+
+Look up Singapore-style tai values, example winning layouts, and table-rule notes for special hands.
+
+How it works:
+
+1. Choose a hand from the Special hand dropdown.
+2. Choose `Classic color` or `Unicode` tile images.
+3. Read the tai badge, description, and table-rule note.
+4. Review the example layout; the red-bordered final tile is the winning tile.
+5. Check Other winning potential for alternative waits.
+6. Confirm values with your group before play; the catalogue lives in `src/data/specialHands.json`.
+
+### 9. 清一色听牌
+
+Analyze a one-suit (清一色) hand: find winning tiles, compare discards, and account for the visible discard river.
+
+How it works:
+
+1. Choose the suit: 萬, 筒, or 索.
+2. In Step 1 · Select tiles, use each tile's `Hand` and `River` +/− steppers to record copies; the `N / 4 used` caption prevents recording more than four copies.
+3. Record claimed Chi/Pong and hidden Gang sets in Step 2; upgrade a claimed pong with `Self-draw → Gang`.
+4. Read the Ways to complete your hand panel for the best grouping and worth-calling discards.
+5. At listening size, the Winning tiles panel lists every wait with remaining copies and a known-suit draw chance.
+6. At discard size, Best discard choices ranks discards by draw chance; `Discard to river` applies a suggestion in one step.
 
 ## Wall-Break Rules
 
@@ -196,8 +231,10 @@ From the repo root, `npm run build:all` builds the app, builds the docs, and cop
 4. `src/pages/InGameDiceRoll.tsx` - 掷骰开墩
 5. `src/pages/FanPayout.tsx` - 台數計算
 6. `src/pages/SideBets.tsx` - 花獸槓計算
-7. `src/pages/PlayerResults.tsx` - Player Results
+7. `src/pages/PlayerResults.tsx` - 秋後算績
 8. `src/pages/BeckonInvite.tsx` - 招兵買馬
+9. `src/pages/SpecialHands.tsx` - 特別牌型
+10. `src/pages/PureSuit.tsx` - 清一色听牌
 
 ### Core logic modules
 
@@ -206,8 +243,11 @@ From the repo root, `npm run build:all` builds the app, builds the docs, and cop
 3. `src/lib/fanPayout.ts` handles tai payout calculation and self-draw/local-rule adjustments.
 4. `src/lib/sideBets.ts` handles 花/獸/槓 side-bet row generation and payout amounts.
 5. `src/lib/playerResults.ts` handles chip tally validation, net calculation, and result entry formatting.
-6. `src/lib/beckonInvite.ts` handles total-hours calculation, the Google Maps link, tai-range validation, and the copy-for-chat invite text generator.
-7. `src/lib/utilities.ts` defines the utility menu registry.
+6. `src/lib/beckonInvite.ts` handles total-hours calculation, venue geocoding (Nominatim) and OpenStreetMap embed URLs, start/end/rounds auto-sync, tai-range validation, and the chat/AI invite text generators.
+7. `src/lib/pureSuit.ts` handles one-suit wait detection, hand grouping, call hints, and known-tile draw odds.
+8. `src/lib/mahjongTileImage.ts` renders tile images for the Classic color and Unicode tile sets.
+9. `src/data/specialHands.json` is the configurable special-hands catalogue (names, tai values, rule notes, example layouts).
+10. `src/lib/utilities.ts` defines the utility menu registry.
 
 ### In-game dice technical behavior
 
@@ -256,5 +296,3 @@ The app uses browser-based random dice and shuffle logic, then maps the result t
 I find that this logic could be integrated into a Automatic Mahjong Table with a touch screen LCD display, but I don't have investment to start the project.
 
 I also don't want anyone to profit from this but this app will always stary free to use without charge.
-
-

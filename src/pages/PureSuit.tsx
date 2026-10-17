@@ -1,10 +1,10 @@
-import { useMemo, useState, type DragEvent } from "react";
+import { useMemo, useState } from "react";
 import Brand from "../components/Brand";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
 import { mahjongTileImage } from "../lib/mahjongTileImage";
-import { getPureSuitDiscardSuggestions, getPureSuitHandPlan, getPureSuitTileUsefulness, getPureSuitWinningTiles, knownRemainingCopies, pureSuitDrawChance, type TileCounts } from "../lib/pureSuit";
+import { getPureSuitDiscardSuggestions, getPureSuitHandPlan, getPureSuitWinningTiles, knownRemainingCopies, pureSuitDrawChance, type TileCounts } from "../lib/pureSuit";
 import "../styles/pureSuit.css";
 
 type Suit = "萬" | "筒" | "索";
@@ -43,7 +43,6 @@ export default function PureSuit() {
   const [looseTiles, setLooseTiles] = useState<number[]>([]);
   const [riverTiles, setRiverTiles] = useState<number[]>([]);
   const [autoSort, setAutoSort] = useState(false);
-  const [paletteTarget, setPaletteTarget] = useState<"hand" | "river">("hand");
   const [claimTab, setClaimTab] = useState<HandSet["kind"]>("chi");
 
   const claimedSets = handSets.filter((set) => set.source !== "concealed");
@@ -51,6 +50,7 @@ export default function PureSuit() {
   const claimedTiles = claimedSets.flatMap((set) => set.tiles);
   const allHandTiles = useMemo(() => [...looseTiles, ...handSets.filter((set) => set.source === "concealed").flatMap((set) => set.tiles)], [looseTiles, handSets]);
   const concealedCounts = useMemo(() => toCounts(allHandTiles), [allHandTiles]);
+  const looseCounts = useMemo(() => toCounts(looseTiles), [looseTiles]);
   const claimedCounts = useMemo(() => toCounts(claimedTiles), [claimedTiles]);
   const riverCounts = useMemo(() => toCounts(riverTiles), [riverTiles]);
   const hiddenCapacity = 14 - claimedSetCount * 3;
@@ -69,7 +69,6 @@ export default function PureSuit() {
   const waiting = concealedTileCount === waitSize;
   const discarding = concealedTileCount === discardSize;
   const tilesToWait = waitSize - concealedTileCount;
-  const tileUses = useMemo(() => getPureSuitTileUsefulness(concealedCounts), [concealedCounts]);
   const handPlan = useMemo(() => getPureSuitHandPlan(concealedCounts), [concealedCounts]);
   const statusMessage = discarding
     ? rankedSuggestions.length
@@ -101,9 +100,24 @@ export default function PureSuit() {
     if (tileKnownCount(tile) < 4) setRiverTiles((current) => [...current, tile]);
   }
 
-  function handlePaletteTap(tile: number) {
-    if (paletteTarget === "hand") addLooseTile(tile);
-    else addRiverTile(tile);
+  function removeLooseTile(tile: number) {
+    setLooseTiles((current) => {
+      const index = current.lastIndexOf(tile);
+      return index < 0 ? current : current.filter((_, itemIndex) => itemIndex !== index);
+    });
+  }
+
+  function removeRiverTile(tile: number) {
+    setRiverTiles((current) => {
+      const index = current.lastIndexOf(tile);
+      return index < 0 ? current : current.filter((_, itemIndex) => itemIndex !== index);
+    });
+  }
+
+  function discardTile(tile: number) {
+    if (!looseTiles.includes(tile)) return;
+    removeLooseTile(tile);
+    setRiverTiles((current) => [...current, tile]);
   }
 
   /** Explains why a set cannot be added right now, or null when it can. */
@@ -137,15 +151,6 @@ export default function PureSuit() {
     setHandSets((current) => current.filter((set) => set.id !== setId));
   }
 
-  function handleDrop(target: "hidden" | "river", event: DragEvent<HTMLElement>) {
-    event.preventDefault();
-    const [source, value] = event.dataTransfer.getData("text/plain").split(":");
-    const tile = Number(value);
-    if (source !== "palette" || !Number.isInteger(tile)) return;
-    if (target === "hidden") addLooseTile(tile);
-    else addRiverTile(tile);
-  }
-
   function reset() {
     setHandSets([]);
     setLooseTiles([]);
@@ -154,7 +159,7 @@ export default function PureSuit() {
 
   return (
     <main className="fan-payout-shell pure-suit-shell">
-      <header className="topbar"><Brand /><div className="topbar-actions"><UtilityMenu /><HelpDialog eyebrow="HOW TO PLAY" title="清一色听牌"><p>牌面上的「P / C×N」角標顯示該牌在你手牌中組成的碰或吃的數量，愈多愈有用。</p><p>「Ways to complete your hand」會即時拆解手牌的最佳組合，並列出別家打出哪些牌時值得碰或吃。</p><p>系統會用隱藏手牌、公開組合和河牌，估算哪些打牌較可能形成聽牌。</p></HelpDialog></div></header>
+      <header className="topbar"><Brand /><div className="topbar-actions"><UtilityMenu /><HelpDialog eyebrow="HOW TO PLAY" title="清一色听牌"><p>Use the + and − controls under each tile to record copies in your hand or the discard river. The “used” count prevents recording more than four copies.</p><p>「Ways to complete your hand」會即時拆解手牌的最佳組合，並列出別家打出哪些牌時值得碰或吃。</p><p>When you have 14 tiles, choose “Discard to river” on a recommendation to update both your hand and river in one step.</p></HelpDialog></div></header>
       <section className="hero" aria-labelledby="page-title"><p className="eyebrow">MAHJONG · PURE SUIT</p><h1 id="page-title">清一色听牌</h1></section>
       <section className="fan-payout-panel pure-suit-panel" aria-label="Pure Suit Mahjong hand assistant">
         <div className="pure-suit-controls"><label className="field"><span>Suit</span><select value={suit} onChange={(event) => setSuit(event.target.value as Suit)}><option value="萬">萬 Characters</option><option value="筒">筒 Circles</option><option value="索">索 Bamboos</option></select></label><button className="pure-suit-reset" type="button" onClick={reset}>Reset</button></div>
@@ -162,24 +167,36 @@ export default function PureSuit() {
         <p className="pure-suit-status" role="status">{statusMessage}</p>
 
         <section className="pure-suit-section">
-          <div className="range-header"><span>Step 1 · Hidden hand</span><label className="pure-suit-sort-toggle"><input type="checkbox" checked={autoSort} onChange={() => { setAutoSort((current) => { if (!current) setLooseTiles((tiles) => sortedTiles(tiles)); return !current; }); }} /><span>Auto-sort</span></label></div>
-          <div className="pure-suit-hidden-rack" onDragEnter={(event) => event.preventDefault()} onDragOver={(event) => event.preventDefault()} onDrop={(event) => handleDrop("hidden", event)}>
-            {Array.from({ length: 14 }, (_, index) => looseTiles[index] ? <button className={`pure-suit-rack-tile${index === looseTiles.length - 1 ? " is-drawn-tile" : ""}`} type="button" key={index} aria-label={`Remove ${tileName(looseTiles[index], suit)} from hidden hand`} onClick={() => setLooseTiles((current) => current.filter((_, itemIndex) => itemIndex !== index))}><img src={mahjongTileImage(tileName(looseTiles[index], suit))} alt="" /></button> : <span className={`pure-suit-rack-slot${index >= hiddenCapacity ? " is-disabled-slot" : ""}`} key={index} />)}
+          <div className="range-header"><span>Step 1 · Select tiles</span><label className="pure-suit-sort-toggle"><input type="checkbox" checked={autoSort} onChange={() => { setAutoSort((current) => { if (!current) setLooseTiles((tiles) => sortedTiles(tiles)); return !current; }); }} /><span>Auto-sort hand</span></label></div>
+          <p className="pure-suit-help">For each tile, record how many copies are in your hand and how many you can see in the discard river.</p>
+          <div className="pure-suit-tile-selector">
+            {Array.from({ length: 9 }, (_, index) => index + 1).map((tile) => <div className="pure-suit-tile-select" key={tile}>
+              <img src={mahjongTileImage(tileName(tile, suit))} alt={tileName(tile, suit)} />
+              <div className="pure-suit-tile-stepper">
+                <span>Hand</span>
+                <div><button type="button" aria-label={`Remove one ${tileName(tile, suit)} from hand`} disabled={looseCounts[tile - 1] === 0} onClick={() => removeLooseTile(tile)}>−</button><strong>{looseCounts[tile - 1]}</strong><button type="button" aria-label={`Add one ${tileName(tile, suit)} to hand`} disabled={!canAddLooseTile(tile)} onClick={() => addLooseTile(tile)}>+</button></div>
+              </div>
+              <div className="pure-suit-tile-stepper is-river">
+                <span>River</span>
+                <div><button type="button" aria-label={`Remove one ${tileName(tile, suit)} from river`} disabled={riverCounts[tile - 1] === 0} onClick={() => removeRiverTile(tile)}>−</button><strong>{riverCounts[tile - 1]}</strong><button type="button" aria-label={`Add one ${tileName(tile, suit)} to river`} disabled={tileKnownCount(tile) >= 4} onClick={() => addRiverTile(tile)}>+</button></div>
+              </div>
+              <small>{tileKnownCount(tile)} / 4 used</small>
+            </div>)}
           </div>
-          <p className="pure-suit-help">Tap a rack tile to remove it. The red-bordered tile is the latest draw. Claimed sets lock three hidden-hand slots each.</p>
+          <div className="pure-suit-subhead"><strong>Your hidden hand</strong><span>Tap any selected tile to remove it</span></div>
+          <div className="pure-suit-hidden-rack">
+            {Array.from({ length: 14 }, (_, index) => looseTiles[index] ? <button className={`pure-suit-rack-tile${index === looseTiles.length - 1 ? " is-drawn-tile" : ""}`} type="button" key={index} aria-label={`Remove ${tileName(looseTiles[index], suit)} from hidden hand`} onClick={() => setLooseTiles((current) => current.filter((_, itemIndex) => itemIndex !== index))}><img src={mahjongTileImage(tileName(looseTiles[index], suit))} alt="" /><span aria-hidden="true">×</span></button> : <span className={`pure-suit-rack-slot${index >= hiddenCapacity ? " is-disabled-slot" : ""}`} key={index} />)}
+          </div>
+          <p className="pure-suit-help">The red outline marks your latest draw. Claimed sets lock three hidden-hand slots each.</p>
           <div className="pure-suit-set-list">
             {handSets.map((set) => <div className="pure-suit-hand-set" key={set.id}><div className="pure-suit-set-heading"><strong>{set.kind} · {sourceLabel(set.source)}</strong><button type="button" onClick={() => removeHandSet(set.id)}>Clear</button></div><div className="pure-suit-set-tiles">{set.tiles.map((tile, index) => <img className={set.claimedTile !== undefined && tile === set.claimedTile && index === set.tiles.indexOf(tile) ? "is-claimed" : ""} key={`${tile}-${index}`} src={mahjongTileImage(tileName(tile, suit))} alt="" />)}</div><p>{setHint(set)}</p>{set.kind === "pong" && set.source === "claimed" && <button className="pure-suit-upgrade" type="button" onClick={() => upgradePongToGang(set.id)}>Self-draw → Gang</button>}</div>)}
           </div>
+          <div className="pure-suit-subhead"><strong>Discard river</strong><span>{riverTiles.length} tiles recorded</span></div>
+          <div className="pure-suit-river-rack">{riverTiles.map((tile, index) => <button className="pure-suit-rack-tile" type="button" key={`${tile}-${index}`} aria-label={`Remove ${tileName(tile, suit)} from river`} onClick={() => setRiverTiles((current) => current.filter((_, itemIndex) => itemIndex !== index))}><img src={mahjongTileImage(tileName(tile, suit))} alt="" /><span aria-hidden="true">×</span></button>)}{riverTiles.length === 0 && <span className="pure-suit-river-placeholder">No river tiles recorded yet. Use the River + controls above.</span>}</div>
         </section>
 
         <section className="pure-suit-section">
-          <div className="range-header"><span>Step 2 · Suit tiles</span><div className="pure-suit-target-toggle" role="group" aria-label="Choose where tapped tiles go"><button className={paletteTarget === "hand" ? "is-active" : ""} type="button" onClick={() => setPaletteTarget("hand")}>Tap → Hand</button><button className={paletteTarget === "river" ? "is-active" : ""} type="button" onClick={() => setPaletteTarget("river")}>Tap → River</button></div></div>
-          <p className="pure-suit-help">{paletteTarget === "hand" ? "Tap a tile to add it to your hidden hand." : "Tap a tile to record it in the discard river."} Drag-and-drop onto either rack works too. The badge shows how many of the 4 copies are already accounted for. Tiles in your hand also show a use hint: P for a pong, C×N for the chi sequences it joins.</p>
-          <div className="pure-suit-grid">{Array.from({ length: 9 }, (_, index) => index + 1).map((tile) => { const use = tileUses[tile - 1]; const useLabel = use.pongs > 0 ? "P" : use.chis > 0 ? `C×${use.chis}` : null; return <button className="pure-suit-palette-tile" type="button" key={tile} aria-label={`Add ${tileName(tile, suit)} to ${paletteTarget === "hand" ? "hidden hand" : "discard river"}`} disabled={paletteTarget === "hand" ? !canAddLooseTile(tile) : tileKnownCount(tile) >= 4} draggable onClick={() => handlePaletteTap(tile)} onDragStart={(event) => event.dataTransfer.setData("text/plain", `palette:${tile}`)}><img src={mahjongTileImage(tileName(tile, suit))} alt="" /><strong>{tileKnownCount(tile)} / 4</strong>{useLabel && <em className="pure-suit-palette-use" title={use.pongs > 0 ? "Forms a pong in your hand" : `Joins ${use.chis} chi sequence${use.chis === 1 ? "" : "s"} in your hand`}>{useLabel}</em>}</button>; })}</div>
-        </section>
-
-        <section className="pure-suit-section">
-          <div className="range-header"><span>Step 3 · Claim / concealed set</span><strong>{claimedSetCount} / 4 sets</strong></div>
+          <div className="range-header"><span>Step 2 · Claim / concealed set</span><strong>{claimedSetCount} / 4 sets</strong></div>
           <p className="pure-suit-help">Chi and Pong can be claimed from another player. Gang can be upgraded from a claimed Pong after self-draw, or formed entirely by self-draw as a hidden Gang. Greyed-out buttons cannot be formed right now — hover to see why.</p>
           <div className="pure-suit-target-toggle pure-suit-claim-tabs" role="tablist" aria-label="Set type">
             {(["chi", "pong", "gang"] as const).map((kind) => <button className={claimTab === kind ? "is-active" : ""} key={kind} role="tab" aria-selected={claimTab === kind} type="button" onClick={() => setClaimTab(kind)}>{kind === "chi" ? "Chi · from player" : kind === "pong" ? "Pong · from player" : "Gang · hidden"}</button>)}
@@ -190,8 +207,6 @@ export default function PureSuit() {
             {claimTab === "gang" && Array.from({ length: 9 }, (_, index) => index + 1).map((tile) => { const reason = claimDisabledReason("gang", tile); return <button className="pure-suit-claim" type="button" key={`gang-${tile}`} disabled={reason !== null} title={reason ?? undefined} aria-label={`Record hidden Gang ${tileName(tile, suit)}`} onClick={() => addHandSet("gang", tile, "concealed")}><span className="pure-suit-claim-meld"><span className="pure-suit-claim-row">{Array.from({ length: 4 }, (_, copy) => <img key={`${tile}-${copy}`} src={mahjongTileImage(tileName(tile, suit))} alt="" />)}</span></span><small>Gang</small></button>; })}
           </div>
         </section>
-
-        <section className="pure-suit-section"><div className="range-header"><span>Step 4 · Discard river</span><strong>{riverTiles.length} tiles</strong></div><div className="pure-suit-river-rack" onDragEnter={(event) => event.preventDefault()} onDragOver={(event) => event.preventDefault()} onDrop={(event) => handleDrop("river", event)}>{riverTiles.map((tile, index) => <button className="pure-suit-rack-tile" type="button" key={`${tile}-${index}`} aria-label={`Remove ${tileName(tile, suit)} from river`} onClick={() => setRiverTiles((current) => current.filter((_, itemIndex) => itemIndex !== index))}><img src={mahjongTileImage(tileName(tile, suit))} alt="" /></button>)}{riverTiles.length === 0 && <span className="pure-suit-river-placeholder">No discards tracked yet — switch to “Tap → River” above and tap tiles, or drag tiles here.</span>}</div></section>
 
         <section className="pure-suit-section pure-suit-plan">
           <div className="range-header"><span>Ways to complete your hand</span><strong>{handPlan.claimHints.length} calls</strong></div>
@@ -207,7 +222,7 @@ export default function PureSuit() {
 
         <section className="pure-suit-section pure-suit-waits"><div className="range-header"><span>Winning tiles</span><strong>{winningTiles.length} waits</strong></div>{waiting ? winningTiles.length ? <><div className="pure-suit-wait-list">{winningTiles.map((tile) => <div key={tile}><img src={mahjongTileImage(tileName(tile, suit))} alt={tileName(tile, suit)} /><strong>{knownRemainingCopies(tile, concealedCounts, riverCounts, claimedCounts)} left</strong></div>)}</div><p className="pure-suit-odds">Known-suit draw chance: <strong>{(drawChance * 100).toFixed(1)}%</strong></p></> : <p className="pure-suit-empty">This hand is not waiting on a standard 清一色 hand.</p> : <p className="pure-suit-empty">{`Enter ${waitSize} concealed tiles to see waits.`}</p>}</section>
 
-        <section className="pure-suit-section"><div className="range-header"><span>Best discards to listen</span><strong>{rankedSuggestions.length} options</strong></div>{discarding ? rankedSuggestions.length ? <div className="pure-suit-suggestions">{rankedSuggestions.map((suggestion, index) => <div className={`pure-suit-suggestion${index === 0 ? " is-best" : ""}`} key={suggestion.discard}><div><small>{index === 0 ? "Best discard" : "Discard"}</small><img src={mahjongTileImage(tileName(suggestion.discard, suit))} alt={tileName(suggestion.discard, suit)} /></div><div><small>Then wait on</small><div className="pure-suit-suggestion-waits">{suggestion.winningTiles.map((tile) => <img key={tile} src={mahjongTileImage(tileName(tile, suit))} alt={tileName(tile, suit)} />)}</div></div><strong>{suggestion.knownLeft} known left<br />{(suggestion.drawChance * 100).toFixed(1)}%</strong></div>)}</div> : <p className="pure-suit-empty">No discard creates an immediate wait.</p> : <p className="pure-suit-empty">{`Enter ${discardSize} concealed tiles to compare discards.`}</p>}</section>
+        <section className="pure-suit-section"><div className="range-header"><span>Best discard choices</span><strong>{rankedSuggestions.length} options</strong></div>{discarding ? rankedSuggestions.length ? <div className="pure-suit-suggestions">{rankedSuggestions.map((suggestion, index) => <div className={`pure-suit-suggestion${index === 0 ? " is-best" : ""}`} key={suggestion.discard}><div><small>{index === 0 ? "Best discard" : "Discard"}</small><img src={mahjongTileImage(tileName(suggestion.discard, suit))} alt={tileName(suggestion.discard, suit)} /></div><div><small>Then wait on</small><div className="pure-suit-suggestion-waits">{suggestion.winningTiles.map((tile) => <img key={tile} src={mahjongTileImage(tileName(tile, suit))} alt={tileName(tile, suit)} />)}</div></div><strong>{suggestion.knownLeft} known left<br />{(suggestion.drawChance * 100).toFixed(1)}%</strong><button className="pure-suit-discard-action" type="button" disabled={!looseTiles.includes(suggestion.discard)} onClick={() => discardTile(suggestion.discard)}>Discard to river</button></div>)}</div> : <p className="pure-suit-empty">No discard creates an immediate wait.</p> : <p className="pure-suit-empty">{`Enter ${discardSize} concealed tiles to compare discards.`}</p>}</section>
       </section><Footer />
     </main>
   );
