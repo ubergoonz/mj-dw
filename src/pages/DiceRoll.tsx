@@ -1,8 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Footer from "../components/Footer";
 import UtilityMenu from "../components/UtilityMenu";
 import HelpDialog from "../components/HelpDialog";
 import Brand from "../components/Brand";
+import { vibrate } from "../lib/haptics";
+import { is } from "../lib/storage";
+import { usePersistentState } from "../lib/usePersistentState";
 
 type DiceCount = 2 | 3;
 
@@ -22,14 +25,21 @@ function initialDice(): DieState[] {
 }
 
 export default function DiceRoll() {
-  const [diceCount, setDiceCount] = useState<DiceCount>(2);
+  const [diceCount, setDiceCount] = usePersistentState<DiceCount>("dice:count:v1", 2, is.oneOf([2, 3] as const));
   const [dice, setDice] = useState<DieState[]>(initialDice);
   const [isRolling, setIsRolling] = useState(false);
   const [rollLabel, setRollLabel] = useState("擲骰子");
   const [resultTitle, setResultTitle] = useState("Ready");
-  const [resultDetail, setResultDetail] = useState(`${2}`);
+  const [resultDetail, setResultDetail] = useState(() => `${diceCount}`);
   const rollingIntervalId = useRef<number | null>(null);
   const rollingTimeoutId = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (rollingIntervalId.current !== null) window.clearInterval(rollingIntervalId.current);
+      if (rollingTimeoutId.current !== null) window.clearTimeout(rollingTimeoutId.current);
+    };
+  }, []);
 
   function updateDiceCount(nextCount: DiceCount) {
     if (isRolling) return;
@@ -46,6 +56,7 @@ export default function DiceRoll() {
     setRollLabel("擲骰中");
     setResultTitle("Rolling");
     setResultDetail("Good luck...");
+    vibrate(15);
 
     rollingIntervalId.current = window.setInterval(() => {
       setDice((prev) => prev.map((die, index) => (index < diceCount ? { ...die, face: randomDieValue() } : die)));
@@ -65,8 +76,10 @@ export default function DiceRoll() {
         return next;
       });
 
+      vibrate([30, 40, 30]);
       setRollLabel("再擲一次");
       setIsRolling(false);
+      rollingTimeoutId.current = null;
     }, 900);
   }
 

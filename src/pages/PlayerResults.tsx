@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import Brand from "../components/Brand";
+import CopyActions from "../components/CopyActions";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
@@ -15,17 +16,80 @@ import {
   type PlayerResultEntry,
   type PlayerSessionSlot,
 } from "../lib/playerResults";
+import { is } from "../lib/storage";
+import { usePersistentState } from "../lib/usePersistentState";
 
 const parseChips = (value: string): number => Math.max(0, Number(value) || 0);
 const splitBaseChips = (value: string): number => parseChips(value) / SEAT_ORDER.length;
 
+interface PersistedSession {
+  defaultBaseInput: string;
+  slots: PlayerSessionSlot[];
+  leftInputs: Record<Seat, string>;
+  nextPlayerInputs: Record<Seat, string>;
+  entries: PlayerResultEntry[];
+  startedAt: number | null;
+}
+
+const SESSION_KEY = "player-results:v1";
+
+const isSeat = is.oneOf(SEAT_ORDER);
+const isSeatTextMap = (value: unknown): value is Record<Seat, string> =>
+  is.record(value) && SEAT_ORDER.every((seat) => is.string(value[seat]));
+const isSlot = (value: unknown): value is PlayerSessionSlot =>
+  is.record(value) && isSeat(value.seat) && is.string(value.playerName) && is.number(value.baseChips);
+const isEntry = (value: unknown): value is PlayerResultEntry =>
+  is.record(value) &&
+  is.string(value.id) &&
+  isSeat(value.seat) &&
+  is.string(value.playerName) &&
+  is.number(value.baseChips) &&
+  is.number(value.leftChips) &&
+  is.number(value.net) &&
+  is.oneOf(["takeover", "end"] as const)(value.reason);
+const isPersistedSession = (value: unknown): value is PersistedSession =>
+  is.record(value) &&
+  is.string(value.defaultBaseInput) &&
+  is.arrayOf(isSlot)(value.slots) &&
+  (value.slots as PlayerSessionSlot[]).length === SEAT_ORDER.length &&
+  isSeatTextMap(value.leftInputs) &&
+  isSeatTextMap(value.nextPlayerInputs) &&
+  is.arrayOf(isEntry)(value.entries) &&
+  (value.startedAt === null || is.number(value.startedAt));
+
+function createSession(totalBase = "2000"): PersistedSession {
+  const base = parseChips(totalBase);
+  return {
+    defaultBaseInput: totalBase,
+    slots: createInitialSlots(base),
+    leftInputs: createSeatTextMap(String(base / SEAT_ORDER.length)),
+    nextPlayerInputs: createSeatTextMap(""),
+    entries: [],
+    startedAt: null,
+  };
+}
+
+function formatStartedAt(timestamp: number): string {
+  return new Date(timestamp).toLocaleString(undefined, {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 export default function PlayerResults() {
-  const [defaultBaseInput, setDefaultBaseInput] = useState("2000");
-  const [slots, setSlots] = useState<PlayerSessionSlot[]>(() => createInitialSlots(2000));
-  const [leftInputs, setLeftInputs] = useState<Record<Seat, string>>(() => createSeatTextMap("500"));
-  const [nextPlayerInputs, setNextPlayerInputs] = useState<Record<Seat, string>>(() => createSeatTextMap(""));
-  const [entries, setEntries] = useState<PlayerResultEntry[]>([]);
-  const [copyStatus, setCopyStatus] = useState("");
+  const [session, setSession] = usePersistentState<PersistedSession>(SESSION_KEY, () => createSession(), isPersistedSession);
+  const { defaultBaseInput, slots, leftInputs, nextPlayerInputs, entries, startedAt } = session;
+  const [lastRemoved, setLastRemoved] = useState<{ entry: PlayerResultEntry; index: number } | null>(null);
+
+  function patch(updates: Partial<PersistedSession> | ((current: PersistedSession) => Partial<PersistedSession>)) {
+    setSession((current) => ({
+      ...current,
+      ...(typeof updates === "function" ? updates(current) : updates),
+      startedAt: current.startedAt ?? Date.now(),
+    }));
+  }
 
   const totalBaseChips = parseChips(defaultBaseInput);
   const baseTally = useMemo(
@@ -43,32 +107,33 @@ export default function PlayerResults() {
   const isLeftTallyInvalid = Math.abs(leftTallyDifference) > 0.001;
   const isTallyInvalid = isBaseTallyInvalid || isLeftTallyInvalid;
   const chatText = useMemo(() => formatPlayerResultsForChat(entries), [entries]);
+  const hasUnsavedWork = entries.length > 0 || slots.some((slot) => slot.playerName.trim() !== "");
 
   function updateSlot(seat: Seat, updates: Partial<PlayerSessionSlot>) {
-    setSlots((current) => current.map((slot) => (slot.seat === seat ? { ...slot, ...updates } : slot)));
+    patch((current) => ({
+      slots: current.slots.map((slot) => (slot.seat === seat ? { ...slot, ...updates } : slot)),
+    }));
   }
 
   function updateLeftInput(seat: Seat, value: string) {
-    setLeftInputs((current) => ({ ...current, [seat]: value }));
+    patch((current) => ({ leftInputs: { ...current.leftInputs, [seat]: value } }));
   }
 
   function updateNextPlayerInput(seat: Seat, value: string) {
-    setNextPlayerInputs((current) => ({ ...current, [seat]: value }));
+    patch((current) => ({ nextPlayerInputs: { ...current.nextPlayerInputs, [seat]: value } }));
   }
 
   function resetSession() {
-    const base = parseChips(defaultBaseInput);
-    const seatBase = splitBaseChips(defaultBaseInput);
-    setSlots(createInitialSlots(base));
-    setLeftInputs(createSeatTextMap(String(seatBase)));
-    setNextPlayerInputs(createSeatTextMap(""));
-    setEntries([]);
-    setCopyStatus("");
+    if (hasUnsavedWork && !window.confirm("Reset session? 所有座位、名字與已記錄的結果都會清除。")) return;
+    setSession(createSession(defaultBaseInput));
+    setLastRemoved(null);
   }
 
   function recordSeat(seat: Seat, reason: "takeover" | "end") {
     const slot = slots.find((candidate) => candidate.seat === seat);
     if (!slot) return;
+
+    if (isLeftTallyInvalid && !window.confirm("剩餘籌碼總和與總起始籌碼不符。仍要記錄嗎？")) return;
 
     const leftChips = leftChipsBySeat[seat];
     const nextPlayerName = nextPlayerInputs[seat].trim();
@@ -80,20 +145,24 @@ export default function PlayerResults() {
       nextPlayerName: reason === "takeover" ? nextPlayerName : undefined,
     });
 
-    setEntries((current) => [...current, entry]);
-
-    if (reason === "takeover") {
-      setSlots((current) =>
-        current.map((candidate) =>
+    patch((current) => {
+      const next: Partial<PersistedSession> = { entries: [...current.entries, entry] };
+      if (reason === "takeover") {
+        next.slots = current.slots.map((candidate) =>
           candidate.seat === seat ? replaceSeatPlayer(candidate, nextPlayerName, leftChips) : candidate,
-        ),
-      );
-      updateLeftInput(seat, String(leftChips));
-      updateNextPlayerInput(seat, "");
-    }
+        );
+        next.leftInputs = { ...current.leftInputs, [seat]: String(leftChips) };
+        next.nextPlayerInputs = { ...current.nextPlayerInputs, [seat]: "" };
+      }
+      return next;
+    });
+    setLastRemoved(null);
   }
 
   function recordAllEnd() {
+    if (!window.confirm("全完場：為四家各記錄一筆完場結果？")) return;
+    if (isLeftTallyInvalid && !window.confirm("剩餘籌碼總和與總起始籌碼不符。仍要記錄嗎？")) return;
+
     const timestamp = Date.now();
     const endEntries = SEAT_ORDER.map((seat, index) => {
       const slot = slots.find((candidate) => candidate.seat === seat)!;
@@ -106,12 +175,26 @@ export default function PlayerResults() {
       });
     });
 
-    setEntries((current) => [...current, ...endEntries]);
+    patch((current) => ({ entries: [...current.entries, ...endEntries] }));
+    setLastRemoved(null);
   }
 
-  async function copyResults() {
-    await navigator.clipboard.writeText(chatText);
-    setCopyStatus("Copied");
+  function removeEntry(id: string) {
+    const index = entries.findIndex((entry) => entry.id === id);
+    if (index === -1) return;
+    setLastRemoved({ entry: entries[index], index });
+    patch((current) => ({ entries: current.entries.filter((entry) => entry.id !== id) }));
+  }
+
+  function undoRemove() {
+    if (!lastRemoved) return;
+    const { entry, index } = lastRemoved;
+    patch((current) => {
+      const next = [...current.entries];
+      next.splice(Math.min(index, next.length), 0, entry);
+      return { entries: next };
+    });
+    setLastRemoved(null);
   }
 
   return (
@@ -125,6 +208,7 @@ export default function PlayerResults() {
             <p>四家的 base 與剩餘籌碼都可手動輸入；若總和不等於總起始籌碼，座位卡會以紅框提醒。</p>
             <p>中途有人離場時，輸入剩餘籌碼並按「接手」，系統記錄離場者輸贏，接手者用該剩餘籌碼作為新 base。</p>
             <p>完場時輸入各家剩餘籌碼並按「完場」，下方文字可直接複製貼到聊天。</p>
+            <p>所有輸入會自動保存在此裝置上，鎖屏或重新整理都不會遺失；按「Reset session」才會清除。</p>
           </HelpDialog>
         </div>
       </header>
@@ -136,6 +220,12 @@ export default function PlayerResults() {
 
       <section className="fan-payout-panel" aria-label="Player result recorder">
         <div className="fan-payout-form">
+          {startedAt !== null && (
+            <p className="session-banner" role="status">
+              <span aria-hidden="true">💾</span> Session auto-saved on this device · started {formatStartedAt(startedAt)}
+            </p>
+          )}
+
           <div className="range-field">
             <div className="range-header">
               <span>Start of session</span>
@@ -148,8 +238,9 @@ export default function PlayerResults() {
                   type="number"
                   min="0"
                   step="1"
+                  inputMode="decimal"
                   value={defaultBaseInput}
-                  onChange={(event) => setDefaultBaseInput(event.target.value)}
+                  onChange={(event) => patch({ defaultBaseInput: event.target.value })}
                 />
               </label>
               <div className="result-session-actions">
@@ -193,6 +284,7 @@ export default function PlayerResults() {
                       type="number"
                       min="0"
                       step="1"
+                      inputMode="decimal"
                       value={slot.baseChips}
                       onChange={(event) => updateSlot(seat, { baseChips: parseChips(event.target.value) })}
                       className={isBaseChipMismatched ? "result-input-invalid" : undefined}
@@ -205,6 +297,7 @@ export default function PlayerResults() {
                       type="number"
                       min="0"
                       step="1"
+                      inputMode="decimal"
                       value={leftInputs[seat]}
                       onChange={(event) => updateLeftInput(seat, event.target.value)}
                       className={isLeftChipMismatched ? "result-input-invalid" : undefined}
@@ -270,9 +363,19 @@ export default function PlayerResults() {
                 <th>Left</th>
                 <th>Win/Loss</th>
                 <th>Type</th>
+                <th>
+                  <span className="visually-hidden">Remove</span>
+                </th>
               </tr>
             </thead>
             <tbody>
+              {entries.length === 0 && (
+                <tr>
+                  <td className="fan-table-empty" colSpan={6}>
+                    尚未記錄結果 · Records appear here after 接手 / 完場.
+                  </td>
+                </tr>
+              )}
               {entries.map((entry) => (
                 <tr className="fan-row-active" key={entry.id}>
                   <td>{entry.playerName}</td>
@@ -280,21 +383,38 @@ export default function PlayerResults() {
                   <td>{formatChips(entry.leftChips)}</td>
                   <td className={resultToneClass(entry.net)}>{formatSignedChips(entry.net)}</td>
                   <td>{entry.reason === "takeover" ? "離場" : "完場"}</td>
+                  <td>
+                    <button
+                      className="row-remove"
+                      type="button"
+                      aria-label={`Remove ${entry.playerName} record`}
+                      title="Remove record"
+                      onClick={() => removeEntry(entry.id)}
+                    >
+                      ×
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
+        {lastRemoved && (
+          <p className="undo-bar" role="status">
+            <span>Removed {lastRemoved.entry.playerName} ({formatSignedChips(lastRemoved.entry.net)}).</span>
+            <button type="button" className="link-button" onClick={undoRemove}>
+              Undo
+            </button>
+          </p>
+        )}
+
         <div className="copy-panel">
           <div className="range-header">
             <span>Copy for chat</span>
-            <button className="utility-action" type="button" onClick={copyResults}>
-              Copy
-            </button>
           </div>
           <textarea readOnly value={chatText} aria-label="Copyable result text" />
-          {copyStatus && <small>{copyStatus}</small>}
+          <CopyActions text={chatText} shareTitle="麻將成績" disabled={entries.length === 0} />
         </div>
       </section>
 

@@ -9,6 +9,8 @@ import {
   mahjongTileImage,
   type MahjongTileSetId,
 } from "../lib/mahjongTileImage";
+import { is } from "../lib/storage";
+import { usePersistentState } from "../lib/usePersistentState";
 import "../styles/specialHands.css";
 
 const MAX_VISIBLE_WINNING_POTENTIALS = 6;
@@ -19,7 +21,11 @@ function TileImage({ tile, tileSet }: { tile: string; tileSet: MahjongTileSetId 
 
 export default function SpecialHands() {
   const [selectedId, setSelectedId] = useState(specialHands[0].id);
-  const [tileSet, setTileSet] = useState<MahjongTileSetId>("classic");
+  const [tileSet, setTileSet] = usePersistentState<MahjongTileSetId>(
+    "tile-set:v1",
+    "classic",
+    is.oneOf(MAHJONG_TILE_SETS.map((set) => set.id)),
+  );
   const selectedHand = specialHands.find((hand) => hand.id === selectedId) ?? specialHands[0];
 
   return (

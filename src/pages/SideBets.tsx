@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import Brand from "../components/Brand";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
@@ -7,6 +7,8 @@ import {
   SIDE_BET_TYPES,
   getSideBetRows,
 } from "../lib/sideBets";
+import { is } from "../lib/storage";
+import { usePersistentState } from "../lib/usePersistentState";
 
 const formatMoney = (value: number): string => {
   const rounded = Number(value.toFixed(2));
@@ -16,7 +18,7 @@ const formatMoney = (value: number): string => {
 const baseOptions = [0.5, 1, 2, 3, 4, 5, 10, 20, 30, 40, 50];
 
 export default function SideBets() {
-  const [baseMin, setBaseMin] = useState(1);
+  const [baseMin, setBaseMin] = usePersistentState("side-bets:v1", 1, is.oneOf(baseOptions));
   const baseMax = baseMin * 2;
 
   const rows = useMemo(() => getSideBetRows({ baseMin, baseMax }), [baseMin, baseMax]);

@@ -1,9 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import Brand from "../components/Brand";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
 import { FAN_BASE_OPTIONS, FAN_INPUT_MAX, getFanPayoutRows } from "../lib/fanPayout";
+import { is } from "../lib/storage";
+import { usePersistentState } from "../lib/usePersistentState";
 
 const formatMoney = (value: number): string => {
   const rounded = Number(value.toFixed(2));
@@ -13,12 +15,37 @@ const formatMoney = (value: number): string => {
 const clampFan = (value: string): number =>
   Math.min(FAN_INPUT_MAX, Math.max(0, Math.floor(Number(value) || 0)));
 
+interface FanPayoutSettings {
+  base: number;
+  minFan: number;
+  maxFan: number;
+  selfDrawBonus: boolean;
+  selfDrawBonusInput: string;
+}
+
+const DEFAULT_SETTINGS: FanPayoutSettings = {
+  base: 1,
+  minFan: 1,
+  maxFan: 5,
+  selfDrawBonus: false,
+  selfDrawBonusInput: "1",
+};
+
+const isSettings = (value: unknown): value is FanPayoutSettings =>
+  is.record(value) &&
+  is.oneOf(FAN_BASE_OPTIONS.map((option) => option.player))(value.base) &&
+  is.number(value.minFan) &&
+  is.number(value.maxFan) &&
+  is.boolean(value.selfDrawBonus) &&
+  is.string(value.selfDrawBonusInput);
+
 export default function FanPayout() {
-  const [base, setBase] = useState(1);
-  const [minFan, setMinFan] = useState(1);
-  const [maxFan, setMaxFan] = useState(5);
-  const [selfDrawBonus, setSelfDrawBonus] = useState(false);
-  const [selfDrawBonusInput, setSelfDrawBonusInput] = useState("1");
+  const [settings, setSettings] = usePersistentState("fan-payout:v1", DEFAULT_SETTINGS, isSettings);
+  const { base, minFan, maxFan, selfDrawBonus, selfDrawBonusInput } = settings;
+
+  function update<K extends keyof FanPayoutSettings>(key: K, value: FanPayoutSettings[K]) {
+    setSettings((current) => ({ ...current, [key]: value }));
+  }
 
   const selfDrawBonusAmount = Math.max(0, Math.floor(Number(selfDrawBonusInput) || 0));
   const isRangeInvalid = maxFan <= minFan;
@@ -58,7 +85,7 @@ export default function FanPayout() {
         <div className="fan-payout-form">
           <label className="field">
             <span>Base (player / shooter)</span>
-            <select value={base} onChange={(event) => setBase(Number(event.target.value))}>
+            <select value={base} onChange={(event) => update("base", Number(event.target.value))}>
               {FAN_BASE_OPTIONS.map((option) => (
                 <option key={option.player} value={option.player}>
                   {option.player} / {option.shooter}
@@ -84,7 +111,7 @@ export default function FanPayout() {
                   max={FAN_INPUT_MAX}
                   step="1"
                   value={minFan}
-                  onChange={(event) => setMinFan(clampFan(event.target.value))}
+                  onChange={(event) => update("minFan", clampFan(event.target.value))}
                 />
               </label>
 
@@ -96,7 +123,7 @@ export default function FanPayout() {
                   max={FAN_INPUT_MAX}
                   step="1"
                   value={maxFan}
-                  onChange={(event) => setMaxFan(clampFan(event.target.value))}
+                  onChange={(event) => update("maxFan", clampFan(event.target.value))}
                 />
               </label>
             </div>
@@ -113,7 +140,7 @@ export default function FanPayout() {
               id="self-draw-bonus"
               type="checkbox"
               checked={selfDrawBonus}
-              onChange={(event) => setSelfDrawBonus(event.target.checked)}
+              onChange={(event) => update("selfDrawBonus", event.target.checked)}
             />
             <span>Include 自摸 bonus</span>
           </label>
@@ -127,8 +154,8 @@ export default function FanPayout() {
                 step="1"
                 inputMode="numeric"
                 value={selfDrawBonusInput}
-                onChange={(event) => setSelfDrawBonusInput(event.target.value.replace(/[^\d]/g, ""))}
-                onBlur={() => setSelfDrawBonusInput(String(selfDrawBonusAmount))}
+                onChange={(event) => update("selfDrawBonusInput", event.target.value.replace(/[^\d]/g, ""))}
+                onBlur={() => update("selfDrawBonusInput", String(selfDrawBonusAmount))}
               />
             </label>
           )}

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Brand from "../components/Brand";
+import CopyActions from "../components/CopyActions";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
@@ -34,14 +35,24 @@ import {
   type TableMode,
   type VenueGeocodeResult,
 } from "../lib/beckonInvite";
+import { is } from "../lib/storage";
+import { usePersistentState } from "../lib/usePersistentState";
 import "../styles/beckonInvite.css";
 
 const clampFan = (value: string): number =>
   Math.min(FAN_MAX_BOUND, Math.max(FAN_MIN_BOUND, Math.floor(Number(value) || 0)));
 
+const FORM_TEMPLATE = createInitialBeckonInviteForm();
+
+/** Accept saved forms only when every field still has the shape this build expects. */
+const isBeckonInviteForm = (value: unknown): value is BeckonInviteForm =>
+  is.record(value) &&
+  (Object.keys(FORM_TEMPLATE) as Array<keyof BeckonInviteForm>).every(
+    (key) => typeof value[key] === typeof FORM_TEMPLATE[key],
+  );
+
 export default function BeckonInvite() {
-  const [form, setForm] = useState<BeckonInviteForm>(createInitialBeckonInviteForm);
-  const [copyStatus, setCopyStatus] = useState("");
+  const [form, setForm] = usePersistentState<BeckonInviteForm>("beckon-invite:v1", createInitialBeckonInviteForm, isBeckonInviteForm);
   const [copyTab, setCopyTab] = useState<"chat" | "ai">("chat");
   const [venueResult, setVenueResult] = useState<VenueGeocodeResult | null>(null);
   const [venueLookupStatus, setVenueLookupStatus] = useState<"idle" | "loading" | "not-found">("idle");
@@ -86,9 +97,9 @@ export default function BeckonInvite() {
     };
   }, [form.venueQuery]);
 
-  async function copyInvite() {
-    await navigator.clipboard.writeText(copyTab === "chat" ? chatText : imagePromptText);
-    setCopyStatus("Copied");
+  function clearForm() {
+    if (!window.confirm("Clear the invite form? 所有欄位會還原為預設值。")) return;
+    setForm(createInitialBeckonInviteForm());
   }
 
   function handleStartChange(value: string) {
@@ -573,10 +584,7 @@ export default function BeckonInvite() {
                 role="tab"
                 aria-selected={copyTab === "chat"}
                 className={`copy-tab${copyTab === "chat" ? " copy-tab-active" : ""}`}
-                onClick={() => {
-                  setCopyTab("chat");
-                  setCopyStatus("");
-                }}
+                onClick={() => setCopyTab("chat")}
               >
                 Chat
               </button>
@@ -585,16 +593,13 @@ export default function BeckonInvite() {
                 role="tab"
                 aria-selected={copyTab === "ai"}
                 className={`copy-tab${copyTab === "ai" ? " copy-tab-active" : ""}`}
-                onClick={() => {
-                  setCopyTab("ai");
-                  setCopyStatus("");
-                }}
+                onClick={() => setCopyTab("ai")}
               >
                 AI
               </button>
             </div>
-            <button className="utility-action" type="button" onClick={copyInvite}>
-              Copy
+            <button className="link-button" type="button" onClick={clearForm}>
+              Clear form
             </button>
           </div>
           {copyTab === "ai" && (
@@ -609,7 +614,11 @@ export default function BeckonInvite() {
             aria-label={copyTab === "chat" ? "Copyable invite text" : "Copyable AI image prompt"}
             rows={16}
           />
-          {copyStatus && <small>{copyStatus}</small>}
+          <CopyActions
+            text={copyTab === "chat" ? chatText : imagePromptText}
+            shareTitle="麻將招兵買馬"
+            copyLabel={copyTab === "chat" ? "Copy invite" : "Copy prompt"}
+          />
         </div>
       </section>
 

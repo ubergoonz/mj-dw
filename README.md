@@ -121,7 +121,8 @@ How it works:
 3. The tool validates that base and remaining chip tallies match the table total.
 4. When a player leaves mid-session, use `接手` to record the outgoing result and seat a replacement.
 5. At the end of play, use `完場` per seat or `全完場` for every seat.
-6. Copy a formatted chat-ready summary of all recorded results.
+6. Copy or share a formatted chat-ready summary of all recorded results; remove a wrong record with `×` and restore it with `Undo`.
+7. The whole session is auto-saved on the device until you choose `Reset session`.
 
 ### 7. 招兵買馬
 
@@ -133,7 +134,7 @@ How it works:
 2. Enter parking, smoking availability, expected start/end date and time, and expected rounds; start, end, rounds, and total hours stay in sync automatically.
 3. Set the table's game rules: stake size, tai range, 門清, 平胡 (Ping Hu), 花獸咬, Shooter, End Wall, and Dice Bonus.
 4. Toggle special hands: 大三元, 大四喜, 七對子, 花胡, and 天地胡, each with their payout notes.
-5. Copy the generated invite from the Chat tab, or switch to the AI tab for a banner image prompt.
+5. Copy the generated invite from the Chat tab, or switch to the AI tab for a banner image prompt. The form is saved on the device; use `Clear form` to start over.
 
 ### 8. 特別牌型
 
@@ -186,7 +187,17 @@ The 掷骰开墩 page follows the current logic implemented in the app.
 
 ## Mobile Use
 
-You can save the web app as a shortcut on your phone and open it directly at the table.
+The app is installable. Open it in your phone's browser and choose **Add to Home Screen** (iOS Safari: Share → Add to Home Screen; Android Chrome: menu → Install app). It launches full-screen with its own icon, like a native app.
+
+Robustness features designed for use at a live table:
+
+1. **Auto-save.** 秋後算績 (the chip ledger), 招兵買馬 (the invite form), and your preferred 台數 / 花獸槓 bases and tile style are saved on the device. Locking the screen, switching apps, or reloading never loses your work.
+2. **Safe destructive actions.** Resetting a session, 全完場, and recording while the chip tally is off all ask for confirmation. Individual records can be removed and undone.
+3. **Copy that works everywhere.** Copy falls back gracefully on browsers that block the clipboard API and shows a clear message; on phones a native **Share** button is offered too.
+4. **No white screens.** A render error shows a recovery card with Reload / Home; unknown routes show a friendly 404.
+5. **Haptics.** Dice rolls give a short vibration on supporting phones.
+
+Saved data lives only in your browser's local storage (`mj-dw:*` keys) and is never sent anywhere.
 
 ## Development
 
@@ -248,6 +259,16 @@ From the repo root, `npm run build:all` builds the app, builds the docs, and cop
 8. `src/lib/mahjongTileImage.ts` renders tile images for the Classic color and Unicode tile sets.
 9. `src/data/specialHands.json` is the configurable special-hands catalogue (names, tai values, rule notes, example layouts).
 10. `src/lib/utilities.ts` defines the utility menu registry.
+11. `src/lib/storage.ts` and `src/lib/usePersistentState.ts` provide guarded, validated `localStorage` persistence.
+12. `src/lib/clipboard.ts` provides copy (with legacy fallback) and native share helpers; `src/lib/haptics.ts` wraps vibration.
+
+### App shell
+
+1. `src/components/ErrorBoundary.tsx` catches render errors and shows a recovery card instead of a blank page.
+2. `src/components/RouteChrome.tsx` resets scroll and sets the document title on every route change.
+3. `src/components/CopyActions.tsx` is the shared Copy / Share control with self-clearing feedback.
+4. `src/pages/NotFound.tsx` handles unknown hash routes.
+5. `public/manifest.webmanifest` plus the icons in `public/` make the app installable to the home screen.
 
 ### In-game dice technical behavior
 

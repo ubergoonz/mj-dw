@@ -4,6 +4,7 @@ import UtilityMenu from "../components/UtilityMenu";
 import HelpDialog from "../components/HelpDialog";
 import Brand from "../components/Brand";
 import { resolveWallBreak, SEAT_ORDER, stacksForSeat, type Seat, type WallBreakResult } from "../lib/inGameDiceRoll";
+import { vibrate } from "../lib/haptics";
 import "../styles/inGameDiceRoll.css";
 
 type DiceCount = 2 | 3;
@@ -143,6 +144,7 @@ export default function InGameDiceRoll() {
 
     setWallThemeIndex((current) => (current + 1) % WALL_COLOR_THEMES.length);
     setIsRolling(true);
+    vibrate(15);
 
     rollingIntervalId.current = window.setInterval(() => {
       setDice((prev) => prev.map((die) => ({ ...die, face: randomDieValue() })));
@@ -160,6 +162,7 @@ export default function InGameDiceRoll() {
       const rollTotal = finalFaces.reduce((sum, face) => sum + face, 0);
       const updatedRolls = [...priorRolls, rollTotal];
       setRollsSoFar(updatedRolls);
+      vibrate([30, 40, 30]);
 
       if (updatedRolls.length >= rollsRequired(diceCount)) {
         // First roll picks the seat (counting 東→南→西→北). With two dice,

@@ -1,0 +1,32 @@
+{
+  "name": "雀起 · 麻将都Win",
+  "short_name": "麻将都Win",
+  "description": "Singapore mahjong table utilities: wind draw, dice, wall break, 台 payout, side bets, results and invites.",
+  "lang": "zh",
+  "start_url": "/mj-dw/#/",
+  "scope": "/mj-dw/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f0e2",
+  "theme_color": "#123f3a",
+  "icons": [
+    {
+      "src": "/mj-dw/mj-dw-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/mj-dw/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/mj-dw/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
