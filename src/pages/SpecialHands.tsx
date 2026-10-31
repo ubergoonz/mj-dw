@@ -3,6 +3,7 @@ import Brand from "../components/Brand";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
+import VersionBadge from "../components/VersionBadge";
 import specialHands from "../data/specialHands.json";
 import {
   MAHJONG_TILE_SETS,
@@ -33,6 +34,7 @@ export default function SpecialHands() {
       <header className="topbar">
         <Brand />
         <div className="topbar-actions">
+          <VersionBadge />
           <UtilityMenu />
           <HelpDialog eyebrow="HOW TO PLAY" title="特別牌型">
             <p>選擇一個牌型，查看常見新加坡麻將台數、胡牌示例和規則說明。</p>

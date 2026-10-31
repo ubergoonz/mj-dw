@@ -3,6 +3,7 @@ import Brand from "../components/Brand";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
+import VersionBadge from "../components/VersionBadge";
 import { mahjongTileImage } from "../lib/mahjongTileImage";
 import { getPureSuitDiscardSuggestions, getPureSuitHandPlan, getPureSuitWinningTiles, knownRemainingCopies, pureSuitDrawChance, type TileCounts } from "../lib/pureSuit";
 import "../styles/pureSuit.css";
@@ -159,7 +160,7 @@ export default function PureSuit() {
 
   return (
     <main className="fan-payout-shell pure-suit-shell">
-      <header className="topbar"><Brand /><div className="topbar-actions"><UtilityMenu /><HelpDialog eyebrow="HOW TO PLAY" title="清一色听牌"><p>Use the + and − controls under each tile to record copies in your hand or the discard river. The “used” count prevents recording more than four copies.</p><p>「Ways to complete your hand」會即時拆解手牌的最佳組合，並列出別家打出哪些牌時值得碰或吃。</p><p>When you have 14 tiles, choose “Discard to river” on a recommendation to update both your hand and river in one step.</p></HelpDialog></div></header>
+      <header className="topbar"><Brand /><div className="topbar-actions"><VersionBadge /><UtilityMenu /><HelpDialog eyebrow="HOW TO PLAY" title="清一色听牌"><p>Use the + and − controls under each tile to record copies in your hand or the discard river. The “used” count prevents recording more than four copies.</p><p>「Ways to complete your hand」會即時拆解手牌的最佳組合，並列出別家打出哪些牌時值得碰或吃。</p><p>When you have 14 tiles, choose “Discard to river” on a recommendation to update both your hand and river in one step.</p></HelpDialog></div></header>
       <section className="hero" aria-labelledby="page-title"><p className="eyebrow">MAHJONG · PURE SUIT</p><h1 id="page-title">清一色听牌</h1></section>
       <section className="fan-payout-panel pure-suit-panel" aria-label="Pure Suit Mahjong hand assistant">
         <div className="pure-suit-controls"><label className="field"><span>Suit</span><select value={suit} onChange={(event) => setSuit(event.target.value as Suit)}><option value="萬">萬 Characters</option><option value="筒">筒 Circles</option><option value="索">索 Bamboos</option></select></label><button className="pure-suit-reset" type="button" onClick={reset}>Reset</button></div>

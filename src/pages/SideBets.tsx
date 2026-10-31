@@ -3,6 +3,7 @@ import Brand from "../components/Brand";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
+import VersionBadge from "../components/VersionBadge";
 import {
   SIDE_BET_TYPES,
   getSideBetRows,
@@ -28,6 +29,7 @@ export default function SideBets() {
       <header className="topbar">
         <Brand />
         <div className="topbar-actions">
+          <VersionBadge />
           <UtilityMenu />
           <HelpDialog eyebrow="HOW TO PLAY" title="花獸槓計算">
             <p>選擇底注最小值，最大值自動為最小值的兩倍。</p>

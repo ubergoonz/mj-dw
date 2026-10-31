@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { shuffledWinds } from "../lib/winds";
 import Footer from "../components/Footer";
 import UtilityMenu from "../components/UtilityMenu";
+import VersionBadge from "../components/VersionBadge";
 import HelpDialog from "../components/HelpDialog";
 import Brand from "../components/Brand";
 
@@ -88,6 +89,7 @@ export default function WindDraw() {
       <header className="topbar">
         <Brand />
         <div className="topbar-actions">
+          <VersionBadge />
           <UtilityMenu />
           <HelpDialog eyebrow="HOW TO PLAY" title="選風打位">
             <p>点击"开始抽风"，系统会随机抽取東、南、西、北四个风位。</p>

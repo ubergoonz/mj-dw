@@ -78,7 +78,10 @@ export default function UtilityMenu() {
                 >
                   <span className="utility-menu-glyph" aria-hidden="true">{utility.glyph}</span>
                   <strong>{utility.label}</strong>
-                  <small>{utility.description}</small>
+                  <small>
+                    {utility.description}
+                    {utility.version && <span className="utility-menu-version"> · v{utility.version}</span>}
+                  </small>
                 </Link>
               </li>
             );

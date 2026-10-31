@@ -4,6 +4,7 @@ import CopyActions from "../components/CopyActions";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
+import VersionBadge from "../components/VersionBadge";
 import { SEAT_ORDER, type Seat } from "../lib/inGameDiceRoll";
 import {
   calculateNet,
@@ -202,6 +203,7 @@ export default function PlayerResults() {
       <header className="topbar">
         <Brand />
         <div className="topbar-actions">
+          <VersionBadge />
           <UtilityMenu />
           <HelpDialog eyebrow="HOW TO PLAY" title="成績記錄">
             <p>開局先輸入總起始籌碼，系統會平均分給東、南、西、北四家作為 base。</p>

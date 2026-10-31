@@ -4,6 +4,7 @@ import CopyActions from "../components/CopyActions";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
+import VersionBadge from "../components/VersionBadge";
 import {
   DA_SAN_YUAN_OPTIONS,
   DA_SI_XI_OPTIONS,
@@ -136,6 +137,7 @@ export default function BeckonInvite() {
       <header className="topbar">
         <Brand />
         <div className="topbar-actions">
+          <VersionBadge />
           <UtilityMenu />
           <HelpDialog eyebrow="HOW TO PLAY" title="招兵買馬">
             <p>組織者填寫場地、時間與遊戲規則，下方會自動生成一份可複製的邀請文字。</p>

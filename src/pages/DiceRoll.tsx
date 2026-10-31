@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Footer from "../components/Footer";
 import UtilityMenu from "../components/UtilityMenu";
+import VersionBadge from "../components/VersionBadge";
 import HelpDialog from "../components/HelpDialog";
 import Brand from "../components/Brand";
 import { vibrate } from "../lib/haptics";
@@ -88,6 +89,7 @@ export default function DiceRoll() {
       <header className="topbar">
         <Brand />
         <div className="topbar-actions">
+          <VersionBadge />
           <UtilityMenu />
           <HelpDialog eyebrow="HOW TO PLAY" title="掷骰子">
             <p>点击上方按钮，选择使用 2 个或 3 个骰子。</p>

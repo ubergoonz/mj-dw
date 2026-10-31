@@ -185,6 +185,32 @@ The 掷骰开墩 page follows the current logic implemented in the app.
 2. Leftward rollover order is: 東 → 北 → 西 → 南 → 東.
 3. If the count lands exactly at the wall end, opening continues at the next wall.
 
+## Versioning
+
+The project follows [Semantic Versioning](https://semver.org/) at two levels, and every page shows its version as a small badge in the header (hover or long-press it for the full app build identity).
+
+| Level | Source of truth | Shown | Bump when |
+| --- | --- | --- | --- |
+| **App** | `version` in `package.json` | Badge on the home page; in every badge tooltip as `App vX.Y.Z · build <sha> · <date>` | A release is cut (any set of tool changes shipped together) |
+| **Tool** | `version` on each entry in `src/lib/utilities.ts` | Badge on that tool's page; next to the tool in the utilities menu | That tool's behaviour changes |
+
+Tool version semantics:
+
+- **MAJOR** — rule or output changes players must re-learn: payout formula, chat text format, an incompatible saved-data shape.
+- **MINOR** — new capability (a new control, option, or output).
+- **PATCH** — fix or visual polish with no behaviour change.
+
+Every change is recorded in [CHANGELOG.md](CHANGELOG.md) (Keep a Changelog format). A tool bump needs a `#### <tool label> v<version>` heading under the release it ships in; the app version needs a `## [X.Y.Z] - YYYY-MM-DD` release heading. `src/lib/utilities.test.ts` enforces both, so `npm test` / CI fails if a version is bumped without notes.
+
+Release checklist:
+
+1. Bump the affected tool versions in `src/lib/utilities.ts` and write their CHANGELOG entries under `[Unreleased]`.
+2. Bump `version` in `package.json`, rename `[Unreleased]` to the new release heading with today's date, and update the compare links at the bottom.
+3. `npm run lint && npx vitest run && npm run build`, commit, push — the deploy workflow publishes it.
+4. Optionally tag the commit: `git tag vX.Y.Z && git push --tags`.
+
+Saved-data keys in `localStorage` carry their own schema suffix (e.g. `mj-dw:player-results:v1`); bump that suffix when a stored shape changes incompatibly so old data is ignored rather than mis-read.
+
 ## Mobile Use
 
 The app is installable. Open it in your phone's browser and choose **Add to Home Screen** (iOS Safari: Share → Add to Home Screen; Android Chrome: menu → Install app). It launches full-screen with its own icon, like a native app.
@@ -258,17 +284,19 @@ From the repo root, `npm run build:all` builds the app, builds the docs, and cop
 7. `src/lib/pureSuit.ts` handles one-suit wait detection, hand grouping, call hints, and known-tile draw odds.
 8. `src/lib/mahjongTileImage.ts` renders tile images for the Classic color and Unicode tile sets.
 9. `src/data/specialHands.json` is the configurable special-hands catalogue (names, tai values, rule notes, example layouts).
-10. `src/lib/utilities.ts` defines the utility menu registry.
+10. `src/lib/utilities.ts` defines the utility menu registry, including each tool's version.
 11. `src/lib/storage.ts` and `src/lib/usePersistentState.ts` provide guarded, validated `localStorage` persistence.
 12. `src/lib/clipboard.ts` provides copy (with legacy fallback) and native share helpers; `src/lib/haptics.ts` wraps vibration.
+13. `src/lib/version.ts` exposes the build-time app version/SHA and resolves the version to show for a route.
 
 ### App shell
 
 1. `src/components/ErrorBoundary.tsx` catches render errors and shows a recovery card instead of a blank page.
 2. `src/components/RouteChrome.tsx` resets scroll and sets the document title on every route change.
 3. `src/components/CopyActions.tsx` is the shared Copy / Share control with self-clearing feedback.
-4. `src/pages/NotFound.tsx` handles unknown hash routes.
-5. `public/manifest.webmanifest` plus the icons in `public/` make the app installable to the home screen.
+4. `src/components/VersionBadge.tsx` renders the header version pill (tool version, or app version on Home).
+5. `src/pages/NotFound.tsx` handles unknown hash routes.
+6. `public/manifest.webmanifest` plus the icons in `public/` make the app installable to the home screen.
 
 ### In-game dice technical behavior
 

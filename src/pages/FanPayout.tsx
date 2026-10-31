@@ -3,6 +3,7 @@ import Brand from "../components/Brand";
 import Footer from "../components/Footer";
 import HelpDialog from "../components/HelpDialog";
 import UtilityMenu from "../components/UtilityMenu";
+import VersionBadge from "../components/VersionBadge";
 import { FAN_BASE_OPTIONS, FAN_INPUT_MAX, getFanPayoutRows } from "../lib/fanPayout";
 import { is } from "../lib/storage";
 import { usePersistentState } from "../lib/usePersistentState";
@@ -67,6 +68,7 @@ export default function FanPayout() {
       <header className="topbar">
         <Brand />
         <div className="topbar-actions">
+          <VersionBadge />
           <UtilityMenu />
           <HelpDialog eyebrow="HOW TO PLAY" title="台數計算">
             <p>底注是「閒家 / 出銃」一對數值，直接作為 0 台的基礎，例如 1 / 2。</p>

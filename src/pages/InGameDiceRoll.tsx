@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Footer from "../components/Footer";
 import UtilityMenu from "../components/UtilityMenu";
+import VersionBadge from "../components/VersionBadge";
 import HelpDialog from "../components/HelpDialog";
 import Brand from "../components/Brand";
 import { resolveWallBreak, SEAT_ORDER, stacksForSeat, type Seat, type WallBreakResult } from "../lib/inGameDiceRoll";
@@ -205,6 +206,7 @@ export default function InGameDiceRoll() {
       <header className="topbar">
         <Brand />
         <div className="topbar-actions">
+          <VersionBadge />
           <UtilityMenu />
           <HelpDialog eyebrow="HOW TO PLAY" title="掷骰开墩">
             <p>庄家（東）掷骰决定哪一家开门取牌：选 2 颗骰子需连续掷两次；选 3 颗骰子只需掷一次。</p>

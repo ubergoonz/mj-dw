@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Brand from "../components/Brand";
 import Footer from "../components/Footer";
 import UtilityMenu from "../components/UtilityMenu";
+import VersionBadge from "../components/VersionBadge";
 import { UTILITIES } from "../lib/utilities";
 
 export default function MainSplash() {
@@ -12,6 +13,7 @@ export default function MainSplash() {
       <header className="topbar">
         <Brand />
         <div className="topbar-actions">
+          <VersionBadge />
           <UtilityMenu />
         </div>
       </header>
