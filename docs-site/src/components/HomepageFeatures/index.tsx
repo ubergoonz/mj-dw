@@ -20,13 +20,13 @@ const FeatureList: FeatureItem[] = [
   {
     glyph: '⚄',
     title: '掷骰子 Dice Roll',
-    description: <>Roll dice to decide who breaks the wall and where play starts.</>,
+    description: <>Simple 2- or 3-dice roller with a clear total for any table call.</>,
     to: '/docs/features/dice-roll',
   },
   {
     glyph: '⚅',
     title: '掷骰开墩 In-Game Dice Roll',
-    description: <>Roll dice mid-game for draws, self-draw checks, and other in-game calls.</>,
+    description: <>Roll to pick the opening seat and the exact wall stack where tile pick-up starts.</>,
     to: '/docs/features/in-game-dice-roll',
   },
   {
@@ -44,7 +44,7 @@ const FeatureList: FeatureItem[] = [
   {
     glyph: '績',
     title: '秋後算績 Player Results',
-    description: <>Track scores across rounds and settle up at the end of the session.</>,
+    description: <>Track chips, handovers and net results — auto-saved on your device until you reset.</>,
     to: '/docs/features/player-results',
   },
   {

@@ -9,10 +9,12 @@ Use this reference to look up common Singapore-style tai values for the special 
 
 Route: [`/#/special-hands`](https://ubergoonz.github.io/mj-dw/#/special-hands)
 
+![特別牌型 screenshot](/img/features/special-hands.png)
+
 ## How it works
 
 1. Choose a hand from the Special hand dropdown.
-2. Choose `Classic color` (default) or `Unicode` from Tile image set. Future image sets can be added to the shared renderer.
+2. Choose `Classic color` (default) or `Unicode` from Tile image set. Your choice is remembered on the device. Future image sets can be added to the shared renderer.
 3. Read the tai badge for the selected hand.
 4. Review the Mahjong tile-image layout, description, and table-rule note.
 5. The final tile has a red border: it is the winning tile that completes the illustrated hand. Check whether your table permits it as a self-draw, a discard claim, or both.
@@ -39,8 +41,14 @@ The source of truth is [`src/data/specialHands.json`](https://github.com/ubergoo
 
 Tai values are a convenient Singapore-style baseline rather than universal rules. Update the JSON file as your table agrees additions, removals, or different payouts.
 
+## Tile image sets
+
+- **Classic color** is drawn to match a real Singapore set: concentric-ring 筒 with the traditional green/red/blue placements and the large ornate 一筒; segmented 索 sticks with the bird 一索; a blue numeral over a red 萬 (with 伍 for five); blue 東南西北; red 中, green 發, and a double-framed 白; 春夏秋冬 and 梅蘭菊竹 with their numerals; and the Singapore animals 貓 鼠 雞 蜈蚣. Characters use the device's CJK serif font, so the calligraphy may differ slightly between phones while colours and layouts stay the same.
+- **Unicode** uses the Mahjong Tiles Unicode block, rendered with the device's emoji font.
+
 ## Implementation
 
 - Page: `src/pages/SpecialHands.tsx`
 - Data: `src/data/specialHands.json`
+- Tile renderer: `src/lib/mahjongTileImage.ts` (tested by `src/lib/mahjongTileImage.test.ts`)
 - Styles: `src/styles/specialHands.css`

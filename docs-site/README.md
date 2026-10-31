@@ -1,43 +1,44 @@
-# Website
+# 麻将都Win Docs
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+Documentation site for the [mj-dw](https://github.com/ubergoonz/mj-dw) mahjong toolkit, built with [Docusaurus](https://docusaurus.io/). It is kept as a standalone project so its dependencies stay isolated from the app's React/Vite stack.
 
-## Installation
+Live site: https://ubergoonz.github.io/mj-dw/docs/
+
+## Structure
+
+- `docs/intro.mdx` — overview, install-to-home-screen guidance, what each tool remembers on the device
+- `docs/features/*.mdx` — one page per tool, in sidebar order: 選風打位, 掷骰子, 掷骰开墩, 台數計算, 花獸槓計算, 秋後算績, 招兵買馬, 特別牌型, 清一色听牌
+- `static/img/features/*.png` — screenshots referenced by the feature pages
+- `src/components/HomepageFeatures` — the card grid on the docs homepage
+
+Blogging is disabled (`blog: false` in `docusaurus.config.ts`).
+
+## Local development
 
 ```bash
 npm install
+npm run start      # dev server with live reload
+npm run build      # static output in build/
 ```
 
-**Note**: feel free to use the package manager of your choice.
+From the repository root, `npm run dev` runs the app and docs together, and `npm run build:all` builds both and copies this site into `dist/docs`.
 
-## Local Development
+## Keeping docs in sync with the app
 
-```bash
-npm run start
-```
+When a tool's behaviour changes:
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+1. Update its page under `docs/features/` and, if the change is cross-cutting (persistence, copy/share, install), `docs/intro.mdx`.
+2. Regenerate screenshots so they match the current UI:
 
-## Build
+   ```bash
+   # repository root
+   npm run build && npm run preview     # terminal 1 — serves the app on :4173
+   npm run docs:screenshots             # terminal 2 — writes static/img/features/*.png
+   ```
 
-```bash
-npm run build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+   The script (`_local-dev/screenshots.mjs`) drives the locally installed Google Chrome through `playwright-core`, captures every tool at 726px wide, and puts each stateful tool into a representative state (a completed wind draw, a finished wall break, a settled 秋後算績 session, a listening 清一色 hand).
+3. Run `npm run build` here to validate MDX and links before committing.
 
 ## Deployment
 
-Using SSH:
-
-```bash
-USE_SSH=true npm run deploy
-```
-
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> npm run deploy
-```
-
-If you are using GitHub Pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+The site is deployed automatically by `.github/workflows/deploy-pages.yml` on every push to `main`, together with the app. There is no manual `npm run deploy` step.
