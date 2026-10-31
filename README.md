@@ -281,13 +281,24 @@ From the repo root, `npm run build:all` builds the app, builds the docs, and cop
 
 1. GitHub Actions workflow: `.github/workflows/deploy-pages.yml`
 2. Trigger: push to `main` or manual dispatch
-3. Runtime: Node.js 20
+3. Runtime: Node.js 22; actions are pinned to commit SHAs and run with least-privilege permissions
 4. Build steps:
    - `npm ci`
    - `npm ci --prefix docs-site`
+   - `npm audit --omit=dev --audit-level=high` (deploy is blocked by high/critical production-dependency advisories)
+   - `npm run lint`
+   - `npx vitest run`
    - `npm run build:all` (app build + docs build, docs copied into `dist/docs`)
 5. Output: `dist/` (app at root, docs under `dist/docs`)
 6. Deploy target: GitHub Pages
+7. Dependabot (`.github/dependabot.yml`) opens weekly grouped update PRs for the app, the docs site, and the workflow actions.
+
+### Security posture
+
+- The app is fully client-side: no backend, no accounts, no secrets. The only network calls are to OpenStreetMap Nominatim (venue lookup, user-initiated), Google Fonts, and Google Analytics.
+- Saved state lives in `localStorage` under `mj-dw:*` keys and is shape-validated on read, so tampered or stale data falls back to defaults instead of breaking a page.
+- Tile SVGs are generated from a fixed vocabulary and XML-escaped; there is no `dangerouslySetInnerHTML` anywhere in the app.
+- Dev-only transitive advisories are closed with `overrides` in `package.json` and `docs-site/package.json`; `npm audit` on both trees should report zero high/critical findings.
 
 ### Project structure
 
