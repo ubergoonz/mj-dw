@@ -57,7 +57,7 @@ const shots = [
     async act(page) {
       page.on("dialog", (d) => d.accept());
       const names = ["Ah Seng", "Mei Ling", "Uncle Tan", "Jia Wei"];
-      for (const [i, seat] of ["東", "南", "西", "北"].entries()) {
+      for (const [i, seat] of ["东", "南", "西", "北"].entries()) {
         await page.getByPlaceholder(`${seat} player`).fill(names[i]);
       }
       const nums = page.locator("input[type=number]");
@@ -66,7 +66,7 @@ const shots = [
       await nums.nth(4).fill("380");
       await nums.nth(6).fill("520");
       await nums.nth(8).fill("450");
-      await page.getByRole("button", { name: "全完場" }).click();
+      await page.getByRole("button", { name: "全完场" }).click();
       await page.waitForTimeout(300);
     },
     extra: [{ name: "player-results-records", focus: ".fan-table-wrap", offset: 140 }],
@@ -78,10 +78,10 @@ const shots = [
     route: "pure-suit",
     height: 1000,
     async act(page) {
-      // 13-tile listening hand in 萬: 1112345678999 (nine gates).
+      // 13-tile listening hand in 万: 1112345678999 (nine gates).
       const counts = { 一: 3, 二: 1, 三: 1, 四: 1, 五: 1, 六: 1, 七: 1, 八: 1, 九: 3 };
       for (const [n, c] of Object.entries(counts)) {
-        for (let i = 0; i < c; i++) await page.getByRole("button", { name: `Add one ${n}萬 to hand` }).click();
+        for (let i = 0; i < c; i++) await page.getByRole("button", { name: `Add one ${n}万 to hand` }).click();
       }
       await page.waitForTimeout(300);
     },

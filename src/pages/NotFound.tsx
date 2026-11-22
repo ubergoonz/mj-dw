@@ -17,13 +17,13 @@ export default function NotFound() {
 
       <section className="intro" aria-labelledby="page-title">
         <p className="eyebrow">404 · NOT FOUND</p>
-        <h1 id="page-title">找不到這一頁</h1>
-        <p>這個連結可能已經更改。請從主頁選擇工具。</p>
+        <h1 id="page-title">找不到这一页</h1>
+        <p>这个连结可能已经更改。请从主页选择工具。</p>
       </section>
 
       <div className="error-actions">
         <Link className="utility-action" to="/">
-          回主頁 · Home
+          回主页 · Home
         </Link>
       </div>
 

@@ -13,14 +13,14 @@ https://ubergoonz.github.io/mj-dw/
 
 Main routes:
 
-1. `/#/` - 主頁 (utility hub)
-2. `/#/wind-draw` - 選風打位
+1. `/#/` - 主页 (utility hub)
+2. `/#/wind-draw` - 选风打位
 3. `/#/dice` - 掷骰子
 4. `/#/in-game-dice` - 掷骰开墩
-5. `/#/fan-payout` - 台數計算
-6. `/#/side-bets` - 花獸槓計算
+5. `/#/fan-payout` - 台数计算
+6. `/#/side-bets` - 花兽杠计算
 7. `/#/player-results` - Player Results
-8. `/#/beckon-invite` - 招兵買馬
+8. `/#/beckon-invite` - 招兵买马
 
 Documentation site:
 
@@ -38,7 +38,7 @@ This requires Node.js, npm, and installed project dependencies. It opens the Mah
 
 ## Features
 
-### 1. 選風打位
+### 1. 选风打位
 
 Use the compass view to determine seat positions before the game starts.
 
@@ -46,8 +46,8 @@ How it works:
 
 1. Tap the center tile.
 2. The four winds reveal in sequence.
-3. 東 marks the dealer seat.
-4. The ▲起莊 marker appears beside 東.
+3. 东 marks the dealer seat.
+4. The ▲起庄 marker appears beside 东.
 
 ### 2. 掷骰子
 
@@ -73,11 +73,11 @@ How it works:
 Extra behavior on this page:
 
 1. Each seat shows its own mini wall stack.
-2. 東 and 西 use 19 stacks; 南 and 北 use 18 stacks.
+2. 东 and 西 use 19 stacks; 南 and 北 use 18 stacks.
 3. The opening wall animates when the break point is determined.
 4. The wall color theme rotates between rolls.
 
-### 4. 台數計算
+### 4. 台数计算
 
 Use the tai payout calculator to review the table payout for every 台 value in a selected range.
 
@@ -98,19 +98,19 @@ The calculator shows:
 
 This is designed for quick Singapore mahjong table checks and local-rule comparisons.
 
-### 5. 花獸槓計算
+### 5. 花兽杠计算
 
-Use the side-bet calculator to settle 花/獸 (flower/animal) and 槓 (kong) payouts outside the main hand.
+Use the side-bet calculator to settle 花/兽 (flower/animal) and 杠 (kong) payouts outside the main hand.
 
 How it works:
 
 1. Pick a base min value; the max is automatically double the min.
 2. 正暗 (hidden) pairs are valued at the max; 正明 (open) pairs are valued at the min.
 3. Extra pairs of the same bet type multiply the payout.
-4. Open 槓 shows a separate 出銃 column for the amount a discarder pays alone.
+4. Open 杠 shows a separate 出铳 column for the amount a discarder pays alone.
 5. Each row is paid by all three other players to the winner at the shown per-player amount.
 
-### 6. 秋後算績 (Player Results)
+### 6. 秋后算绩 (Player Results)
 
 Track a play session's chip counts and settle net win/loss between players.
 
@@ -120,11 +120,11 @@ How it works:
 2. Enter each player's name, base chips, and remaining chips in their seat card.
 3. The tool validates that base and remaining chip tallies match the table total.
 4. When a player leaves mid-session, use `接手` to record the outgoing result and seat a replacement.
-5. At the end of play, use `完場` per seat or `全完場` for every seat.
+5. At the end of play, use `完场` per seat or `全完场` for every seat.
 6. Copy or share a formatted chat-ready summary of all recorded results; remove a wrong record with `×` and restore it with `Undo`.
 7. The whole session is auto-saved on the device until you choose `Reset session`.
 
-### 7. 招兵買馬
+### 7. 招兵买马
 
 Organize a mahjong session and generate a chat-ready invite for players.
 
@@ -132,11 +132,11 @@ How it works:
 
 1. Enter the venue; a debounced OpenStreetMap (Nominatim) lookup resolves it to an embedded map preview and an "Open in Google Maps" link, falling back to a plain Google Maps search link.
 2. Enter parking, smoking availability, expected start/end date and time, and expected rounds; start, end, rounds, and total hours stay in sync automatically.
-3. Set the table's game rules: stake size, tai range, 門清, 平胡 (Ping Hu), 花獸咬, Shooter, End Wall, and Dice Bonus.
-4. Toggle special hands: 大三元, 大四喜, 七對子, 花胡, and 天地胡, each with their payout notes.
+3. Set the table's game rules: stake size, tai range, 门清, 平胡 (Ping Hu), 花兽咬, Shooter, End Wall, and Dice Bonus.
+4. Toggle special hands: 大三元, 大四喜, 七对子, 花胡, and 天地胡, each with their payout notes.
 5. Copy the generated invite from the Chat tab, or switch to the AI tab for a banner image prompt. The form is saved on the device; use `Clear form` to start over.
 
-### 8. 特別牌型
+### 8. 特别牌型
 
 Look up Singapore-style tai values, example winning layouts, and table-rule notes for special hands.
 
@@ -155,7 +155,7 @@ Analyze a one-suit (清一色) hand: find winning tiles, compare discards, and a
 
 How it works:
 
-1. Choose the suit: 萬, 筒, or 索.
+1. Choose the suit: 万, 筒, or 索.
 2. In Step 1 · Select tiles, use each tile's `Hand` and `River` +/− steppers to record copies; the `N / 4 used` caption prevents recording more than four copies.
 3. Record claimed Chi/Pong and hidden Gang sets in Step 2; upgrade a claimed pong with `Self-draw → Gang`.
 4. Read the Ways to complete your hand panel for the best grouping and worth-calling discards.
@@ -168,8 +168,8 @@ The 掷骰开墩 page follows the current logic implemented in the app.
 
 ### Seat selection
 
-1. The first roll starts counting from 東.
-2. Counting order for seat selection is: 東 → 南 → 西 → 北.
+1. The first roll starts counting from 东.
+2. Counting order for seat selection is: 东 → 南 → 西 → 北.
 3. The seat landed on performs the second roll in 2-dice mode.
 
 ### Stack counting
@@ -182,7 +182,7 @@ The 掷骰开墩 page follows the current logic implemented in the app.
 ### Rollover
 
 1. If the count passes the current wall, it rolls to the next wall on the left.
-2. Leftward rollover order is: 東 → 北 → 西 → 南 → 東.
+2. Leftward rollover order is: 东 → 北 → 西 → 南 → 东.
 3. If the count lands exactly at the wall end, opening continues at the next wall.
 
 ## Versioning
@@ -217,8 +217,8 @@ The app is installable. Open it in your phone's browser and choose **Add to Home
 
 Robustness features designed for use at a live table:
 
-1. **Auto-save.** 秋後算績 (the chip ledger), 招兵買馬 (the invite form), and your preferred 台數 / 花獸槓 bases and tile style are saved on the device. Locking the screen, switching apps, or reloading never loses your work.
-2. **Safe destructive actions.** Resetting a session, 全完場, and recording while the chip tally is off all ask for confirmation. Individual records can be removed and undone.
+1. **Auto-save.** 秋后算绩 (the chip ledger), 招兵买马 (the invite form), and your preferred 台数 / 花兽杠 bases and tile style are saved on the device. Locking the screen, switching apps, or reloading never loses your work.
+2. **Safe destructive actions.** Resetting a session, 全完场, and recording while the chip tally is off all ask for confirmation. Individual records can be removed and undone.
 3. **Copy that works everywhere.** Copy falls back gracefully on browsers that block the clipboard API and shows a clear message; on phones a native **Share** button is offered too.
 4. **No white screens.** A render error shows a recovery card with Reload / Home; unknown routes show a friendly 404.
 5. **Haptics.** Dice rolls give a short vibration on supporting phones.
@@ -262,15 +262,15 @@ From the repo root, `npm run build:all` builds the app, builds the docs, and cop
 
 ### Current page map
 
-1. `src/pages/MainSplash.tsx` - 主頁 (utility hub)
-2. `src/pages/WindDraw.tsx` - 選風打位
+1. `src/pages/MainSplash.tsx` - 主页 (utility hub)
+2. `src/pages/WindDraw.tsx` - 选风打位
 3. `src/pages/DiceRoll.tsx` - 掷骰子
 4. `src/pages/InGameDiceRoll.tsx` - 掷骰开墩
-5. `src/pages/FanPayout.tsx` - 台數計算
-6. `src/pages/SideBets.tsx` - 花獸槓計算
-7. `src/pages/PlayerResults.tsx` - 秋後算績
-8. `src/pages/BeckonInvite.tsx` - 招兵買馬
-9. `src/pages/SpecialHands.tsx` - 特別牌型
+5. `src/pages/FanPayout.tsx` - 台数计算
+6. `src/pages/SideBets.tsx` - 花兽杠计算
+7. `src/pages/PlayerResults.tsx` - 秋后算绩
+8. `src/pages/BeckonInvite.tsx` - 招兵买马
+9. `src/pages/SpecialHands.tsx` - 特别牌型
 10. `src/pages/PureSuit.tsx` - 清一色听牌
 
 ### Core logic modules
@@ -278,7 +278,7 @@ From the repo root, `npm run build:all` builds the app, builds the docs, and cop
 1. `src/lib/winds.ts` handles wind shuffling for seat draw.
 2. `src/lib/inGameDiceRoll.ts` contains wall-break resolution logic.
 3. `src/lib/fanPayout.ts` handles tai payout calculation and self-draw/local-rule adjustments.
-4. `src/lib/sideBets.ts` handles 花/獸/槓 side-bet row generation and payout amounts.
+4. `src/lib/sideBets.ts` handles 花/兽/杠 side-bet row generation and payout amounts.
 5. `src/lib/playerResults.ts` handles chip tally validation, net calculation, and result entry formatting.
 6. `src/lib/beckonInvite.ts` handles total-hours calculation, venue geocoding (Nominatim) and OpenStreetMap embed URLs, start/end/rounds auto-sync, tai-range validation, and the chat/AI invite text generators.
 7. `src/lib/pureSuit.ts` handles one-suit wait detection, hand grouping, call hints, and known-tile draw odds.
@@ -345,7 +345,7 @@ docs-site/      # standalone Docusaurus documentation site (own package.json)
 
 1. Why create this app?
 
-When playing the first game on an automatic mahjong table, players may need to spend time finding 東南西北 or determining where to open the wall. This app reduces setup friction so the table can stay intact and the game can start faster.
+When playing the first game on an automatic mahjong table, players may need to spend time finding 东南西北 or determining where to open the wall. This app reduces setup friction so the table can stay intact and the game can start faster.
 
 2. How does it work?
 

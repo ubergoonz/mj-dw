@@ -36,7 +36,7 @@ the app for live-table use, and redraws the tile set.
 
 ### Tools
 
-#### 選風打位 v1.0.0
+#### 选风打位 v1.0.0
 
 - Baseline.
 
@@ -50,29 +50,29 @@ the app for live-table use, and redraws the tile set.
 
 - Added: haptic tick when a roll starts and lands.
 
-#### 台數計算 v1.1.0
+#### 台数计算 v1.1.0
 
 - Added: base pair, 台 range and 自摸 bonus settings persist on the device.
 
-#### 花獸槓計算 v1.1.0
+#### 花兽杠计算 v1.1.0
 
 - Added: base minimum persists on the device.
 
-#### 秋後算績 v1.1.0
+#### 秋后算绩 v1.1.0
 
 - Added: whole session auto-saved on the device with a "started at" banner.
-- Added: confirmation before `Reset session`, `全完場`, and recording while the chip tally does not balance.
+- Added: confirmation before `Reset session`, `全完场`, and recording while the chip tally does not balance.
 - Added: remove a record with `×` and restore it with `Undo`; empty-state row.
 - Added: native Share alongside Copy; copy falls back gracefully when the clipboard is blocked.
 
-#### 招兵買馬 v1.1.0
+#### 招兵买马 v1.1.0
 
 - Added: invite form persists on the device; `Clear form` resets it.
 - Added: native Share alongside Copy; copy feedback clears itself.
 
-#### 特別牌型 v1.1.0
+#### 特别牌型 v1.1.0
 
-- Changed: Classic tile images redrawn to match a real Singapore set (concentric 筒, segmented 索 with bird 一索, blue numeral / red 萬, framed 白, numbered flowers, animals).
+- Changed: Classic tile images redrawn to match a real Singapore set (concentric 筒, segmented 索 with bird 一索, blue numeral / red 万, framed 白, numbered flowers, animals).
 - Added: tile image set choice persists on the device.
 
 #### 清一色听牌 v1.0.1

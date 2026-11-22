@@ -14,12 +14,12 @@ export interface SideBetType {
 export const SIDE_BET_TYPES: SideBetType[] = [
   {
     id: "animal",
-    label: "正咬 · 正動物 / 正花",
+    label: "正咬 · 正动物 / 正花",
     note: "正暗：max · 正明：min",
     statePrefix: "正",
     pairCounts: [1, 2],
   },
-  { id: "gang", label: "槓 · gang", note: "暗：max · 明：min", statePrefix: "", pairCounts: [1] },
+  { id: "gang", label: "杠 · gang", note: "暗：max · 明：min", statePrefix: "", pairCounts: [1] },
 ];
 
 export const SIDE_BET_STATES: { id: SideBetState; label: string }[] = [
@@ -42,7 +42,7 @@ export interface SideBetRow {
   pairLabel: string;
   perPlayer: number;
   winnerTakes: number;
-  /** 明槓 is covered by the discarder, so only that seat pays. */
+  /** 明杠 is covered by the discarder, so only that seat pays. */
   hasShooter: boolean;
   shooterPays: number;
 }
@@ -75,7 +75,7 @@ export function getSideBetRows({ baseMin, baseMax }: SideBetInput): SideBetRow[]
           state,
           stateLabel: `${type.statePrefix}${stateLabel}`,
           pairs,
-          pairLabel: `${pairs} 對`,
+          pairLabel: `${pairs} 对`,
           perPlayer,
           winnerTakes,
           hasShooter,

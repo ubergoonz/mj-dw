@@ -13,10 +13,10 @@ Use the Singapore Mahjong overview from [The Smart Local](https://thesmartlocal.
 
 ## Singapore-Style Table Model
 
-- A full set contains 148 tiles: three numbered suits (萬/Characters, 筒/Circles, 索/Bamboos), four winds, three dragons, four flowers, and four animals.
+- A full set contains 148 tiles: three numbered suits (万/Characters, 筒/Circles, 索/Bamboos), four winds, three dragons, four flowers, and four animals.
 - Each numbered-suit tile, wind, and dragon has four copies. Flowers and animals are supplementary tiles and should not be treated as normal 14-tile hand sets.
-- 東 is the dealer. Seat order is 東 → 南 → 西 → 北, with South on the dealer's right and West opposite East.
-- The table wall uses 19 stacks for 東 and 西, and 18 stacks for 南 and 北. The in-game dice tool must preserve this layout.
+- 东 is the dealer. Seat order is 东 → 南 → 西 → 北, with South on the dealer's right and West opposite East.
+- The table wall uses 19 stacks for 东 and 西, and 18 stacks for 南 and 北. The in-game dice tool must preserve this layout.
 - Play proceeds in seat order. The wall is drawn from clockwise; the dealer starts with 14 tiles and opens by discarding, while other players normally draw then discard.
 - Flower and animal tiles go to the visible garden and require a replacement draw from the wall tail.
 
@@ -64,10 +64,10 @@ Before editing a special-hand example, state the intended hand structure and win
 
 ## Feature-Specific Checks
 
-- **Wind Draw:** identifies 東 as dealer and displays the dealer marker after every completed draw.
+- **Wind Draw:** identifies 东 as dealer and displays the dealer marker after every completed draw.
 - **Dice Roll:** supports independent two- and three-dice totals for table setup.
 - **In-Game Dice Roll:** two-dice mode requires two rolls; the first selects the seat and the combined totals determine the wall break. Three-dice mode uses one roll for both decisions.
-- **Tai Payout:** label ranges, rows, and generated content in 台/Tai. A base pair represents 閒家 / 出銃 at 0 台.
+- **Tai Payout:** label ranges, rows, and generated content in 台/Tai. A base pair represents 闲家 / 出铳 at 0 台.
 - **Side Bets:** describe flower, animal, and kong payments separately from winning-hand tai. Verify whether a rule is an immediate garden payment or a winning-hand modifier.
 - **Beckon Invite:** its copied Chat and AI content must match the current form fields, selected rules, and tai terminology.
 

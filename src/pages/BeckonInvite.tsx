@@ -99,7 +99,7 @@ export default function BeckonInvite() {
   }, [form.venueQuery]);
 
   function clearForm() {
-    if (!window.confirm("Clear the invite form? 所有欄位會還原為預設值。")) return;
+    if (!window.confirm("Clear the invite form? 所有栏位会还原为预设值。")) return;
     setForm(createInitialBeckonInviteForm());
   }
 
@@ -139,16 +139,16 @@ export default function BeckonInvite() {
         <div className="topbar-actions">
           <VersionBadge />
           <UtilityMenu />
-          <HelpDialog eyebrow="HOW TO PLAY" title="招兵買馬">
-            <p>組織者填寫場地、時間與遊戲規則，下方會自動生成一份可複製的邀請文字。</p>
-            <p>場地會自動生成 Google Maps 搜尋連結；開始/結束時間會自動計算總時長。</p>
+          <HelpDialog eyebrow="HOW TO PLAY" title="招兵买马">
+            <p>组织者填写场地、时间与游戏规则，下方会自动生成一份可复制的邀请文字。</p>
+            <p>场地会自动生成 Google Maps 搜寻连结；开始/结束时间会自动计算总时长。</p>
           </HelpDialog>
         </div>
       </header>
 
       <section className="hero" aria-labelledby="page-title">
         <p className="eyebrow">MAHJONG · BECKON INVITE</p>
-        <h1 id="page-title">招兵買馬 - UNDER CONSTRUCTION</h1>
+        <h1 id="page-title">招兵买马 - UNDER CONSTRUCTION</h1>
       </section>
 
       <section className="fan-payout-panel" aria-label="Beckon invite organizer form">
@@ -337,7 +337,7 @@ export default function BeckonInvite() {
           </div>
 
           <label className="field">
-            <span>門清 (Men Qing) Concealed</span>
+            <span>门清 (Men Qing) Concealed</span>
             <select
               value={form.menQing}
               onChange={(event) => update("menQing", event.target.value as MenQingMode)}
@@ -351,7 +351,7 @@ export default function BeckonInvite() {
           </label>
 
           <label className="field">
-            <span>平胡幾台 (Ping Hu)</span>
+            <span>平胡几台 (Ping Hu)</span>
             <select
               value={form.pingHu}
               onChange={(event) => update("pingHu", Number(event.target.value) as 3.5 | 4)}
@@ -371,7 +371,7 @@ export default function BeckonInvite() {
               checked={form.animalBite}
               onChange={(event) => update("animalBite", event.target.checked)}
             />
-            <span>花獸咬 (Animal/Flower Bite)</span>
+            <span>花兽咬 (Animal/Flower Bite)</span>
           </label>
 
           {form.animalBite && (
@@ -416,7 +416,7 @@ export default function BeckonInvite() {
                 <span>臭</span>
               </label>
 
-              <p className="beckon-subgroup-label">4隻</p>
+              <p className="beckon-subgroup-label">4只</p>
               <label className="toggle-field" htmlFor="four-tiles-add-fan">
                 <input
                   id="four-tiles-add-fan"
@@ -433,7 +433,7 @@ export default function BeckonInvite() {
                   checked={form.fourTilesPayGang}
                   onChange={(event) => update("fourTilesPayGang", event.target.checked)}
                 />
-                <span>Pay 花獸槓</span>
+                <span>Pay 花兽杠</span>
               </label>
             </div>
           )}
@@ -492,7 +492,7 @@ export default function BeckonInvite() {
               <input
                 value={form.diceBonusType}
                 onChange={(event) => update("diceBonusType", event.target.value)}
-                placeholder="e.g. 花紅 双numbers"
+                placeholder="e.g. 花红 双numbers"
               />
             </label>
           )}
@@ -535,7 +535,7 @@ export default function BeckonInvite() {
               checked={form.qiDuiZiHand}
               onChange={(event) => update("qiDuiZiHand", event.target.checked)}
             />
-            <span>七对子 — 有玩 / 沒有玩</span>
+            <span>七对子 — 有玩 / 没有玩</span>
           </label>
 
           <label className="toggle-field" htmlFor="hua-hu">
@@ -545,17 +545,17 @@ export default function BeckonInvite() {
               checked={form.huaHu}
               onChange={(event) => update("huaHu", event.target.checked)}
             />
-            <span>花胡 — 有玩 / 沒有玩</span>
+            <span>花胡 — 有玩 / 没有玩</span>
           </label>
 
           {form.huaHu ? (
             <ul className="beckon-rule-notes">
-              <li>自摸第 7 張可搶第 8 張，抓第 8 張者付 1 台出銃 + 2 台閒家</li>
-              <li>自摸第 8 張，全體以出銃價支付</li>
+              <li>自摸第 7 张可抢第 8 张，抓第 8 张者付 1 台出铳 + 2 台闲家</li>
+              <li>自摸第 8 张，全体以出铳价支付</li>
             </ul>
           ) : (
             <ul className="beckon-rule-notes">
-              <li>不設花胡：自摸可打到第 7 張，第 8 張仍可搶（付 1 台）</li>
+              <li>不设花胡：自摸可打到第 7 张，第 8 张仍可抢（付 1 台）</li>
             </ul>
           )}
 
@@ -571,9 +571,9 @@ export default function BeckonInvite() {
 
           {form.tianDiHu && (
             <ul className="beckon-rule-notes">
-              <li>僅限首圈</li>
-              <li>天胡：限庄家，全體以出銃價支付</li>
-              <li>地胡：自摸第 7 張可搶第 8 張，抓第 8 張者付 1 台出銃 + 2 台閒家</li>
+              <li>仅限首圈</li>
+              <li>天胡：限庄家，全体以出铳价支付</li>
+              <li>地胡：自摸第 7 张可抢第 8 张，抓第 8 张者付 1 台出铳 + 2 台闲家</li>
             </ul>
           )}
         </div>
@@ -618,7 +618,7 @@ export default function BeckonInvite() {
           />
           <CopyActions
             text={copyTab === "chat" ? chatText : imagePromptText}
-            shareTitle="麻將招兵買馬"
+            shareTitle="麻将招兵买马"
             copyLabel={copyTab === "chat" ? "Copy invite" : "Copy prompt"}
           />
         </div>

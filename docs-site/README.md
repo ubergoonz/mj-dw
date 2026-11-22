@@ -7,7 +7,7 @@ Live site: https://ubergoonz.github.io/mj-dw/docs/
 ## Structure
 
 - `docs/intro.mdx` — overview, install-to-home-screen guidance, what each tool remembers on the device
-- `docs/features/*.mdx` — one page per tool, in sidebar order: 選風打位, 掷骰子, 掷骰开墩, 台數計算, 花獸槓計算, 秋後算績, 招兵買馬, 特別牌型, 清一色听牌
+- `docs/features/*.mdx` — one page per tool, in sidebar order: 选风打位, 掷骰子, 掷骰开墩, 台数计算, 花兽杠计算, 秋后算绩, 招兵买马, 特别牌型, 清一色听牌
 - `static/img/features/*.png` — screenshots referenced by the feature pages
 - `src/components/HomepageFeatures` — the card grid on the docs homepage
 
@@ -36,7 +36,7 @@ When a tool's behaviour changes:
    npm run docs:screenshots             # terminal 2 — writes static/img/features/*.png
    ```
 
-   The script (`_local-dev/screenshots.mjs`) drives the locally installed Google Chrome through `playwright-core`, captures every tool at 726px wide, and puts each stateful tool into a representative state (a completed wind draw, a finished wall break, a settled 秋後算績 session, a listening 清一色 hand).
+   The script (`_local-dev/screenshots.mjs`) drives the locally installed Google Chrome through `playwright-core`, captures every tool at 726px wide, and puts each stateful tool into a representative state (a completed wind draw, a finished wall break, a settled 秋后算绩 session, a listening 清一色 hand).
 3. Run `npm run build` here to validate MDX and links before committing.
 
 ## Deployment

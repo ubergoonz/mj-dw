@@ -30,16 +30,16 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
       <main className="app-shell error-shell" role="alert">
         <section className="intro">
           <p className="eyebrow">SOMETHING WENT WRONG</p>
-          <h1>糟糕，出錯了</h1>
-          <p>這個工具暫時無法顯示。你的紀錄仍保存在此裝置上，重新載入即可繼續。</p>
+          <h1>糟糕，出错了</h1>
+          <p>这个工具暂时无法显示。你的纪录仍保存在此装置上，重新载入即可继续。</p>
           <p className="error-detail">{this.state.error.message}</p>
         </section>
         <div className="error-actions">
           <button className="utility-action" type="button" onClick={() => window.location.reload()}>
-            重新載入 · Reload
+            重新载入 · Reload
           </button>
           <a className="utility-action utility-action-secondary" href={`${import.meta.env.BASE_URL}#/`}>
-            回主頁 · Home
+            回主页 · Home
           </a>
         </div>
       </main>

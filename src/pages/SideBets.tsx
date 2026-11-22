@@ -31,18 +31,18 @@ export default function SideBets() {
         <div className="topbar-actions">
           <VersionBadge />
           <UtilityMenu />
-          <HelpDialog eyebrow="HOW TO PLAY" title="花獸槓計算">
-            <p>選擇底注最小值，最大值自動為最小值的兩倍。</p>
-            <p>正咬（正動物 / 正花）與槓：正暗按最大值計，正明按最小值計。</p>
-            <p>明槓另設出銃欄，顯示放槓者一人包付的金額，供對照參考。</p>
-            <p>每一項由 Player A、Player B、Player C 各付相同金額給贏家。</p>
+          <HelpDialog eyebrow="HOW TO PLAY" title="花兽杠计算">
+            <p>选择底注最小值，最大值自动为最小值的两倍。</p>
+            <p>正咬（正动物 / 正花）与杠：正暗按最大值计，正明按最小值计。</p>
+            <p>明杠另设出铳栏，显示放杠者一人包付的金额，供对照参考。</p>
+            <p>每一项由 Player A、Player B、Player C 各付相同金额给赢家。</p>
           </HelpDialog>
         </div>
       </header>
 
       <section className="hero" aria-labelledby="page-title">
         <p className="eyebrow">MAHJONG · SIDE BETS</p>
-        <h1 id="page-title">花獸槓計算</h1>
+        <h1 id="page-title">花兽杠计算</h1>
       </section>
 
       <section className="fan-payout-panel" aria-label="Side bet calculator">
