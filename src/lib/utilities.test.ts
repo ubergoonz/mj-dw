@@ -37,7 +37,7 @@ describe("versioning standard", () => {
   });
 
   it("resolves the tool version for tool routes and the app version elsewhere", () => {
-    expect(versionForPath("/fan-payout")).toMatchObject({ subject: "台數計算", isApp: false });
+    expect(versionForPath("/fan-payout")).toMatchObject({ subject: "台数计算", isApp: false });
     expect(versionForPath("/")).toMatchObject({ isApp: true });
     expect(versionForPath("/does-not-exist")).toMatchObject({ isApp: true });
   });

@@ -12,8 +12,8 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    glyph: '風',
-    title: '選風打位 Wind Draw',
+    glyph: '风',
+    title: '选风打位 Wind Draw',
     description: <>Randomly assign seats and prevailing wind at the start of a session.</>,
     to: '/docs/features/wind-draw',
   },
@@ -31,31 +31,31 @@ const FeatureList: FeatureItem[] = [
   },
   {
     glyph: '台',
-    title: '台數計算 Tai Payout',
+    title: '台数计算 Tai Payout',
     description: <>Calculate payouts for a hand based on stake, tai count, and shooter rules.</>,
     to: '/docs/features/fan-payout',
   },
   {
     glyph: '花',
-    title: '花獸槓計算 Side Bets',
+    title: '花兽杠计算 Side Bets',
     description: <>Work out flower, animal, and kong side-bet payouts at the table.</>,
     to: '/docs/features/side-bets',
   },
   {
-    glyph: '績',
-    title: '秋後算績 Player Results',
+    glyph: '绩',
+    title: '秋后算绩 Player Results',
     description: <>Track chips, handovers and net results — auto-saved on your device until you reset.</>,
     to: '/docs/features/player-results',
   },
   {
     glyph: '招',
-    title: '招兵買馬 Beckon Invite',
+    title: '招兵买马 Beckon Invite',
     description: <>Organize a session and generate a copy-ready invite for chat.</>,
     to: '/docs/features/beckon-invite',
   },
   {
     glyph: '胡',
-    title: '特別牌型 Special Hands',
+    title: '特别牌型 Special Hands',
     description: <>Look up common tai values and winning-layout examples for special hands.</>,
     to: '/docs/features/special-hands',
   },

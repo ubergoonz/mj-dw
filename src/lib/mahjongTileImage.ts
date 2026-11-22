@@ -6,22 +6,22 @@ export const MAHJONG_TILE_SETS: Array<{ id: MahjongTileSetId; label: string }> =
 ];
 
 const unicodeTileGlyphs: Record<string, string> = {
-  東: "🀀",
+  东: "🀀",
   南: "🀁",
   西: "🀂",
   北: "🀃",
   中: "中",
-  發: "🀅",
+  发: "🀅",
   白: "🀆",
-  一萬: "🀇",
-  二萬: "🀈",
-  三萬: "🀉",
-  四萬: "🀊",
-  五萬: "🀋",
-  六萬: "🀌",
-  七萬: "🀍",
-  八萬: "🀎",
-  九萬: "🀏",
+  一万: "🀇",
+  二万: "🀈",
+  三万: "🀉",
+  四万: "🀊",
+  五万: "🀋",
+  六万: "🀌",
+  七万: "🀍",
+  八万: "🀎",
+  九万: "🀏",
   一筒: "🀙",
   二筒: "🀚",
   三筒: "🀛",
@@ -45,7 +45,7 @@ const unicodeTileGlyphs: Record<string, string> = {
   秋: "🀤",
   冬: "🀥",
   梅: "🀦",
-  蘭: "🀧",
+  兰: "🀧",
   菊: "🀨",
   竹: "🀩",
 };
@@ -53,8 +53,8 @@ const unicodeTileGlyphs: Record<string, string> = {
  * Classic set: modelled on a real Singapore-style set (see src/assets/
  * Singaporean-Mahjong-Set-Gold-Tile-5_1800x1800.jpg.webp): ivory face with a
  * yellow back edge, concentric-ring 筒 with the traditional green/red/blue
- * placements, segmented 索 with the bird 一索, blue numerals over a red 萬,
- * blue winds, red 中 / green 發 / blue-framed 白, numbered flowers, and the
+ * placements, segmented 索 with the bird 一索, blue numerals over a red 万,
+ * blue winds, red 中 / green 发 / blue-framed 白, numbered flowers, and the
  * Singapore animal tiles.
  */
 
@@ -67,7 +67,7 @@ const INK = "#1f2a2a";
 const FACE_FONT = "'Noto Serif SC','Songti SC','STSong','Noto Serif CJK SC','SimSun',serif";
 
 const NUMERALS = "一二三四五六七八九";
-/** Real sets write 5 as 伍 on the 萬 tile. */
+/** Real sets write 5 as 伍 on the 万 tile. */
 const WAN_NUMERALS = ["一", "二", "三", "四", "伍", "六", "七", "八", "九"];
 
 type Colored = [number, number, string];
@@ -205,10 +205,10 @@ function bambooFace(n: number): string {
   return sticks.map(([x, y, c, hh, rot]) => stick(x, y, c, hh ?? h, rot ?? 0, width)).join("");
 }
 
-/* ---------- 萬, honours ---------- */
+/* ---------- 万, honours ---------- */
 
 function wanFace(n: number): string {
-  return text(27, 31, 23, BLUE, WAN_NUMERALS[n - 1]) + text(27, 59, 24, RED, "萬");
+  return text(27, 31, 23, BLUE, WAN_NUMERALS[n - 1]) + text(27, 59, 24, RED, "万");
 }
 
 function honourFace(tile: string): string {
@@ -218,11 +218,11 @@ function honourFace(tile: string): string {
       `<rect x="17" y="17" width="20" height="38" rx="2" fill="none" stroke="${BLUE}" stroke-width="1.3"/>`
     );
   }
-  const color = tile === "中" ? RED : tile === "發" ? GREEN : BLUE;
+  const color = tile === "中" ? RED : tile === "发" ? GREEN : BLUE;
   return text(27, 49, 34, color, tile);
 }
 
-/* ---------- Flowers (春夏秋冬 numbered 1-4, 梅蘭菊竹 numbered 1-4) ---------- */
+/* ---------- Flowers (春夏秋冬 numbered 1-4, 梅兰菊竹 numbered 1-4) ---------- */
 
 function bloom(x: number, y: number, color: string, r = 2.6): string {
   const petals = Array.from({ length: 5 }, (_, i) => {
@@ -260,7 +260,7 @@ function gentlemanPlant(tile: string): string {
         `<path d="M22 61 C 24 52, 28 46, 36 36 M28 48 C 24 44, 22 41, 20 38" stroke="${ORANGE}" stroke-width="2" fill="none" stroke-linecap="round"/>` +
         bloom(36, 34, RED, 2.4) + bloom(29, 43, RED, 2.2) + bloom(20, 36, RED, 2) + bloom(32, 54, RED, 1.9)
       );
-    case "蘭":
+    case "兰":
       return (
         `<path d="M27 61 C 20 54, 14 46, 15 32 M27 61 C 34 54, 40 46, 40 32 M27 61 C 25 50, 24 40, 27 30 M27 61 C 31 52, 34 44, 33 34" stroke="${GREEN}" stroke-width="2" fill="none" stroke-linecap="round"/>` +
         bloom(16, 30, RED, 1.8) + bloom(40, 30, RED, 1.8) + bloom(27, 28, RED, 1.8)
@@ -295,7 +295,7 @@ function flowerFace(tile: string): string {
       seasonPlant(tile)
     );
   }
-  const gentlemen = "梅蘭菊竹";
+  const gentlemen = "梅兰菊竹";
   const gIndex = gentlemen.indexOf(tile);
   const labelColor = gIndex % 2 === 0 ? BLUE : GREEN;
   // Character top-left, numeral top-right.
@@ -306,16 +306,14 @@ function flowerFace(tile: string): string {
   );
 }
 
-/* ---------- Singapore animals: 貓 鼠 雞 蜈蚣 ---------- */
+/* ---------- Singapore animals: 猫 鼠 鸡 蜈蚣 ---------- */
 
 const ANIMAL_TILES: Record<string, { color: string; label: string }> = {
-  貓: { color: GREEN, label: "貓" },
-  猫: { color: GREEN, label: "貓" },
+  猫: { color: GREEN, label: "猫" },
   鼠: { color: BLUE, label: "鼠" },
   老鼠: { color: BLUE, label: "鼠" },
-  雞: { color: RED, label: "雞" },
-  鸡: { color: RED, label: "雞" },
-  公雞: { color: RED, label: "雞" },
+  鸡: { color: RED, label: "鸡" },
+  公鸡: { color: RED, label: "鸡" },
   蜈蚣: { color: GREEN, label: "蜈蚣" },
 };
 
@@ -336,17 +334,17 @@ function animalFace(tile: string): string {
 
 /* ---------- Tile body ---------- */
 
-const FLOWER_TILES = "春夏秋冬梅蘭菊竹";
+const FLOWER_TILES = "春夏秋冬梅兰菊竹";
 
 function classicFace(tile: string): string {
-  const numbered = tile.match(/^([一二三四五六七八九])([萬筒索])$/);
+  const numbered = tile.match(/^([一二三四五六七八九])([万筒索])$/);
   if (numbered) {
     const n = NUMERALS.indexOf(numbered[1]) + 1;
     if (numbered[2] === "筒") return circleFace(n);
     if (numbered[2] === "索") return bambooFace(n);
     return wanFace(n);
   }
-  if ("東南西北中發白".includes(tile)) return honourFace(tile);
+  if ("东南西北中发白".includes(tile)) return honourFace(tile);
   if (FLOWER_TILES.includes(tile)) return flowerFace(tile);
   if (tile in ANIMAL_TILES) return animalFace(tile);
   return text(27, 48, 26, INK, tile);

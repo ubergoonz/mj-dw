@@ -36,16 +36,16 @@ export default function SpecialHands() {
         <div className="topbar-actions">
           <VersionBadge />
           <UtilityMenu />
-          <HelpDialog eyebrow="HOW TO PLAY" title="特別牌型">
-            <p>選擇一個牌型，查看常見新加坡麻將台數、胡牌示例和規則說明。</p>
-            <p>台數是方便討論的預設參考；各桌玩法不同，可直接更新 specialHands.json 作為共同規則。</p>
+          <HelpDialog eyebrow="HOW TO PLAY" title="特别牌型">
+            <p>选择一个牌型，查看常见新加坡麻将台数、胡牌示例和规则说明。</p>
+            <p>台数是方便讨论的预设参考；各桌玩法不同，可直接更新 specialHands.json 作为共同规则。</p>
           </HelpDialog>
         </div>
       </header>
 
       <section className="hero" aria-labelledby="page-title">
         <p className="eyebrow">MAHJONG · SPECIAL HANDS</p>
-        <h1 id="page-title">特別牌型</h1>
+        <h1 id="page-title">特别牌型</h1>
       </section>
 
       <section className="fan-payout-panel special-hands-panel" aria-label="Special hand reference">

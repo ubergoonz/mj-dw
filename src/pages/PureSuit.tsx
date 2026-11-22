@@ -8,7 +8,7 @@ import { mahjongTileImage } from "../lib/mahjongTileImage";
 import { getPureSuitDiscardSuggestions, getPureSuitHandPlan, getPureSuitWinningTiles, knownRemainingCopies, pureSuitDrawChance, type TileCounts } from "../lib/pureSuit";
 import "../styles/pureSuit.css";
 
-type Suit = "萬" | "筒" | "索";
+type Suit = "万" | "筒" | "索";
 type SetSource = "concealed" | "claimed" | "upgraded";
 type HandSet = { id: string; tiles: number[]; kind: "chi" | "pong" | "gang"; source: SetSource; claimedTile?: number };
 
@@ -39,7 +39,7 @@ function sourceLabel(source: SetSource): string {
 }
 
 export default function PureSuit() {
-  const [suit, setSuit] = useState<Suit>("萬");
+  const [suit, setSuit] = useState<Suit>("万");
   const [handSets, setHandSets] = useState<HandSet[]>([]);
   const [looseTiles, setLooseTiles] = useState<number[]>([]);
   const [riverTiles, setRiverTiles] = useState<number[]>([]);
@@ -160,10 +160,10 @@ export default function PureSuit() {
 
   return (
     <main className="fan-payout-shell pure-suit-shell">
-      <header className="topbar"><Brand /><div className="topbar-actions"><VersionBadge /><UtilityMenu /><HelpDialog eyebrow="HOW TO PLAY" title="清一色听牌"><p>Use the + and − controls under each tile to record copies in your hand or the discard river. The “used” count prevents recording more than four copies.</p><p>「Ways to complete your hand」會即時拆解手牌的最佳組合，並列出別家打出哪些牌時值得碰或吃。</p><p>When you have 14 tiles, choose “Discard to river” on a recommendation to update both your hand and river in one step.</p></HelpDialog></div></header>
+      <header className="topbar"><Brand /><div className="topbar-actions"><VersionBadge /><UtilityMenu /><HelpDialog eyebrow="HOW TO PLAY" title="清一色听牌"><p>Use the + and − controls under each tile to record copies in your hand or the discard river. The “used” count prevents recording more than four copies.</p><p>「Ways to complete your hand」会即时拆解手牌的最佳组合，并列出别家打出哪些牌时值得碰或吃。</p><p>When you have 14 tiles, choose “Discard to river” on a recommendation to update both your hand and river in one step.</p></HelpDialog></div></header>
       <section className="hero" aria-labelledby="page-title"><p className="eyebrow">MAHJONG · PURE SUIT</p><h1 id="page-title">清一色听牌</h1></section>
       <section className="fan-payout-panel pure-suit-panel" aria-label="Pure Suit Mahjong hand assistant">
-        <div className="pure-suit-controls"><label className="field"><span>Suit</span><select value={suit} onChange={(event) => setSuit(event.target.value as Suit)}><option value="萬">萬 Characters</option><option value="筒">筒 Circles</option><option value="索">索 Bamboos</option></select></label><button className="pure-suit-reset" type="button" onClick={reset}>Reset</button></div>
+        <div className="pure-suit-controls"><label className="field"><span>Suit</span><select value={suit} onChange={(event) => setSuit(event.target.value as Suit)}><option value="万">万 Characters</option><option value="筒">筒 Circles</option><option value="索">索 Bamboos</option></select></label><button className="pure-suit-reset" type="button" onClick={reset}>Reset</button></div>
         <div className="pure-suit-summary"><div><small>Claimed sets</small><strong>{claimedSetCount} / 4</strong></div><div><small>Concealed tiles</small><strong>{concealedTileCount} / {hiddenCapacity}</strong></div><div><small>Waits at</small><strong>{waitSize}</strong></div><div><small>Discard at</small><strong>{discardSize}</strong></div></div>
         <p className="pure-suit-status" role="status">{statusMessage}</p>
 

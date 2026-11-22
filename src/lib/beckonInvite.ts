@@ -3,7 +3,7 @@ export interface StakeOption {
   label: string;
 }
 
-/** 底注選項，含相同金額但採用「相公捨入」規則的變體，故以獨立 id 區分。 */
+/** 底注选项，含相同金额但采用「相公舍入」规则的变体，故以独立 id 区分。 */
 export const STAKE_OPTIONS: StakeOption[] = [
   { id: "0.10-0.20", label: "0.10 / 0.20" },
   { id: "0.20-0.40", label: "0.20 / 0.40" },
@@ -56,7 +56,7 @@ export const EXPECTED_ROUNDS_OPTIONS: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
 export type MenQingMode = "off" | "play" | "fan";
 
 export const MEN_QING_OPTIONS: SelectOption<MenQingMode>[] = [
-  { id: "off", label: "Not played (不設)" },
+  { id: "off", label: "Not played (不设)" },
   { id: "play", label: "Play" },
   { id: "fan", label: "Play + 加 1 台" },
 ];
@@ -64,15 +64,15 @@ export const MEN_QING_OPTIONS: SelectOption<MenQingMode>[] = [
 export type BigHandMode = "off" | "complete" | "pong";
 
 export const DA_SAN_YUAN_OPTIONS: SelectOption<BigHandMode>[] = [
-  { id: "off", label: "Not played (不設)" },
+  { id: "off", label: "Not played (不设)" },
   { id: "complete", label: "Winning hand only (和牌才算)" },
-  { id: "pong", label: "Pong/Kong all 3 dragons (碰/槓三元即成)" },
+  { id: "pong", label: "Pong/Kong all 3 dragons (碰/杠三元即成)" },
 ];
 
 export const DA_SI_XI_OPTIONS: SelectOption<BigHandMode>[] = [
-  { id: "off", label: "Not played (不設)" },
+  { id: "off", label: "Not played (不设)" },
   { id: "complete", label: "Winning hand only (和牌才算)" },
-  { id: "pong", label: "Pong/Kong all 4 winds (碰/槓四喜即成)" },
+  { id: "pong", label: "Pong/Kong all 4 winds (碰/杠四喜即成)" },
 ];
 
 export interface BeckonInviteForm {
@@ -254,10 +254,10 @@ export function formatBeckonInviteForChat(form: BeckonInviteForm): string {
   const smokingLabel = SMOKING_OPTIONS.find((option) => option.id === form.smoking)?.label ?? "";
   const tableModeLabel = TABLE_MODE_OPTIONS.find((option) => option.id === form.tableMode)?.label ?? "";
   const endWallLabel = END_WALL_OPTIONS.find((option) => option.id === form.endWall)?.label ?? "";
-  const menQingLabel = MEN_QING_OPTIONS.find((option) => option.id === form.menQing)?.label ?? "Not played (不設)";
+  const menQingLabel = MEN_QING_OPTIONS.find((option) => option.id === form.menQing)?.label ?? "Not played (不设)";
 
   const lines: string[] = [
-    "📣 招兵買馬 · Mahjong Session Invite",
+    "📣 招兵买马 · Mahjong Session Invite",
     "",
     `📍 Venue: ${form.venueQuery.trim() || "TBC"}${mapsUrl ? ` (${mapsUrl})` : ""}`,
     `🕒 Start: ${formatDateTime(form.startDateTime)}`,
@@ -271,47 +271,47 @@ export function formatBeckonInviteForChat(form: BeckonInviteForm): string {
     `Table mode: ${tableModeLabel}`,
     `Stake: ${stake.label}`,
     `Tai range: ${form.minFan}–${form.maxFan}`,
-    `門清: ${menQingLabel}`,
-    `平胡幾台(Ping Hu): ${form.pingHu}`,
-    `花獸咬: ${form.animalBite ? "Yes" : "No"}`,
+    `门清: ${menQingLabel}`,
+    `平胡几台(Ping Hu): ${form.pingHu}`,
+    `花兽咬: ${form.animalBite ? "Yes" : "No"}`,
   ];
 
   if (form.animalBite) {
     lines.push(
       `  正明: ${form.openZheng ? "Yes" : "No"} · 臭明: ${form.openChou ? "Yes" : "No"}`,
       `  正暗: ${form.closeZheng ? "Yes" : "No"} · 臭暗: ${form.closeChou ? "Yes" : "No"}`,
-      `  4隻: Add 1 台: ${form.fourTilesAddFan ? "Yes" : "No"} · Pay 花獸槓: ${form.fourTilesPayGang ? "Yes" : "No"}`,
+      `  4只: Add 1 台: ${form.fourTilesAddFan ? "Yes" : "No"} · Pay 花兽杠: ${form.fourTilesPayGang ? "Yes" : "No"}`,
     );
   }
 
   lines.push(
-    `出銃 (Shooter): ${form.shooter ? "Yes" : "No"}`,
+    `出铳 (Shooter): ${form.shooter ? "Yes" : "No"}`,
     `尾墩: ${endWallLabel}`,
-    `骰子花紅: ${form.diceBonus ? form.diceBonusType.trim() || "Yes" : "No"}`,
+    `骰子花红: ${form.diceBonus ? form.diceBonusType.trim() || "Yes" : "No"}`,
     "",
     "🏆 Special hands",
-    `大三元: ${DA_SAN_YUAN_OPTIONS.find((option) => option.id === form.daSanYuan)?.label ?? "Not played (不設)"}`,
-    `大四喜: ${DA_SI_XI_OPTIONS.find((option) => option.id === form.daSiXi)?.label ?? "Not played (不設)"}`,
+    `大三元: ${DA_SAN_YUAN_OPTIONS.find((option) => option.id === form.daSanYuan)?.label ?? "Not played (不设)"}`,
+    `大四喜: ${DA_SI_XI_OPTIONS.find((option) => option.id === form.daSiXi)?.label ?? "Not played (不设)"}`,
     `七对子: ${form.qiDuiZiHand ? "有玩" : "没有玩"}`,
     `花胡: ${form.huaHu ? "有玩" : "没有玩"}`,
   );
 
   if (form.huaHu) {
     lines.push(
-      "  自摸第7張可搶第8張，抓第8張者付1台出銃 + 2台閒家",
-      "  自摸第8張，全體以出銃價支付",
+      "  自摸第7张可抢第8张，抓第8张者付1台出铳 + 2台闲家",
+      "  自摸第8张，全体以出铳价支付",
     );
   } else {
-    lines.push("  不設花胡：自摸可打到第7張，第8張仍可搶（付1台）");
+    lines.push("  不设花胡：自摸可打到第7张，第8张仍可抢（付1台）");
   }
 
   lines.push(`天地胡: ${form.tianDiHu ? "Yes" : "No"}`);
 
   if (form.tianDiHu) {
     lines.push(
-      "  僅限首圈",
-      "  天胡：限庄家，全體以出銃價支付",
-      "  地胡：自摸第7張可搶第8張，抓第8張者付1台出銃 + 2台閒家",
+      "  仅限首圈",
+      "  天胡：限庄家，全体以出铳价支付",
+      "  地胡：自摸第7张可抢第8张，抓第8张者付1台出铳 + 2台闲家",
     );
   }
 
@@ -332,7 +332,7 @@ export function formatBeckonInviteImagePrompt(form: BeckonInviteForm): string {
     `- Expected rounds: ${form.expectedRounds}`,
     `- Stake: ${stake.label}`,
     "",
-    "Visual style: festive Chinese/Singaporean mahjong theme, mahjong tiles (bamboo, dots, characters, winds, dragons) artfully arranged, warm red/gold/jade color palette, celebratory and inviting mood, clean modern layout suitable for a landscape banner (16:9), legible bold title text such as \"MAHJONG NIGHT\" or \"招兵買馬\".",
+    "Visual style: festive Chinese/Singaporean mahjong theme, mahjong tiles (bamboo, dots, characters, winds, dragons) artfully arranged, warm red/gold/jade color palette, celebratory and inviting mood, clean modern layout suitable for a landscape banner (16:9), legible bold title text such as \"MAHJONG NIGHT\" or \"招兵买马\".",
     "Avoid photorealistic faces; keep the style illustrative/graphic.",
   ];
 

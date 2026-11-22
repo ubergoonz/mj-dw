@@ -2,10 +2,10 @@ import { describe, expect, it } from "vitest";
 import specialHands from "../data/specialHands.json";
 import { MAHJONG_TILE_SETS, mahjongTileImage } from "./mahjongTileImage";
 
-const NUMBERED = ["萬", "筒", "索"].flatMap((suit) => [..."一二三四五六七八九"].map((n) => `${n}${suit}`));
-const HONOURS = [..."東南西北中發白"];
-const FLOWERS = [..."春夏秋冬梅蘭菊竹"];
-const ANIMALS = ["貓", "鼠", "雞", "蜈蚣"];
+const NUMBERED = ["万", "筒", "索"].flatMap((suit) => [..."一二三四五六七八九"].map((n) => `${n}${suit}`));
+const HONOURS = [..."东南西北中发白"];
+const FLOWERS = [..."春夏秋冬梅兰菊竹"];
+const ANIMALS = ["猫", "鼠", "鸡", "蜈蚣"];
 const FULL_SET = [...NUMBERED, ...HONOURS, ...FLOWERS, ...ANIMALS];
 
 function decode(dataUrl: string): string {
@@ -36,10 +36,10 @@ describe("mahjongTileImage", () => {
     }
   });
 
-  it("uses the classic colour conventions: blue numeral over red 萬, with 伍 for five", () => {
-    const five = decode(mahjongTileImage("五萬"));
+  it("uses the classic colour conventions: blue numeral over red 万, with 伍 for five", () => {
+    const five = decode(mahjongTileImage("五万"));
     expect(five).toContain(">伍<");
-    expect(five).toContain(">萬<");
+    expect(five).toContain(">万<");
     expect(five.indexOf("#1d4ea8")).toBeLessThan(five.indexOf("#cf2f2a"));
   });
 

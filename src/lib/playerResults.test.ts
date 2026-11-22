@@ -10,7 +10,7 @@ import {
 describe("player results", () => {
   it("creates four seats in the same direction order with the total base split evenly", () => {
     expect(createInitialSlots(80)).toEqual([
-      { seat: "東", playerName: "", baseChips: 20 },
+      { seat: "东", playerName: "", baseChips: 20 },
       { seat: "南", playerName: "", baseChips: 20 },
       { seat: "西", playerName: "", baseChips: 20 },
       { seat: "北", playerName: "", baseChips: 20 },
@@ -23,7 +23,7 @@ describe("player results", () => {
   });
 
   it("records a takeover and carries left chips into the next player's base", () => {
-    const slot = { seat: "東" as const, playerName: "Alice", baseChips: 100 };
+    const slot = { seat: "东" as const, playerName: "Alice", baseChips: 100 };
     const entry = createResultEntry({
       id: "1",
       slot,
@@ -40,7 +40,7 @@ describe("player results", () => {
       net: -28,
       nextPlayerName: "Ben",
     });
-    expect(replacement).toEqual({ seat: "東", playerName: "Ben", baseChips: 72 });
+    expect(replacement).toEqual({ seat: "东", playerName: "Ben", baseChips: 72 });
   });
 
   it("formats results into copy-ready chat text", () => {
@@ -61,7 +61,7 @@ describe("player results", () => {
     ];
 
     expect(formatPlayerResultsForChat(entries)).toBe(
-      "麻將成績\nMei: +30 (完場)\nJun: -12 (離場 -> Kai 接手)",
+      "麻将成绩\nMei: +30 (完场)\nJun: -12 (离场 -> Kai 接手)",
     );
   });
 });

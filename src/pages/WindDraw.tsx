@@ -26,7 +26,7 @@ export default function WindDraw() {
   const [isCompassDrawing, setIsCompassDrawing] = useState(false);
   const [buttonLabel, setButtonLabel] = useState("开始");
   const [resultTitle, setResultTitle] = useState("准备就绪");
-  const [resultDetail, setResultDetail] = useState("点击發开始抽风");
+  const [resultDetail, setResultDetail] = useState("点击发开始抽风");
   const timeoutIds = useRef<number[]>([]);
 
   useEffect(() => {
@@ -57,10 +57,10 @@ export default function WindDraw() {
 
     schedule(() => {
       setCards((prev) =>
-        prev.map((card) => (card.character === "東" ? { ...card, winner: true } : card)),
+        prev.map((card) => (card.character === "东" ? { ...card, winner: true } : card)),
       );
-      setResultTitle("定风完成 · 東风为庄");
-      setResultDetail("東风 · 庄家先行，开局大吉");
+      setResultTitle("定风完成 · 东风为庄");
+      setResultDetail("东风 · 庄家先行，开局大吉");
       setButtonLabel("再抽一次");
       setIsDrawing(false);
     }, 4 * 260 + 150);
@@ -91,10 +91,10 @@ export default function WindDraw() {
         <div className="topbar-actions">
           <VersionBadge />
           <UtilityMenu />
-          <HelpDialog eyebrow="HOW TO PLAY" title="選風打位">
-            <p>点击"开始抽风"，系统会随机抽取東、南、西、北四个风位。</p>
+          <HelpDialog eyebrow="HOW TO PLAY" title="选风打位">
+            <p>点击"开始抽风"，系统会随机抽取东、南、西、北四个风位。</p>
             <p>
-              抽到<strong>東风</strong>的玩家为本局庄家。
+              抽到<strong>东风</strong>的玩家为本局庄家。
             </p>
           </HelpDialog>
         </div>
@@ -102,7 +102,7 @@ export default function WindDraw() {
 
       <section className="intro" aria-labelledby="page-title">
         <p className="eyebrow">MAHJONG · SEAT DRAW</p>
-        <h1 id="page-title">選風打位</h1>
+        <h1 id="page-title">选风打位</h1>
         <p>
           一掷定乾坤，
           <br />
@@ -128,9 +128,9 @@ export default function WindDraw() {
                 <span className="card-inner">
                   <span className="tile-face tile-back" aria-hidden="true"></span>
                   <span className="tile-face tile-front">{card.character}</span>
-                  {card.character === "東" && (
-                    <span className="east-starter-marker" aria-label="起莊">
-                      ▲起莊
+                  {card.character === "东" && (
+                    <span className="east-starter-marker" aria-label="起庄">
+                      ▲起庄
                     </span>
                   )}
                 </span>
@@ -138,7 +138,7 @@ export default function WindDraw() {
             );
           })}
           <button className="center-tile" id="drawButton" type="button" aria-label="开始抽风" onClick={drawWind} disabled={isDrawing}>
-            <span className="tile-symbol">發</span>
+            <span className="tile-symbol">发</span>
             <span className="tile-label">{buttonLabel}</span>
           </button>
         </div>

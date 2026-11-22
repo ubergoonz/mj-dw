@@ -78,16 +78,16 @@ export function formatChips(value: number): string {
 }
 
 export function formatPlayerResultsForChat(entries: PlayerResultEntry[]): string {
-  if (entries.length === 0) return "麻將成績\n未記錄任何結果";
+  if (entries.length === 0) return "麻将成绩\n未记录任何结果";
 
   const lines = entries.map((entry) => {
-    const reason = entry.reason === "takeover" ? "離場" : "完場";
+    const reason = entry.reason === "takeover" ? "离场" : "完场";
     const takeover = entry.nextPlayerName ? ` -> ${entry.nextPlayerName} 接手` : "";
 
     return `${entry.playerName}: ${formatSignedChips(entry.net)} (${reason}${takeover})`;
   });
 
-  return ["麻將成績", ...lines].join("\n");
+  return ["麻将成绩", ...lines].join("\n");
 }
 
 function displayPlayerName(slot: PlayerSessionSlot): string {

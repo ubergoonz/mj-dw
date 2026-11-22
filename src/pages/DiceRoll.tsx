@@ -29,7 +29,7 @@ export default function DiceRoll() {
   const [diceCount, setDiceCount] = usePersistentState<DiceCount>("dice:count:v1", 2, is.oneOf([2, 3] as const));
   const [dice, setDice] = useState<DieState[]>(initialDice);
   const [isRolling, setIsRolling] = useState(false);
-  const [rollLabel, setRollLabel] = useState("擲骰子");
+  const [rollLabel, setRollLabel] = useState("掷骰子");
   const [resultTitle, setResultTitle] = useState("Ready");
   const [resultDetail, setResultDetail] = useState(() => `${diceCount}`);
   const rollingIntervalId = useRef<number | null>(null);
@@ -54,7 +54,7 @@ export default function DiceRoll() {
     if (isRolling) return;
 
     setIsRolling(true);
-    setRollLabel("擲骰中");
+    setRollLabel("掷骰中");
     setResultTitle("Rolling");
     setResultDetail("Good luck...");
     vibrate(15);
@@ -78,7 +78,7 @@ export default function DiceRoll() {
       });
 
       vibrate([30, 40, 30]);
-      setRollLabel("再擲一次");
+      setRollLabel("再掷一次");
       setIsRolling(false);
       rollingTimeoutId.current = null;
     }, 900);

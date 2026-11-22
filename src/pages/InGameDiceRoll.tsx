@@ -16,10 +16,10 @@ interface DieState {
 }
 
 /** Visual compass slot each seat is pinned to, reusing WindDraw's compass layout. */
-// Real compass orientation for this feature: 東 at the bottom, 南 on the
+// Real compass orientation for this feature: 东 at the bottom, 南 on the
 // right, 西 at the top, 北 on the left (matches the physical seating view).
 const COMPASS_POSITIONS: Record<Seat, "east" | "south" | "west" | "north"> = {
-  東: "west",
+  东: "west",
   南: "south",
   西: "east",
   北: "north",
@@ -166,7 +166,7 @@ export default function InGameDiceRoll() {
       vibrate([30, 40, 30]);
 
       if (updatedRolls.length >= rollsRequired(diceCount)) {
-        // First roll picks the seat (counting 東→南→西→北). With two dice,
+        // First roll picks the seat (counting 东→南→西→北). With two dice,
         // the second roll is added to the first to find the break stack;
         // with three dice, the single roll is used directly for both.
         setResult(
@@ -209,19 +209,19 @@ export default function InGameDiceRoll() {
           <VersionBadge />
           <UtilityMenu />
           <HelpDialog eyebrow="HOW TO PLAY" title="掷骰开墩">
-            <p>庄家（東）掷骰决定哪一家开门取牌：选 2 颗骰子需连续掷两次；选 3 颗骰子只需掷一次。</p>
+            <p>庄家（东）掷骰决定哪一家开门取牌：选 2 颗骰子需连续掷两次；选 3 颗骰子只需掷一次。</p>
             <p>
-              第一次点数从庄家起，按東、南、西、北的出牌顺序数，数到的一家即为开门家（3 颗骰子时同一次点数兼作此用）。
+              第一次点数从庄家起，按东、南、西、北的出牌顺序数，数到的一家即为开门家（3 颗骰子时同一次点数兼作此用）。
             </p>
             <p>
-              新加坡麻将中，<strong>東、西</strong>两家的墙各叠 19 墩，<strong>南、北</strong>
+              新加坡麻将中，<strong>东、西</strong>两家的墙各叠 19 墩，<strong>南、北</strong>
               两家各叠 18 墩。
             </p>
             <p>
-              2 颗骰子时，第一次由東掷骰，点数决定由哪一家掷第二次；两次点数相加后，从第二位掷骰者的墙开始数。
-              3 颗骰子时由東一次掷完并直接计数。墙墩计数一律从该墙的第 1 墩开始，开门后从下一墩开始摸牌。
+              2 颗骰子时，第一次由东掷骰，点数决定由哪一家掷第二次；两次点数相加后，从第二位掷骰者的墙开始数。
+              3 颗骰子时由东一次掷完并直接计数。墙墩计数一律从该墙的第 1 墩开始，开门后从下一墩开始摸牌。
             </p>
-            <p>若两次点数超过当前墙的总墩数，则向左顺延：東→北→西→南→東。</p>
+            <p>若两次点数超过当前墙的总墩数，则向左顺延：东→北→西→南→东。</p>
           </HelpDialog>
         </div>
       </header>
@@ -272,9 +272,9 @@ export default function InGameDiceRoll() {
                 <span className="card-inner">
                   <span className="tile-face tile-back" aria-hidden="true"></span>
                   <span className="tile-face tile-front">{seat}</span>
-                  {seat === "東" && (
-                    <span className="east-starter-marker" aria-label="起莊">
-                      ▲起莊
+                  {seat === "东" && (
+                    <span className="east-starter-marker" aria-label="起庄">
+                      ▲起庄
                     </span>
                   )}
                 </span>
@@ -357,7 +357,7 @@ export default function InGameDiceRoll() {
               <p>
                 {diceCount === 2 && rollsSoFar.length === 2
                   ? `第一次 ${result.seatRoll} 点由${result.chosenSeat}掷第二次 · 两次相加 ${result.seatRoll + result.breakRoll} 点`
-                  : `東掷骰 ${result.seatRoll} 点`}{" "}
+                  : `东掷骰 ${result.seatRoll} 点`}{" "}
                 · {result.seat}家开门
               </p>
               {result.rolledOver && (

@@ -125,7 +125,7 @@ export default function PlayerResults() {
   }
 
   function resetSession() {
-    if (hasUnsavedWork && !window.confirm("Reset session? 所有座位、名字與已記錄的結果都會清除。")) return;
+    if (hasUnsavedWork && !window.confirm("Reset session? 所有座位、名字与已记录的结果都会清除。")) return;
     setSession(createSession(defaultBaseInput));
     setLastRemoved(null);
   }
@@ -134,7 +134,7 @@ export default function PlayerResults() {
     const slot = slots.find((candidate) => candidate.seat === seat);
     if (!slot) return;
 
-    if (isLeftTallyInvalid && !window.confirm("剩餘籌碼總和與總起始籌碼不符。仍要記錄嗎？")) return;
+    if (isLeftTallyInvalid && !window.confirm("剩余筹码总和与总起始筹码不符。仍要记录吗？")) return;
 
     const leftChips = leftChipsBySeat[seat];
     const nextPlayerName = nextPlayerInputs[seat].trim();
@@ -161,8 +161,8 @@ export default function PlayerResults() {
   }
 
   function recordAllEnd() {
-    if (!window.confirm("全完場：為四家各記錄一筆完場結果？")) return;
-    if (isLeftTallyInvalid && !window.confirm("剩餘籌碼總和與總起始籌碼不符。仍要記錄嗎？")) return;
+    if (!window.confirm("全完场：为四家各记录一笔完场结果？")) return;
+    if (isLeftTallyInvalid && !window.confirm("剩余筹码总和与总起始筹码不符。仍要记录吗？")) return;
 
     const timestamp = Date.now();
     const endEntries = SEAT_ORDER.map((seat, index) => {
@@ -205,19 +205,19 @@ export default function PlayerResults() {
         <div className="topbar-actions">
           <VersionBadge />
           <UtilityMenu />
-          <HelpDialog eyebrow="HOW TO PLAY" title="成績記錄">
-            <p>開局先輸入總起始籌碼，系統會平均分給東、南、西、北四家作為 base。</p>
-            <p>四家的 base 與剩餘籌碼都可手動輸入；若總和不等於總起始籌碼，座位卡會以紅框提醒。</p>
-            <p>中途有人離場時，輸入剩餘籌碼並按「接手」，系統記錄離場者輸贏，接手者用該剩餘籌碼作為新 base。</p>
-            <p>完場時輸入各家剩餘籌碼並按「完場」，下方文字可直接複製貼到聊天。</p>
-            <p>所有輸入會自動保存在此裝置上，鎖屏或重新整理都不會遺失；按「Reset session」才會清除。</p>
+          <HelpDialog eyebrow="HOW TO PLAY" title="成绩记录">
+            <p>开局先输入总起始筹码，系统会平均分给东、南、西、北四家作为 base。</p>
+            <p>四家的 base 与剩余筹码都可手动输入；若总和不等于总起始筹码，座位卡会以红框提醒。</p>
+            <p>中途有人离场时，输入剩余筹码并按「接手」，系统记录离场者输赢，接手者用该剩余筹码作为新 base。</p>
+            <p>完场时输入各家剩余筹码并按「完场」，下方文字可直接复制贴到聊天。</p>
+            <p>所有输入会自动保存在此装置上，锁屏或重新整理都不会遗失；按「Reset session」才会清除。</p>
           </HelpDialog>
         </div>
       </header>
 
       <section className="hero" aria-labelledby="page-title">
         <p className="eyebrow">MAHJONG · RESULTS</p>
-        <h1 id="page-title">秋後算績</h1>
+        <h1 id="page-title">秋后算绩</h1>
       </section>
 
       <section className="fan-payout-panel" aria-label="Player result recorder">
@@ -250,7 +250,7 @@ export default function PlayerResults() {
                   Reset session
                 </button>
                 <button className="utility-action utility-action-compact" type="button" onClick={recordAllEnd}>
-                  全完場
+                  全完场
                 </button>
               </div>
             </div>
@@ -328,7 +328,7 @@ export default function PlayerResults() {
                       接手
                     </button>
                     <button type="button" onClick={() => recordSeat(seat, "end")}>
-                      完場
+                      完场
                     </button>
                   </div>
                 </section>
@@ -374,7 +374,7 @@ export default function PlayerResults() {
               {entries.length === 0 && (
                 <tr>
                   <td className="fan-table-empty" colSpan={6}>
-                    尚未記錄結果 · Records appear here after 接手 / 完場.
+                    尚未记录结果 · Records appear here after 接手 / 完场.
                   </td>
                 </tr>
               )}
@@ -384,7 +384,7 @@ export default function PlayerResults() {
                   <td>{formatChips(entry.baseChips)}</td>
                   <td>{formatChips(entry.leftChips)}</td>
                   <td className={resultToneClass(entry.net)}>{formatSignedChips(entry.net)}</td>
-                  <td>{entry.reason === "takeover" ? "離場" : "完場"}</td>
+                  <td>{entry.reason === "takeover" ? "离场" : "完场"}</td>
                   <td>
                     <button
                       className="row-remove"
@@ -416,7 +416,7 @@ export default function PlayerResults() {
             <span>Copy for chat</span>
           </div>
           <textarea readOnly value={chatText} aria-label="Copyable result text" />
-          <CopyActions text={chatText} shareTitle="麻將成績" disabled={entries.length === 0} />
+          <CopyActions text={chatText} shareTitle="麻将成绩" disabled={entries.length === 0} />
         </div>
       </section>
 

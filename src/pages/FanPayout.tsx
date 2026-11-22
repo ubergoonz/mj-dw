@@ -70,17 +70,17 @@ export default function FanPayout() {
         <div className="topbar-actions">
           <VersionBadge />
           <UtilityMenu />
-          <HelpDialog eyebrow="HOW TO PLAY" title="台數計算">
-            <p>底注是「閒家 / 出銃」一對數值，直接作為 0 台的基礎，例如 1 / 2。</p>
-            <p>0 台出銃時，Player A 與 Player B 各付 1，出銃者付 2，贏家共收 4。</p>
-            <p>自摸沒有出銃者，三家都當作出銃者各付 2，贏家收 6；有自摸花紅時每家再各付花紅。</p>
+          <HelpDialog eyebrow="HOW TO PLAY" title="台数计算">
+            <p>底注是「闲家 / 出铳」一对数值，直接作为 0 台的基础，例如 1 / 2。</p>
+            <p>0 台出铳时，Player A 与 Player B 各付 1，出铳者付 2，赢家共收 4。</p>
+            <p>自摸没有出铳者，三家都当作出铳者各付 2，赢家收 6；有自摸花红时每家再各付花红。</p>
           </HelpDialog>
         </div>
       </header>
 
       <section className="hero" aria-labelledby="page-title">
         <p className="eyebrow">MAHJONG · 台 PAYOUT</p>
-        <h1 id="page-title">台數計算</h1>
+        <h1 id="page-title">台数计算</h1>
       </section>
 
       <section className="fan-payout-panel" aria-label="台 payout calculator">

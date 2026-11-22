@@ -5,7 +5,7 @@ export interface Wind {
 }
 
 export const winds: Wind[] = [
-  { name: "東风", character: "東", detail: "庄家先行，开局大吉" },
+  { name: "东风", character: "东", detail: "庄家先行，开局大吉" },
   { name: "南风", character: "南", detail: "南来北往，手气正旺" },
   { name: "西风", character: "西", detail: "西风送爽，静待好牌" },
   { name: "北风", character: "北", detail: "北辰高照，稳坐牌桌" },

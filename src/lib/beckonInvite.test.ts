@@ -61,8 +61,8 @@ describe("formatBeckonInviteForChat", () => {
     expect(text).toContain("Total hours: 6h");
     expect(text).toContain("Stake: 1.00 / 2.00");
     expect(text).toContain("Tai range: 1–5");
-    expect(text).toContain("門清: Play + 加 1 台");
-    expect(text).toContain("大三元: Pong/Kong all 3 dragons (碰/槓三元即成)");
+    expect(text).toContain("门清: Play + 加 1 台");
+    expect(text).toContain("大三元: Pong/Kong all 3 dragons (碰/杠三元即成)");
     expect(text).toContain("大四喜: Winning hand only (和牌才算)");
   });
 });

@@ -18,7 +18,7 @@ export default function RouteChrome() {
     const utility = UTILITIES.find((entry) => !entry.external && entry.path === pathname);
     if (pathname === "/") document.title = APP_NAME;
     else if (utility) document.title = `${utility.label} · ${APP_NAME}`;
-    else document.title = `找不到頁面 · ${APP_NAME}`;
+    else document.title = `找不到页面 · ${APP_NAME}`;
   }, [pathname]);
 
   return null;

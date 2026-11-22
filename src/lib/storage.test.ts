@@ -89,8 +89,8 @@ describe("storage validators", () => {
   });
 
   it("is.oneOf restricts to the option list", () => {
-    const seat = is.oneOf(["東", "南"] as const);
-    expect(seat("東")).toBe(true);
+    const seat = is.oneOf(["东", "南"] as const);
+    expect(seat("东")).toBe(true);
     expect(seat("西")).toBe(false);
   });
 });
